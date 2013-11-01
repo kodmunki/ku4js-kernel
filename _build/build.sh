@@ -54,7 +54,7 @@ compile () {
 teardown () {
 	rm $LNKGFILE
 	rm $COMPFILE
-	echo "DONE :{)}"
+	echo "$PROJNAME Compilation Complete :{)}"
 }
 
 setup

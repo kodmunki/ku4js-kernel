@@ -1,280 +1,258 @@
-var $ = require('../../lib/base/__asserters');
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
 
-exports['isArray'] = function (test) {
-    test.expect(2);
-    test.ok($.isArray([]));
-    test.ok($.isArray(new Array()));
-    test.done();
-};
+    test('isArray', function (test) {
+        expect(2);
+        ok($.isArray([]));
+        ok($.isArray(new Array()));
+    });
 
-exports['isNotArray'] = function (test) {
-    test.expect(13);
-    test.ok(!$.isArray(null));
-    test.ok(!$.isArray(undefined));
-    test.ok(!$.isArray(true));
-    test.ok(!$.isArray(false));
-    test.ok(!$.isArray(""));
-    test.ok(!$.isArray(new String()));
-    test.ok(!$.isArray(0));
-    test.ok(!$.isArray(new Number()));
-    test.ok(!$.isArray(new Date()));
-    test.ok(!$.isArray({}));
-    test.ok(!$.isArray(new Object()));
-    test.ok(!$.isArray(function() { } ));
-    test.ok(!$.isArray(new Function()));
-    test.done();
-};
+    test('isNotArray',  function (test) {
+        expect(13);
+        ok(!$.isArray(null));
+        ok(!$.isArray(undefined));
+        ok(!$.isArray(true));
+        ok(!$.isArray(false));
+        ok(!$.isArray(""));
+        ok(!$.isArray(new String()));
+        ok(!$.isArray(0));
+        ok(!$.isArray(new Number()));
+        ok(!$.isArray(new Date()));
+        ok(!$.isArray({}));
+        ok(!$.isArray(new Object()));
+        ok(!$.isArray(function() { } ));
+        ok(!$.isArray(new Function()));
+    });
 
-exports['isBool'] = function (test) {
-    test.expect(2);
-    test.ok($.isBool(true));
-    test.ok($.isBool(false));
-    test.done();
-};
+    test('isBool',  function (test) {
+        expect(2);
+        ok($.isBool(true));
+        ok($.isBool(false));
+    });
 
-exports['isNotBool'] = function (test) {
-    test.expect(13);        test.ok(!$.isBool(null));
-    test.ok(!$.isBool(undefined));
-    test.ok(!$.isBool([]));
-    test.ok(!$.isBool(new Array()));
-    test.ok(!$.isBool(""));
-    test.ok(!$.isBool(new String()));
-    test.ok(!$.isBool(0));
-    test.ok(!$.isBool(new Number()));
-    test.ok(!$.isBool(new Date()));
-    test.ok(!$.isBool({}));
-    test.ok(!$.isBool(new Object()));
-    test.ok(!$.isBool(function() { } ));
-    test.ok(!$.isBool(new Function()));
-    test.done();
-};
+    test('isNotBool',  function (test) {
+        expect(13);        ok(!$.isBool(null));
+        ok(!$.isBool(undefined));
+        ok(!$.isBool([]));
+        ok(!$.isBool(new Array()));
+        ok(!$.isBool(""));
+        ok(!$.isBool(new String()));
+        ok(!$.isBool(0));
+        ok(!$.isBool(new Number()));
+        ok(!$.isBool(new Date()));
+        ok(!$.isBool({}));
+        ok(!$.isBool(new Object()));
+        ok(!$.isBool(function() { } ));
+        ok(!$.isBool(new Function()));
+    });
 
-exports['isDate'] = function (test) {
-    test.expect(1);
-    test.ok($.isDate(new Date()));
-    test.done();
-};
+    test('isDate',  function (test) {
+        expect(1);
+        ok($.isDate(new Date()));
+    });
 
-exports['isNotDate'] = function (test) {
-    test.expect(14);
-    test.ok(!$.isDate(null));
-    test.ok(!$.isDate(undefined));
-    test.ok(!$.isDate(true));
-    test.ok(!$.isDate(false));
-    test.ok(!$.isDate([]));
-    test.ok(!$.isDate(new Array()));
-    test.ok(!$.isDate(""));
-    test.ok(!$.isDate(new String()));
-    test.ok(!$.isDate(0));
-    test.ok(!$.isDate(new Number()));
-    test.ok(!$.isDate({}));
-    test.ok(!$.isDate(new Object()));
-    test.ok(!$.isDate(function() { } ));
-    test.ok(!$.isDate(new Function()));
-    test.done();
-};
+    test('isNotDate',  function (test) {
+        expect(14);
+        ok(!$.isDate(null));
+        ok(!$.isDate(undefined));
+        ok(!$.isDate(true));
+        ok(!$.isDate(false));
+        ok(!$.isDate([]));
+        ok(!$.isDate(new Array()));
+        ok(!$.isDate(""));
+        ok(!$.isDate(new String()));
+        ok(!$.isDate(0));
+        ok(!$.isDate(new Number()));
+        ok(!$.isDate({}));
+        ok(!$.isDate(new Object()));
+        ok(!$.isDate(function() { } ));
+        ok(!$.isDate(new Function()));
+    });
 
-exports['isNumber'] = function (test) {
-    test.expect(2);
-    test.ok($.isNumber(0));
-    test.ok(!$.isNumber(new Number()));
-    test.done();
-};
+    test('isNumber',  function (test) {
+        expect(2);
+        ok($.isNumber(0));
+        ok(!$.isNumber(new Number()));
+    });
 
-exports['isNotNumber'] = function (test) {
-    test.expect(12);
-    test.ok(!$.isNumber(null));
-    test.ok(!$.isNumber(undefined));
-    test.ok(!$.isNumber(true));
-    test.ok(!$.isNumber(false));
-    test.ok(!$.isNumber([]));
-    test.ok(!$.isNumber(new Array()));
-    test.ok(!$.isNumber(""));
-    test.ok(!$.isNumber(new String()));
-    test.ok(!$.isNumber({}));
-    test.ok(!$.isNumber(new Object()));
-    test.ok(!$.isNumber(function() { } ));
-    test.ok(!$.isNumber(new Function()));
-    test.done();
-};
+    test('isNotNumber',  function (test) {
+        expect(12);
+        ok(!$.isNumber(null));
+        ok(!$.isNumber(undefined));
+        ok(!$.isNumber(true));
+        ok(!$.isNumber(false));
+        ok(!$.isNumber([]));
+        ok(!$.isNumber(new Array()));
+        ok(!$.isNumber(""));
+        ok(!$.isNumber(new String()));
+        ok(!$.isNumber({}));
+        ok(!$.isNumber(new Object()));
+        ok(!$.isNumber(function() { } ));
+        ok(!$.isNumber(new Function()));
+    });
 
 
-exports['isObject'] = function (test) {
-    test.expect(6);
-    test.ok($.isObject([]));
-    test.ok($.isObject(new Array()));
-    test.ok($.isObject(new String()));
-    test.ok($.isObject(new Number()));
-    test.ok($.isObject({}));
-    test.ok($.isObject(new Object()));
-    test.done();
-};
+    test('isObject',  function (test) {
+        expect(6);
+        ok($.isObject([]));
+        ok($.isObject(new Array()));
+        ok($.isObject(new String()));
+        ok($.isObject(new Number()));
+        ok($.isObject({}));
+        ok($.isObject(new Object()));
+    });
 
 
-exports['isNotObject'] = function (test) {
-    test.expect(8);
-    test.ok(!$.isObject(null));
-    test.ok(!$.isObject(undefined));
-    test.ok(!$.isObject(true));
-    test.ok(!$.isObject(false));
-    test.ok(!$.isObject(""));
-    test.ok(!$.isObject(0));
-    test.ok(!$.isObject(function() { } ));
-    test.ok(!$.isObject(new Function()));
-    test.done();
-};
+    test('isNotObject',  function (test) {
+        expect(8);
+        ok(!$.isObject(null));
+        ok(!$.isObject(undefined));
+        ok(!$.isObject(true));
+        ok(!$.isObject(false));
+        ok(!$.isObject(""));
+        ok(!$.isObject(0));
+        ok(!$.isObject(function() { } ));
+        ok(!$.isObject(new Function()));
+    });
 
-exports['isFunction'] = function (test) {
-    test.expect(2);
-    test.ok($.isFunction(function() { }));
-    test.ok($.isFunction(new Function()));
-    test.done();
-};
+    test('isFunction',  function (test) {
+        expect(2);
+        ok($.isFunction(function() { }));
+        ok($.isFunction(new Function()));
+    });
 
-exports['isNotFunction'] = function (test) {
-    test.expect(12);
-    test.ok(!$.isFunction(null));
-    test.ok(!$.isFunction(undefined));
-    test.ok(!$.isFunction(true));
-    test.ok(!$.isFunction(false));
-    test.ok(!$.isFunction([]));
-    test.ok(!$.isFunction(new Array()));
-    test.ok(!$.isFunction(""));
-    test.ok(!$.isFunction(new String()));
-    test.ok(!$.isFunction(0));
-    test.ok(!$.isFunction(new Number()));
-    test.ok(!$.isFunction({}));
-    test.ok(!$.isFunction(new Object()));
-    test.done();
-};
+    test('isNotFunction',  function (test) {
+        expect(12);
+        ok(!$.isFunction(null));
+        ok(!$.isFunction(undefined));
+        ok(!$.isFunction(true));
+        ok(!$.isFunction(false));
+        ok(!$.isFunction([]));
+        ok(!$.isFunction(new Array()));
+        ok(!$.isFunction(""));
+        ok(!$.isFunction(new String()));
+        ok(!$.isFunction(0));
+        ok(!$.isFunction(new Number()));
+        ok(!$.isFunction({}));
+        ok(!$.isFunction(new Object()));
+    });
 
-exports['isString'] = function (test) {
-    test.expect(2);
-    test.ok($.isString(""));
-    test.ok($.isString(new String()));
-    test.done();
-};
+    test('isString',  function (test) {
+        expect(2);
+        ok($.isString(""));
+        ok($.isString(new String()));
+    });
 
-exports['isNotString'] = function (test) {
-    test.expect(12);
-    test.ok(!$.isString(null));
-    test.ok(!$.isString(undefined));
-    test.ok(!$.isString(true));
-    test.ok(!$.isString(false));
-    test.ok(!$.isString([]));
-    test.ok(!$.isString(new Array()));
-    test.ok(!$.isString(0));
-    test.ok(!$.isString(new Number()));
-    test.ok(!$.isString({}));
-    test.ok(!$.isString(new Object()));
-    test.ok(!$.isString(function() { } ));
-    test.ok(!$.isString(new Function()));
-    test.done();
-};
+    test('isNotString',  function (test) {
+        expect(12);
+        ok(!$.isString(null));
+        ok(!$.isString(undefined));
+        ok(!$.isString(true));
+        ok(!$.isString(false));
+        ok(!$.isString([]));
+        ok(!$.isString(new Array()));
+        ok(!$.isString(0));
+        ok(!$.isString(new Number()));
+        ok(!$.isString({}));
+        ok(!$.isString(new Object()));
+        ok(!$.isString(function() { } ));
+        ok(!$.isString(new Function()));
+    });
 
-exports['isUndefined'] = function (test) {
-    test.expect(1);
-    test.ok($.isUndefined(undefined));
-    test.done();
-};
+    test('isUndefined',  function (test) {
+        expect(1);
+        ok($.isUndefined(undefined));
+    });
 
-exports['isNotUndefined'] = function (test) {
-    test.expect(13);
-    test.ok(!$.isUndefined(null));
-    test.ok(!$.isUndefined(true));
-    test.ok(!$.isUndefined(false));
-    test.ok(!$.isUndefined([]));
-    test.ok(!$.isUndefined(new Array()));
-    test.ok(!$.isUndefined(""));
-    test.ok(!$.isUndefined(new String()));
-    test.ok(!$.isUndefined(0));
-    test.ok(!$.isUndefined(new Number()));
-    test.ok(!$.isUndefined({}));
-    test.ok(!$.isUndefined(new Object()));
-    test.ok(!$.isUndefined(function() { } ));
-    test.ok(!$.isUndefined(new Function()));
-    test.done();
-};
+    test('isNotUndefined',  function (test) {
+        expect(13);
+        ok(!$.isUndefined(null));
+        ok(!$.isUndefined(true));
+        ok(!$.isUndefined(false));
+        ok(!$.isUndefined([]));
+        ok(!$.isUndefined(new Array()));
+        ok(!$.isUndefined(""));
+        ok(!$.isUndefined(new String()));
+        ok(!$.isUndefined(0));
+        ok(!$.isUndefined(new Number()));
+        ok(!$.isUndefined({}));
+        ok(!$.isUndefined(new Object()));
+        ok(!$.isUndefined(function() { } ));
+        ok(!$.isUndefined(new Function()));
+    });
 
-exports['isEmpty'] = function (test) {
-    test.expect(4);
-    test.ok($.isNullOrEmpty(null));
-    test.ok($.isNullOrEmpty(undefined));
-    test.ok($.isNullOrEmpty(""));
-    test.ok($.isNullOrEmpty(new String()));
-    test.done();
-};
+    test('isEmpty',  function (test) {
+        expect(4);
+        ok($.isNullOrEmpty(null));
+        ok($.isNullOrEmpty(undefined));
+        ok($.isNullOrEmpty(""));
+        ok($.isNullOrEmpty(new String()));
+    });
 
-exports['isNotEmpty'] = function (test) {
-    test.expect(7);
-    test.ok(!$.isNullOrEmpty("null"));
-    test.ok(!$.isNullOrEmpty("undefined"));
-    test.ok(!$.isNullOrEmpty(" "));
-    test.ok(!$.isNullOrEmpty("a"));
-    test.ok(!$.isNullOrEmpty(" a "));
-    test.ok(!$.isNullOrEmpty("1"));
-    test.ok(!$.isNullOrEmpty(" 1 "));
-    test.done();
-};
+    test('isNotEmpty',  function (test) {
+        expect(7);
+        ok(!$.isNullOrEmpty("null"));
+        ok(!$.isNullOrEmpty("undefined"));
+        ok(!$.isNullOrEmpty(" "));
+        ok(!$.isNullOrEmpty("a"));
+        ok(!$.isNullOrEmpty(" a "));
+        ok(!$.isNullOrEmpty("1"));
+        ok(!$.isNullOrEmpty(" 1 "));
+    });
 
-exports['isNullOrEmpty'] = function (test) {
-    test.expect(4);
-    test.ok($.isNullOrEmpty(null));
-    test.ok($.isNullOrEmpty(undefined));
-    test.ok($.isNullOrEmpty(""));
-    test.ok($.isNullOrEmpty(new String()));
-    test.done();
-};
+    test('isNullOrEmpty',  function (test) {
+        expect(4);
+        ok($.isNullOrEmpty(null));
+        ok($.isNullOrEmpty(undefined));
+        ok($.isNullOrEmpty(""));
+        ok($.isNullOrEmpty(new String()));
+    });
 
-exports['isNotNullOrEmpty'] = function (test) {
-    test.expect(11);
-    test.ok(!$.isNullOrEmpty(true));
-    test.ok(!$.isNullOrEmpty(false));
-    test.ok(!$.isNullOrEmpty([]));
-    test.ok(!$.isNullOrEmpty(new Array()));
-    test.ok(!$.isNullOrEmpty(0));
-    test.ok(!$.isNullOrEmpty(new Number()));
-    test.ok(!$.isNullOrEmpty(new Date()));
-    test.ok(!$.isNullOrEmpty({}));
-    test.ok(!$.isNullOrEmpty(new Object()));
-    test.ok(!$.isNullOrEmpty(function() { } ));
-    test.ok(!$.isNullOrEmpty(new Function()));
-    test.done();
-};
+    test('isNotNullOrEmpty',  function (test) {
+        expect(11);
+        ok(!$.isNullOrEmpty(true));
+        ok(!$.isNullOrEmpty(false));
+        ok(!$.isNullOrEmpty([]));
+        ok(!$.isNullOrEmpty(new Array()));
+        ok(!$.isNullOrEmpty(0));
+        ok(!$.isNullOrEmpty(new Number()));
+        ok(!$.isNullOrEmpty(new Date()));
+        ok(!$.isNullOrEmpty({}));
+        ok(!$.isNullOrEmpty(new Object()));
+        ok(!$.isNullOrEmpty(function() { } ));
+        ok(!$.isNullOrEmpty(new Function()));
+    });
 
-exports['exists'] = function (test) {
-    test.expect(12);
-    test.ok($.exists(true));
-    test.ok($.exists(false));
-    test.ok($.exists([]));
-    test.ok($.exists(new Array()));
-    test.ok($.exists(""));
-    test.ok($.exists(new String()));
-    test.ok($.exists(0));
-    test.ok($.exists(new Number()));
-    test.ok($.exists({}));
-    test.ok($.exists(new Object()));
-    test.ok($.exists(function() { } ));
-    test.ok($.exists(new Function()));
-    test.done();
-};
-exports['notExists'] = function (test) {
-    test.expect(2);
-    test.ok(!$.exists(null));
-    test.ok(!$.exists(undefined));
-    test.done();
-};
+    test('exists',  function (test) {
+        expect(12);
+        ok($.exists(true));
+        ok($.exists(false));
+        ok($.exists([]));
+        ok($.exists(new Array()));
+        ok($.exists(""));
+        ok($.exists(new String()));
+        ok($.exists(0));
+        ok($.exists(new Number()));
+        ok($.exists({}));
+        ok($.exists(new Object()));
+        ok($.exists(function() { } ));
+        ok($.exists(new Function()));
+    });
+    test('notExists',  function (test) {
+        expect(2);
+        ok(!$.exists(null));
+        ok(!$.exists(undefined));
+    });
 
-exports['xor'] = function (test) {
-    test.expect(2);
-    test.ok($.xor(true, false));
-    test.ok($.xor(false, true));
-    test.done();
-};
+    test('xor',  function (test) {
+        expect(2);
+        ok($.xor(true, false));
+        ok($.xor(false, true));
+    });
 
-exports['notXor'] = function (test) {
-    test.expect(2);
-    test.ok(!$.xor(false, false));
-    test.ok(!$.xor(true, true));
-    test.done();
-};
+    test('notXor',  function (test) {
+        expect(2);
+        ok(!$.xor(false, false));
+        ok(!$.xor(true, true));
+    })
+})

@@ -1,14 +1,16 @@
-var replicate = require('../../lib/base/__replicate'),
-    array = [1,2,3],
-    date = new Date(),
-    obj = {"1":1,"2":2,"3":3};
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
 
-exports['replicate'] = function (test) {
-    test.expect(5);
-    test.ok(_replicate(null) ==  null);
-    test.ok(_replicate(undefined) == undefined);
-    test.ok(array[0] == _replicate(array)[0]);
-    test.ok(date.valueof == _replicate(date).valueof);
-    test.ok(obj["1"] == _replicate(obj)["1"]);
-    test.done();
-};
+    var array = [1,2,3],
+        date = new Date(),
+        obj = {"1":1,"2":2,"3":3};
+
+    test('replicate', function (test) {
+        expect(5);
+        ok($.replicate(null) ==  null);
+        ok($.replicate(undefined) == undefined);
+        ok(array[0] == $.replicate(array)[0]);
+        ok(date.valueof == $.replicate(date).valueof);
+        ok(obj["1"] == $.replicate(obj)["1"]);
+    });
+});

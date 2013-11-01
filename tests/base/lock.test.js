@@ -1,30 +1,30 @@
-var $ = require('../../lib/base/lock'),
-    lock = $();
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
 
-exports['create'] = function (test) {
-    var lock1 = $(),
-        lock2 = $(false),
-        lock3 = $(true);
+    test('create', function (test) {
+        var lock1 = $.lock(),
+            lock2 = $.lock(false),
+            lock3 = $.lock(true);
 
-    test.expect(3);
-    test.ok(!lock1.isLocked());
-    test.ok(!lock2.isLocked());
-    test.ok(lock3.isLocked());
-    test.done();
-};
+        expect(3);
+        ok(!lock1.isLocked());
+        ok(!lock2.isLocked());
+        ok(lock3.isLocked());
+    });
 
-exports['lock'] = function (test) {
-    lock.unlock().lock();
+    var lock = $.lock();
+    test('lock', function (test) {
+        lock.unlock().lock();
 
-    test.expect(1);
-    test.ok(lock.isLocked());
-    test.done();
-};
+        expect(1);
+        ok(lock.isLocked());
+    });
 
-exports['unlock'] = function (test) {
-    lock.lock().unlock();
+    test('unlock', function (test) {
+        console.log(lock)
+        lock.lock().unlock();
 
-    test.expect(1);
-    test.ok(!lock.isLocked());
-    test.done();
-};
+        expect(1);
+        ok(!lock.isLocked());
+    });
+})
