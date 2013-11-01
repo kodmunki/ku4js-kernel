@@ -1,68 +1,63 @@
-var $ = require('../../lib/base/str');
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
 
-exports['build'] = function (test) {
-    test.expect(5);
-    test.equal($.build(null), "null");
-    test.equal($.build(undefined), "undefined");
-    test.equal($.build("","",""), "");
-    test.equal($.build(" "," "," "), "   ");
-    test.equal($.build("a","b","c"), "abc");
-    test.done();
-};
-
-exports['format'] = function (test) {
-    test.expect(5);
-    test.equal($.format(null), null);
-    test.equal($.format(undefined), undefined);
-    test.equal($.format(""), "");
-    test.equal($.format("{0}{1}{2}","1","2","3"), "123");
-    test.equal($.format("{0}{0}{1}","1","2","3"), "112");
-    test.done();
-};
-
-exports['trimStart'] = function (test) {
-    test.expect(4);
-    test.throws(function() { $.trimStart(null); });
-    test.throws(function() { $.trimStart(undefined); });
-    test.equal($.trimStart(""), "");
-    test.equal($.trimStart(" string"), "string");
-    test.done();
-};
-
-exports['trimEnd'] = function (test) {
-    test.expect(4);
-    test.throws(function() { $.trimEnd(null); });
-    test.throws(function() { $.trimEnd(undefined); });
-    test.equal($.trimEnd(""), "");
-    test.equal($.trimEnd("string "), "string");
-    test.done();
-};
-
-exports['trim'] = function (test) {
-    test.expect(4);
-    test.throws(function() { $.trim(null); });
-    test.throws(function() { $.trim(undefined); });
-    test.equal($.trim(""), "");
-    test.equal($.trim(" string "), "string");
-    test.done();
-};
-
-exports['encodeBase64'] = function (test) {
-    test.expect(5);
-    test.throws(function() { $.encodeBase64(null); });
-    test.throws(function() { $.encodeBase64(undefined); });
-    test.equal($.encodeBase64(""), "");
-    test.equal($.encodeBase64("This Is an (* excellent _+} Test"), "VGhpcyBJcyBhbiAoKiBleGNlbGxlbnQgXyt9IFRlc3Q=");
-    test.equal($.encodeBase64(" This Is an (* excellenter _+} Test "), "IFRoaXMgSXMgYW4gKCogZXhjZWxsZW50ZXIgXyt9IFRlc3Qg");
-    test.done();
-};
-
-exports['decodeBase64'] = function (test) {
-    test.expect(5);
-    test.throws(function() { $.decodeBase64(null); });
-    test.throws(function() { $.decodeBase64(undefined); });
-    test.equal($.decodeBase64(""), "");
-    test.equal($.decodeBase64("VGhpcyBJcyBhbiAoKiBleGNlbGxlbnQgXyt9IFRlc3Q="), "This Is an (* excellent _+} Test");
-    test.equal($.decodeBase64("IFRoaXMgSXMgYW4gKCogZXhjZWxsZW50ZXIgXyt9IFRlc3Qg"), " This Is an (* excellenter _+} Test ");
-    test.done();
-};
+    test('build', function (test) {
+        expect(5);
+        equal($.str.build(null), "null");
+        equal($.str.build(undefined), "undefined");
+        equal($.str.build("","",""), "");
+        equal($.str.build(" "," "," "), "   ");
+        equal($.str.build("a","b","c"), "abc");
+    });
+    
+    test('format', function (test) {
+        expect(5);
+        equal($.str.format(null), null);
+        equal($.str.format(undefined), undefined);
+        equal($.str.format(""), "");
+        equal($.str.format("{0}{1}{2}","1","2","3"), "123");
+        equal($.str.format("{0}{0}{1}","1","2","3"), "112");
+    });
+    
+    test('trimStart', function (test) {
+        expect(4);
+        throws(function() { $.str.trimStart(null); });
+        throws(function() { $.str.trimStart(undefined); });
+        equal($.str.trimStart(""), "");
+        equal($.str.trimStart(" string"), "string");
+    });
+    
+    test('trimEnd', function (test) {
+        expect(4);
+        throws(function() { $.str.trimEnd(null); });
+        throws(function() { $.str.trimEnd(undefined); });
+        equal($.str.trimEnd(""), "");
+        equal($.str.trimEnd("string "), "string");
+    });
+    
+    test('trim', function (test) {
+        expect(4);
+        throws(function() { $.str.trim(null); });
+        throws(function() { $.str.trim(undefined); });
+        equal($.str.trim(""), "");
+        equal($.str.trim(" string "), "string");
+    });
+    
+    test('encodeBase64', function (test) {
+        expect(5);
+        throws(function() { $.str.encodeBase64(null); });
+        throws(function() { $.str.encodeBase64(undefined); });
+        equal($.str.encodeBase64(""), "");
+        equal($.str.encodeBase64("This Is an (* excellent _+} Test"), "VGhpcyBJcyBhbiAoKiBleGNlbGxlbnQgXyt9IFRlc3Q=");
+        equal($.str.encodeBase64(" This Is an (* excellenter _+} Test "), "IFRoaXMgSXMgYW4gKCogZXhjZWxsZW50ZXIgXyt9IFRlc3Qg");
+    });
+    
+    test('decodeBase64', function (test) {
+        expect(5);
+        throws(function() { $.str.decodeBase64(null); });
+        throws(function() { $.str.decodeBase64(undefined); });
+        equal($.str.decodeBase64(""), "");
+        equal($.str.decodeBase64("VGhpcyBJcyBhbiAoKiBleGNlbGxlbnQgXyt9IFRlc3Q="), "This Is an (* excellent _+} Test");
+        equal($.str.decodeBase64("IFRoaXMgSXMgYW4gKCogZXhjZWxsZW50ZXIgXyt9IFRlc3Qg"), " This Is an (* excellenter _+} Test ");
+    });
+});
