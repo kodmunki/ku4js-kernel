@@ -1,88 +1,95 @@
-var $ = require('../../lib/base/__asserters'),
-    $money = require('../../lib/finance/money'),
-    two = $money(2.625),
-    six = $money(6.125),
-    sixAmps = $money(11, "&");
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
+    
+    var two = $.money(2.625);  
+    var six = $.money(6.125);
+    var sixAmps = $.money(11, "&");
+    
+    module("Money Test");
+    test("create", function() {
+        expect(8);
+        raises(function(){$.money(null);});
+        raises(function(){$.money(undefined);});
+        ok($.money(4));
+        ok($.money.parse("$5.99"));
+        
+        equal(two.cents(), .625);
+        equal(two.dollars(), 2);
+        equal(two.type(), "$");
+        equal(two.value(), 2.625);
+    });
+    
+    test("add", function() {
+        expect(8);
+        raises(function(){six.add(null)});
+        raises(function(){six.add(undefined);});
+        raises(function(){six.add("");});
+        raises(function(){six.add("2");});
+        raises(function(){six.add(2);});
+        raises(function(){six.add(sixAmps);});
+        
+        ok(six.add(two).equals($.money(8.75)));
+        ok(two.add(six).equals($.money(8.75)));
+    });
+    
+    test("subtract", function() {
+        expect(8);
+        raises(function(){six.subtract(null)});
+        raises(function(){six.subtract(undefined);});
+        raises(function(){six.subtract("");});
+        raises(function(){six.subtract("2");});
+        raises(function(){six.subtract(2);});
+        raises(function(){six.subtract(sixAmps);});
+        
+        ok(six.subtract(two).equals($.money(3.50)));
+        ok(two.subtract(six).equals($.money(-3.50)));
+    });
+    
+    test("multiply", function() {
+        expect(9);
+        raises(function(){six.multiply(null)});
+        raises(function(){six.multiply(undefined);});
+        raises(function(){six.multiply("");});
+        raises(function(){six.multiply("2");});
+        raises(function(){six.multiply(sixAmps);});
+        raises(function(){six.multiply(two);});
+        raises(function(){two.multiply(six);});
+        
+        ok(six.multiply(2).equals($.money(12.25)));
+        ok(six.multiply(-2).equals($.money(-12.25)));
+    });
+    
+    test("divide", function() {
+        expect(9);
+        raises(function(){six.divide(null)});
+        raises(function(){six.divide(undefined);});
+        raises(function(){six.divide("");});
+        raises(function(){six.divide("2");});
+        raises(function(){six.divide(sixAmps);});
+        raises(function(){six.divide(two);});
+        raises(function(){two.divide(six);});
+        
+        ok(six.divide(2).equals($.money(3.0625)));
+        ok(six.divide(-2).equals($.money(-3.0625)));
+    });
+    
+    test("isOfType", function() {
+        expect(1);
+        ok(six.isOfType(two));
+    });
+    
+    test("isGreaterThan", function() {
+        expect(1);
+        ok(six.isGreaterThan(two));
+    });
+    
+    test("isLessThan", function() {
+        expect(1);
+        ok(two.isLessThan(six));
+    });
 
-exports['create'] = function (test) {
-    test.expect(8);
-    test.throws(function(){$money(null);});
-    test.throws(function(){$money(undefined);});
-    test.ok($money(4));
-    test.ok($money.parse("$5.99"));
-    test.equal(two.cents(), .625);
-    test.equal(two.dollars(), 2);
-    test.equal(two.type(), "$");
-    test.equal(two.value(), 2.625);
-    test.done();
-};
-exports['add'] = function (test) {
-    test.expect(8);
-    test.throws(function(){six.add(null)});
-    test.throws(function(){six.add(undefined);});
-    test.throws(function(){six.add("");});
-    test.throws(function(){six.add("2");});
-    test.throws(function(){six.add(2);});
-    test.throws(function(){six.add(sixAmps);});
-    test.ok(six.add(two).equals($money(8.75)));
-    test.ok(two.add(six).equals($money(8.75)));
-    test.done();
-};
-exports['subtract'] = function (test) {
-    test.expect(8);
-    test.throws(function(){six.subtract(null)});
-    test.throws(function(){six.subtract(undefined);});
-    test.throws(function(){six.subtract("");});
-    test.throws(function(){six.subtract("2");});
-    test.throws(function(){six.subtract(2);});
-    test.throws(function(){six.subtract(sixAmps);});
-    test.ok(six.subtract(two).equals($money(3.50)));
-    test.ok(two.subtract(six).equals($money(-3.50)));
-    test.done();
-};
-exports['multiply'] = function (test) {
-    test.expect(9);
-    test.throws(function(){six.multiply(null)});
-    test.throws(function(){six.multiply(undefined);});
-    test.throws(function(){six.multiply("");});
-    test.throws(function(){six.multiply("2");});
-    test.throws(function(){six.multiply(sixAmps);});
-    test.throws(function(){six.multiply(two);});
-    test.throws(function(){two.multiply(six);});
-    test.ok(six.multiply(2).equals($money(12.25)));
-    test.ok(six.multiply(-2).equals($money(-12.25)));
-    test.done();
-};
-exports['divide'] = function (test) {
-    test.expect(9);
-    test.throws(function(){six.divide(null)});
-    test.throws(function(){six.divide(undefined);});
-    test.throws(function(){six.divide("");});
-    test.throws(function(){six.divide("2");});
-    test.throws(function(){six.divide(sixAmps);});
-    test.throws(function(){six.divide(two);});
-    test.throws(function(){two.divide(six);});
-    test.ok(six.divide(2).equals($money(3.0625)));
-    test.ok(six.divide(-2).equals($money(-3.0625)));
-    test.done();
-};
-exports['isOfType'] = function (test) {
-    test.expect(1);
-    test.ok(six.isOfType(two));
-    test.done();
-};
-exports['isGreaterThan'] = function (test) {
-    test.expect(1);
-    test.ok(six.isGreaterThan(two));
-    test.done();
-};
-exports['isLessThan'] = function (test) {
-    test.expect(1);
-    test.ok(two.isLessThan(six));
-    test.done();
-};
-exports['toString'] = function (test) {
-    test.expect(1);
-    test.ok(two.toString("$2.13"));
-    test.done();
-};
+    test("toString", function() {
+        expect(1);
+        ok(two.toString("$2.13"));
+    });
+});

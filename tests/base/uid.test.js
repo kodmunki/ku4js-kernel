@@ -3,7 +3,7 @@ $(function(){
 
     test('uid', function (test) {
         expect(2);
-        ok(/uid\d+/.test($.kuid()));
-        ok(/myID\d+/.test($.kuid("myID")));
+        ok(/uid\d+/.test($.uid()));
+        ok(/myID\d+/.test($.uid("myID")));
     });
 });

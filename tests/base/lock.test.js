@@ -21,7 +21,6 @@ $(function(){
     });
 
     test('unlock', function (test) {
-        console.log(lock)
         lock.lock().unlock();
 
         expect(1);

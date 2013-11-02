@@ -1,38 +1,38 @@
-var $ = require('../../lib/collections/list'),
-    list =$();
+$(function(){
+    function notOk(s, m) {equal(!!s,false,m);}
+    var list =$.list();
 
-exports['create'] = function (test) {
-    test.expect(1);
-    test.ok($());
-    test.done();
-};
-
-exports['methods'] = function (test) {
-    test.expect(14);
-    var list = $();
-
-    test.ok(list.isEmpty());
-
-    list.add("one");
-    test.equal(1, list.count(), "add(\"one\")");
-    list.add("two");
-    test.equal(2, list.count(), "add(\"two\")");
-    list.add("three");
-    test.equal(3, list.count(), "add(\"three\")");
-
-    test.ok(list.contains("one"), "contains(\"one\")");
-    test.equal("two", list.find(1), "find(1)");
-
-    list.each(function(v){
-        test.ok(/one|two|three/.test(v), "foreach");
+    test('create', function (test) {
+        expect(1);
+        ok($.list());
     });
 
-    test.ok(list.toArray() instanceof Array, "toArray")
+    test('methods', function (test) {
+        expect(14);
+        var list = $.list();
 
-    list.remove("two");
-    test.equal(2, list.count(), "remove()");
-    list.each(function(v){ test.ok(!/two/.test(v), "remove"); });
-    list.clear();
-    test.equal(0, list.count(), "clear()");
-    test.done();
-};
+        ok(list.isEmpty());
+
+        list.add("one");
+        equal(1, list.count(), "add(\"one\")");
+        list.add("two");
+        equal(2, list.count(), "add(\"two\")");
+        list.add("three");
+        equal(3, list.count(), "add(\"three\")");
+
+        ok(list.contains("one"), "contains(\"one\")");
+        equal("two", list.find(1), "find(1)");
+
+        list.each(function(v){
+            ok(/one|two|three/.test(v), "foreach");
+        });
+
+        ok(list.toArray() instanceof Array, "toArray")
+
+        list.remove("two");
+        equal(2, list.count(), "remove()");
+        list.each(function(v){ ok(!/two/.test(v), "remove"); });
+        list.clear();
+        equal(0, list.count(), "clear()");
+    });
+});

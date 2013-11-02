@@ -1,7 +1,7 @@
-var $ = require('../../lib/base/__asserters'),
-    $observer = require('../../lib/patterns/observer'),
-    observer =  $observer(),
-    test1, test2;
+$(function(){
+    function notOk(s, m) {equal(s,false,m);}
+
+    var  observer = $.observer(), test1, test2;
 
 exports['create'] = function (test) {
     test.expect(1);
