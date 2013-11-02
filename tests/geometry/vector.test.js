@@ -1,7 +1,7 @@
 $(function(){
     function notOk(s, m) {equal(s,false,m);}
     
-    module("vector Test");
+    module("vector");
     
     test("create", function(){
         raises(function(){ $.vector(null, null); });

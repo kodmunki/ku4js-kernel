@@ -1,29 +1,29 @@
-var $ = require('../../lib/base/__asserters'),
-    $queue = require('../../lib/patterns/queue');
+$(function(){
+    function notOk(s, m) {equal(s,false,m);}
 
-exports['create'] = function (test) {
-    test.expect(1);
-    test.ok($queue());
-    test.done();
-};
+    module("queue");
 
-exports['methods'] = function (test) {
-    test.expect(7);
+    test('create', function (test) {
+        expect(1);
+        ok($.queue());
+    });
 
-    var queue = $queue();
-    test.ok(queue.isEmpty());
+    test('methods', function (test) {
+        expect(7);
 
-    queue.enqueue(1).enqueue(2).enqueue(3);
-    test.ok(!queue.isEmpty());
+        var queue = $.queue();
+        ok(queue.isEmpty());
 
-    queue.clear();
-    test.ok(queue.isEmpty());
+        queue.enqueue(1).enqueue(2).enqueue(3);
+        ok(!queue.isEmpty());
 
-    queue.enqueue(1).enqueue(2).enqueue(3);
-    test.equal(queue.dequeue(), 1);
-    test.equal(queue.dequeue(), 2);
-    test.equal(queue.dequeue(), 3);
-    test.ok(queue.isEmpty())
+        queue.clear();
+        ok(queue.isEmpty());
 
-    test.done();
-};
+        queue.enqueue(1).enqueue(2).enqueue(3);
+        equal(queue.dequeue(), 1);
+        equal(queue.dequeue(), 2);
+        equal(queue.dequeue(), 3);
+        ok(queue.isEmpty());
+    });
+});

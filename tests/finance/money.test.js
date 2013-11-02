@@ -1,11 +1,12 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
     
-    var two = $.money(2.625);  
-    var six = $.money(6.125);
-    var sixAmps = $.money(11, "&");
+    var two = $.money(2.625),
+        six = $.money(6.125),
+        sixAmps = $.money(11, "&");
     
-    module("Money Test");
+    module("money");
+
     test("create", function() {
         expect(8);
         raises(function(){$.money(null);});

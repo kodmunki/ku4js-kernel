@@ -1,6 +1,8 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
 
+    module("lock");
+
     test('create', function (test) {
         var lock1 = $.lock(),
             lock2 = $.lock(false),

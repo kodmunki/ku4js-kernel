@@ -4,6 +4,8 @@ $(function(){
     var rectangle1 = $.rectangle($.coord.zero(), $.coord(6,5)),
         rectangle2 = $.rectangle($.coord(5,5), $.coord(10,10));
 
+    module("rectangle");
+
     test('create', function (test) {
         expect(1);
         ok($.rectangle($.coord.zero(), $.coord(6,5)));

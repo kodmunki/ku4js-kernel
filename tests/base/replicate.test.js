@@ -5,6 +5,8 @@ $(function(){
         date = new Date(),
         obj = {"1":1,"2":2,"3":3};
 
+    module("replicate");
+
     test('replicate', function (test) {
         expect(5);
         ok($.replicate(null) ==  null);

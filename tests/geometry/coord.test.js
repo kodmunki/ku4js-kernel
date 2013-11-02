@@ -1,7 +1,7 @@
 $(function(){
     function notOk(s, m) {equal(s,false,m);}
     
-    module("coord Test");
+    module("coord");
     
     test("create", function(){
         raises(function(){ $.coord(null, null); });

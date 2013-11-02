@@ -4,6 +4,8 @@ $(function(){
     var obj1 = {"one":1, "two":2, "three":3 },
         obj2 = {"three":7, "four":4, "five":5, "six":6 };
 
+    module("obj");
+
     test('keys', function (test) {
         var keys = $.obj.keys(obj1),
             testValues = ["one", "two", "three"],

@@ -4,6 +4,8 @@ $(function(){
     var mediator = $.mediator(),
         test1, test2, test3;
 
+    module("mediator");
+
     test('create', function (test) {
         expect(1);
         ok($.mediator());

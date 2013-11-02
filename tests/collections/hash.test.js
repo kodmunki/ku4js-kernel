@@ -3,6 +3,8 @@ $(function(){
     
     var hash = $.hash();
 
+    module("hash");
+
     test('create', function (test) {
         expect(1);
         ok($.hash());

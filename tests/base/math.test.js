@@ -1,5 +1,7 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
+
+    module("math");
     
     test('methods round', function (test) {
         expect(10);

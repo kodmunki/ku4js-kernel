@@ -1,6 +1,8 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
 
+    module("str");
+
     test('build', function (test) {
         expect(5);
         equal($.str.build(null), "null");

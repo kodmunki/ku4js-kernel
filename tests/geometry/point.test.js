@@ -1,7 +1,7 @@
 $(function(){
     function notOk(s, m) {equal(s,false,m);}
 
-    module("point Test");
+    module("point");
 
     test("create", function(){
         raises(function(){ $.point(null, null); });

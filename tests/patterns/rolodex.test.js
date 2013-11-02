@@ -1,42 +1,43 @@
-var $ = require('../../lib/base/__asserters'),
-    $rolodex = require('../../lib/patterns/rolodex');
+$(function(){
+    function notOk(s, m) {equal(s,false,m);}
 
-exports['create'] = function (test) {
-    test.expect(1);
-    test.ok($rolodex());
-    test.done();
-};
+    module("rolodex");
 
-exports['methods'] = function (test) {
-    var arr = [1, 2, 3],
-        obj = { "a": 1, "b": 2, "c": 3 },
-        chk = [0,1,2,3,4,5],
-        arrayIterator1 = new $rolodex([1,2,3,4,5]),
-        arrayIterator2 = new $rolodex(arr);
+    test('create', function (test) {
+        expect(1);
+        ok($.rolodex());
+    });
 
-    test.expect(18);
-    function runTests1(t, it) {
-        test.ok(it.hasNext());
-        test.ok(it.hasPrev());
-        test.equal(it.current(), 1);
-        test.equal(it.next(), 2);
-        test.equal(it.prev(), 1);
-        test.equal(it.current(), 1);
+    test('methods', function (test) {
+        var arr = [1, 2, 3],
+            obj = { "a": 1, "b": 2, "c": 3 },
+            chk = [0,1,2,3,4,5],
+            arrayIterator1 = $.rolodex([1,2,3,4,5]),
+            arrayIterator2 = $.rolodex(arr);
 
-        it.each(function(c){ test.equal(c, chk[c]); });
-    }
+        expect(18);
+        function runTests1(t, it) {
+            ok(it.hasNext());
+            ok(it.hasPrev());
+            equal(it.current(), 1);
+            equal(it.next(), 2);
+            equal(it.prev(), 1);
+            equal(it.current(), 1);
 
-    function runTests2(t, it) {
-        test.equal(it.current(), 1);
-        test.ok($.exists(it.prev()));
-        test.equal(it.next(), 1);
-        test.ok(it.hasNext(), "hasNext");
-        test.ok(it.hasPrev(), "hasPrev");
-        test.equal(it.next(), 2);
-        test.ok($.exists(it.next()));
-    }
+            it.each(function(c){ equal(c, chk[c]); });
+        }
 
-    runTests1("arrayIterator1", arrayIterator1);
-    runTests2("arrayIterator2", arrayIterator2);
-    test.done();
-};
+        function runTests2(t, it) {
+            equal(it.current(), 1);
+            ok($.exists(it.prev()));
+            equal(it.next(), 1);
+            ok(it.hasNext(), "hasNext");
+            ok(it.hasPrev(), "hasPrev");
+            equal(it.next(), 2);
+            ok($.exists(it.next()));
+        }
+
+        runTests1("arrayIterator1", arrayIterator1);
+        runTests2("arrayIterator2", arrayIterator2);
+    });
+});

@@ -3,42 +3,42 @@ $(function(){
 
     var  observer = $.observer(), test1, test2;
 
-exports['create'] = function (test) {
-    test.expect(1);
-    test.ok($observer());
-    test.done();
-};
+    module("observer");
 
-exports['add'] = function (test) {
-    test.expect(4);
-    test.ok($.isUndefined(test1));
-    test.ok($.isUndefined(test2));
+    test('create', function (test) {
+        expect(1);
+        ok($.observer());
+    });
 
-    observer.add(function(){test1 = 1; }, this, "1");
-    observer.add(function(){test2 = 2; }, this, "2");
-    observer.notify();
+    test('add', function (test) {
+        expect(4);
+        ok($.isUndefined(test1));
+        ok($.isUndefined(test2));
 
-    test.equal(1, test1);
-    test.equal(2, test2);
-    test.done();
-};
+        observer.add(function(){test1 = 1; }, this, "1");
+        observer.add(function(){test2 = 2; }, this, "2");
+        observer.notify();
 
-exports['remove'] = function (test) {
-    test.expect(5);
+        equal(1, test1);
+        equal(2, test2);
+    });
 
-    test1 = undefined;
-    test2 = undefined;
+    test('remove', function (test) {
+        expect(5);
 
-    test.ok($.isUndefined(test1));
-    test.ok($.isUndefined(test2));
+        test1 = undefined;
+        test2 = undefined;
 
-    observer.remove("1");
-    observer.remove("2");
-    observer.notify();
+        ok($.isUndefined(test1));
+        ok($.isUndefined(test2));
 
-    test.equal(undefined, test1);
-    test.equal(undefined, test2);
+        observer.remove("1");
+        observer.remove("2");
+        observer.notify();
 
-    test.ok(observer.isEmpty());
-    test.done();
-};
+        equal(undefined, test1);
+        equal(undefined, test2);
+
+        ok(observer.isEmpty());
+    });
+});

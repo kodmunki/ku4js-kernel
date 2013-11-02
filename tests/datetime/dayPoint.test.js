@@ -3,6 +3,8 @@ $(function(){
 
     var date = $.dayPoint(2011, 1, 1);
 
+    module("dayPoint");
+
     test('create', function (test) {
         expect(15);
         ok(!$.dayPoint(null));

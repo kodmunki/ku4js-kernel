@@ -1,6 +1,8 @@
 $(function(){
     function notOk(s, m) {equal(s,false,m);}
 
+    module("iterator");
+
     test('create', function (test) {
         expect(1);
         ok($.iterator());

@@ -1,6 +1,8 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
 
+    module("asserters");
+
     test('isArray', function (test) {
         expect(2);
         ok($.isArray([]));

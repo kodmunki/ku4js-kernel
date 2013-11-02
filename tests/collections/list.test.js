@@ -1,6 +1,9 @@
 $(function(){
     function notOk(s, m) {equal(!!s,false,m);}
+
     var list =$.list();
+
+    module("list");
 
     test('create', function (test) {
         expect(1);
