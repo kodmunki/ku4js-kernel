@@ -1,74 +1,4 @@
 (function(l){ $=l;
-$.isArray = function(x) { return x instanceof Array; }
-$.isBool = function(x) { return (/boolean/i.test(typeof (x))); }
-$.isDate = function(x) { return x instanceof Date; }
-$.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x === window.event; }}
-$.isNumber = function(x) { return (/number/i.test(typeof (x))) && !isNaN(x); }
-$.isObject = function(x) { return $.exists(x) && (/object/i.test(typeof (x))); }
-$.isFunction = function(x) { return (x instanceof Function); }
-$.isString = function(x) { return (/string/i.test(typeof (x))) || x instanceof String; }
-$.isZero = function(n) { return n === 0; }
-$.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : n % 2 === 0)); }
-$.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); }
-$.isNull = function(x) { return x === null; }
-$.isUndefined = function(x) { return (/undefined/i.test(typeof (x))); }
-$.isEmpty = function(s) { return $.isString(s) && $.isZero(s.split(/\B/).length); }
-$.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); }
-$.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); }
-$.xor = function(a, b) { return !a != !b; }
-
-$.replicate = function(value) {
-    var result = ($.isDate(value))
-        ? new Date(value)
-        : ($.isArray(value))
-            ? []
-            : ($.isObject(value))
-                ? {} : value,
-        v;
-    for (n in value) {
-        v = value[n];
-        result[n] = (($.isArray(v)) ||
-                     ($.isObject(v)))
-                        ? $.replicate(v) : v;
-    }
-    return result;
-}
-
-if(!$.exists($.obj)) $.obj = { }
-$.obj.keys = function(o) {
-    var r = [];
-    for (n in o) r[r.length] = n;
-    return r;
-}
-$.obj.values = function(o) {
-    var r = [];
-    for (n in o) r[r.length] = o[n];
-    return r;
-}
-$.obj.count = function(o){
-    var c = 0;
-    for(n in o) c++;
-    return c;
-}
-$.obj.hasProp = function(obj, prop){
-    return ($.exists(obj.hasOwnProperty))
-        ? obj.hasOwnProperty(prop)
-        : false;
-}
-$.obj.merge = function(obj1, obj2){
-    var mergee = $.replicate(obj2);
-    for (n in obj1) mergee[n] = obj1[n];
-    return mergee;
-}
-$.obj.meld = function(obj1, obj2){
-    var meldee = $.replicate(obj2);
-    for (n in obj1) {
-        if($.exists(meldee[n])) continue;
-        meldee[n] = obj1[n];
-    }
-    return meldee;
-}
-
 $.Class = function(){ }
 $.Class.prototype = {
     get: function(p){ return this["_"+p]; },
@@ -88,8 +18,7 @@ $.Class.extend = function(sub, sup) {
     sub.prototype = $.obj.merge(sub.prototype, new proto());
     sub.prototype.constructor = sub;
     return sub;
-}
-
+} 
 function lock(isLocked) {
     lock.base.call(this);
     this._isLocked = isLocked || false;
@@ -100,8 +29,7 @@ lock.prototype = {
     unlock: function() { this._isLocked = false; return this; }
 }
 $.Class.extend(lock, $.Class);
-$.lock = function(isLocked){return new lock(isLocked);}
-
+$.lock = function(isLocked){return new lock(isLocked);} 
 var exception = function(type, info, browserTrace, ku4jTrace){
     this._type = type;
     this._info = info || "";
@@ -206,8 +134,7 @@ expressionBeginOffset
 expressionCaretOffset
 expressionEndOffset
 name
-*/
-
+*/ 
 if(!$.exists($.math)) $.math = { }
 $.math.round = function(n, d){
     var p = d || 0,
@@ -235,8 +162,7 @@ $.math.divide = function(a, b){
         throw new Error($.str.format("Invalid division. value: {0}/{1} | type: {2}/{3}",
                                      a, b, typeof a, typeof b));
     return a / b;
-}
-
+} 
 if(!$.exists($.str)) $.str = { }
 var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 $.str.build = function() {
@@ -354,13 +280,78 @@ $.str.decodeUtf8 = function(strng) {
         }
     }
     return value;
-}
-
+} 
 $.uid = function(str) {
 	var s = str || "kuid", u = Math.random().toString().replace(/\b\.\b/, "");
 	return $.str.format("{0}{1}", s, u);
+} 
+if(!$.exists($.obj)) $.obj = { }
+$.obj.keys = function(o) {
+    var r = [];
+    for (n in o) r[r.length] = n;
+    return r;
 }
-
+$.obj.values = function(o) {
+    var r = [];
+    for (n in o) r[r.length] = o[n];
+    return r;
+}
+$.obj.count = function(o){
+    var c = 0;
+    for(n in o) c++;
+    return c;
+}
+$.obj.hasProp = function(obj, prop){
+    return ($.exists(obj.hasOwnProperty))
+        ? obj.hasOwnProperty(prop)
+        : false;
+}
+$.obj.merge = function(obj1, obj2){
+    var mergee = $.replicate(obj2);
+    for (n in obj1) mergee[n] = obj1[n];
+    return mergee;
+}
+$.obj.meld = function(obj1, obj2){
+    var meldee = $.replicate(obj2);
+    for (n in obj1) {
+        if($.exists(meldee[n])) continue;
+        meldee[n] = obj1[n];
+    }
+    return meldee;
+} 
+$.isArray = function(x) { return x instanceof Array; }
+$.isBool = function(x) { return (/boolean/i.test(typeof (x))); }
+$.isDate = function(x) { return x instanceof Date; }
+$.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x === window.event; }}
+$.isNumber = function(x) { return (/number/i.test(typeof (x))) && !isNaN(x); }
+$.isObject = function(x) { return $.exists(x) && (/object/i.test(typeof (x))); }
+$.isFunction = function(x) { return (x instanceof Function); }
+$.isString = function(x) { return (/string/i.test(typeof (x))) || x instanceof String; }
+$.isZero = function(n) { return n === 0; }
+$.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : n % 2 === 0)); }
+$.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); }
+$.isNull = function(x) { return x === null; }
+$.isUndefined = function(x) { return (/undefined/i.test(typeof (x))); }
+$.isEmpty = function(s) { return $.isString(s) && $.isZero(s.split(/\B/).length); }
+$.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); }
+$.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); }
+$.xor = function(a, b) { return !a != !b; } 
+$.replicate = function(value) {
+    var result = ($.isDate(value))
+        ? new Date(value)
+        : ($.isArray(value))
+            ? []
+            : ($.isObject(value))
+                ? {} : value,
+        v;
+    for (n in value) {
+        v = value[n];
+        result[n] = (($.isArray(v)) ||
+                     ($.isObject(v)))
+                        ? $.replicate(v) : v;
+    }
+    return result;
+} 
 function hash(obj) {
     hash.base.call(this);
     var o = (!$.exists(obj) || !obj.toObject) ? obj : obj.toObject();
@@ -451,8 +442,7 @@ function hash_combine(hash, obj, m) {
 }
 
 $.hash = function(obj){ return new hash(obj); }
-$.hash.Class = hash;
-
+$.hash.Class = hash; 
 function list(a) {
     list.base.call(this);
     this._keys = [];
@@ -522,8 +512,7 @@ $.list.Class = list;
 
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
-}
-
+} 
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
     if ((month < 1) || (month > 12)) throw new $.exception("arg", "Invalid month at $.dayPoint");
     if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new $.exception("arg", "Invalid date at $.dayPoint");
@@ -676,8 +665,7 @@ function dayPoint_createDay(dp, d, m, y) {
     date = (date > dim) ? dim : date;
     
     return new dayPoint(year, month, date);
-}
-
+} 
 function money(amt, type) {
     if (isNaN(amt)) throw new $.exception("arg", $.str.format("$.money requires a number. Passed {0}", amt));
     var x = amt.toString().split(/\./), d = x[0], c = x[1];
@@ -792,8 +780,7 @@ money_formatCents = function(money) {
     if ($.isZero(l) || C >= .995) return "00";
     if (l < 2) return "0" + c[0];
     return (parseInt(c[2]) > 4) ? c[0] + (parseInt(c[1]) + 1) : c[0] + c[1];
-}
-
+} 
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
         throw new Error($.str.format("at $.coord({0},{1})", x, y));
@@ -874,8 +861,7 @@ $.coord.random = function(seedx, seedy){
 }
 $.coord.canParse = coord_parse;
 $.coord.parse = coord_parse;
-$.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; }
-
+$.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; } 
 function point(x, y) {
     point.base.call(this, x, y);
 }
@@ -902,8 +888,7 @@ function point_canParse(candidate){
     try { return !isNaN(candidate.x()) && !isNaN(candidate.y()); }
     catch(e) { return false; }
 }
-function point_parse(obj) { return new point(obj.x(), obj.y()); }
-
+function point_parse(obj) { return new point(obj.x(), obj.y()); } 
 function rectangle (topLeft, dims){
     rectangle.base.call(this);
     this._topLeft = $.point.parse(topLeft);
@@ -926,8 +911,7 @@ rectangle.prototype = {
     }
 }
 $.Class.extend(rectangle, $.Class);
-$.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); }
-
+$.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); } 
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
         throw $.exception("args", $.str.format("at $.vector({0},{1})", x, y));
@@ -999,8 +983,7 @@ function vector_calculateLengthSquared(v, x, y) {
 function vector_calculateUnitNormal (v, scalar) {
    if (v.isZero()) return 0;
    return scalar / v.magnatude();
-}
-
+} 
 $.abstractContext = function(state) {
     $.abstractContext.base.call(this);
     this.state(state);
@@ -1011,8 +994,7 @@ $.abstractContext.prototype = {
         return this.set("state", state.context(this));
     }
 }
-$.Class.extend($.abstractContext, $.Class);
-
+$.Class.extend($.abstractContext, $.Class); 
 $.abstractState = function(states) {
     $.abstractState.base.call(this);
     this.states(states);
@@ -1026,15 +1008,13 @@ $.abstractState.prototype = {
         return this;
     }
 }
-$.Class.extend($.abstractState, $.Class);
-
+$.Class.extend($.abstractState, $.Class); 
 $.abstractVisitor = function() { }
 $.abstractVisitor.prototype = {
     $visit: function(){ throw new Error("visit method is abstract an must be defined."); },
     subject: function(subject) { return this.property("subject", $.replicate(subject)); },
     visit: function() { return this.$visit(); }
-}
-
+} 
 function iterator(subject) {
     iterator.base.call(this);
     this.$current = 0;
@@ -1089,8 +1069,7 @@ function iterator_createKvArray (obj) {
 }
 $.Class.extend(iterator, $.Class);
 $.iterator = function(subject){ return new iterator(subject); }
-$.iterator.Class = iterator;
-
+$.iterator.Class = iterator; 
 function mediator() {
     mediator.base.call(this);
     this._observers = $.hash();
@@ -1145,8 +1124,7 @@ mediator.prototype = {
 }
 $.Class.extend(mediator, $.Class);
 $.mediator = function() { return new mediator(); }
-$.mediator.Class = mediator;
-
+$.mediator.Class = mediator; 
 function observer() {
     observer.base.call(this);
     this._methods = new $.hash();
@@ -1174,8 +1152,7 @@ observer.prototype = {
 }
 $.Class.extend(observer, $.Class);
 $.observer = function() { return new observer(); }
-$.observer.Class = observer
-
+$.observer.Class = observer 
 function queue() {
     this._q = [];
 }
@@ -1195,8 +1172,7 @@ queue.prototype = {
     clear: function() { this._q = []; }
 }
 $.queue = function(){ return new queue(); }
-$.queue.Class = queue;
-
+$.queue.Class = queue; 
 function rolodex(subj) {
     rolodex.base.call(this, subj);
 }
@@ -1230,8 +1206,7 @@ rolodex.prototype = {
 }
 $.Class.extend(rolodex, $.iterator.Class);
 $.rolodex = function(subj){ return new rolodex(subj); }
-$.rolodex.Class = rolodex;
-
+$.rolodex.Class = rolodex; 
 function abstractSpec() { }
 abstractSpec.prototype = {
     $isSatisfiedBy: function(v) { return; },
@@ -1300,8 +1275,7 @@ $.Class.extend(spec, abstractSpec);
 
 $.spec = function(func){
     return new spec(func);
-}
-
+} 
 function stack() {
     this._q = [];
 }
@@ -1318,6 +1292,5 @@ stack.prototype = {
     clear: function() { this._q = []; }
 }
 $.stack = function(){ return new stack(); }
-$.stack.Class = stack;
-
+$.stack.Class = stack; 
 })(jQuery);
