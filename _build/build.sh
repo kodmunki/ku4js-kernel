@@ -1,5 +1,5 @@
 #!/bin/sh
-#===============kodmunki build process===============
+#===============kodmunki™ build process==============
 # This build process is dependent upon yuicompressor
 # and a specific directory structure:
 #
