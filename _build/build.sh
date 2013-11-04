@@ -6,7 +6,7 @@
 # root
 #   _build (This build script and the yuicompressor)
 #   bin (The compiled scripts will appear here)
-#   lib (All script files go here)
+#   src (All script files go here)
 #
 # The following variables found in setup () are
 # expected to be changed by the developer running
@@ -25,7 +25,7 @@ setup () {
     ENDMSG="$PROJNAME Complete :{)}"
 
     BIN=../bin
-    LIB=../lib
+    SRC=../src
     COMPRESSOR=yuicompressor-2.4.6/build/yuicompressor-2.4.6.jar
     LNKGFILE=$BIN/${PROJNAME}-link.js
     COMPFILE=$BIN/${PROJNAME}-comp.js
@@ -41,7 +41,7 @@ openlink () {
 }
 
 linkfiles () {
-    SCRIPTS=`find $LIB -regex ".*\.js"`
+    SCRIPTS=`find $SRC -regex ".*\.js"`
     for f in $SCRIPTS
     do
     	cat $f >> $LNKGFILE

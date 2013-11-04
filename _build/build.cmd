@@ -5,7 +5,7 @@
 ::  root
 ::    _build (This build script and the yuicompressor)
 ::    bin (The compiled scripts will appear here)
-::    lib (All script files go here)
+::    src (All script files go here)
 ::
 ::  The following variables found in setup () are
 ::  expected to be changed by the developer running
@@ -33,7 +33,7 @@ SET STARTMSG=Building %PROJNAME%
 SET ENDMSG=%PROJNAME% Complete :{)}
 
 SET BIN=..\bin
-SET LIB=..\lib
+SET SRC=..\src
 SET COMPRESSOR=yuicompressor-2.4.6\build\yuicompressor-2.4.6.jar
 SET LNKGFILE=%BIN%\%PROJNAME%-link.js
 SET COMPFILE=%BIN%\%PROJNAME%-comp.js
@@ -49,7 +49,7 @@ GOTO :eof
 
 :link
 @echo Linking
-FOR /R %LIB% %%D IN (*.js) DO CALL :linkfile %%D
+FOR /R %SRC% %%D IN (*.js) DO CALL :linkfile %%D
 GOTO :eof
 
 :closelink
