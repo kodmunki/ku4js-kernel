@@ -68,7 +68,6 @@ echo.> %COMPFILE%
 java -jar %COMPRESSOR% %LNKGFILE% -o %COMPFILE%
 
 IF EXIST %MINFILE% del %MINFILE%
-echo //kodmunki utilities>> %MINFILE%
 type %COMPFILE%>> %MINFILE%
 
 IF EXIST %JSFILE% del %JSFILE%
