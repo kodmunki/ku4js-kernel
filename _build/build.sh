@@ -61,8 +61,6 @@ compile () {
     
     [ -f $MINFILE ] && rm $MINFILE
     touch $MINFILE
-    echo //kodmunki utilities >> $MINFILE
-    #cat license.txt >> $MINFILE
     cat $COMPFILE >> $MINFILE
     
     [ -f $JSFILE ] && rm $JSFILE
