@@ -610,7 +610,8 @@ dayPoint.prototype = {
                 (d < 10) ? "{1}/0{2}/{0}" : "{1}/{2}/{0}";
         return $.str.format(f, y, m, d);
     },
-    toDate: function() { return this.value(); }
+    toDate: function() { return this.value(); },
+    toJson: function() { return this.value().toJSON(); }
 }
 
 $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){

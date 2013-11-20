@@ -44,6 +44,17 @@ $(function(){
         equal($.dayPoint.parse("1/1/2011").toDate().toString(), new Date("01/01/2011").toString());
         equal($.dayPoint.parse(new Date("1/1/2011")).toDate().toString(), new Date("01/01/2011").toString());
     });
+    test('toJson', function (test) {
+        expect(8);
+        throws(function(){$.dayPoint(null).toJson()});
+        throws(function(){$.dayPoint(undefined).toJson()});
+        equal($.dayPoint(2011, 1, 1).toJson(), new Date("01/01/2011").toJSON());
+        throws(function(){$.dayPoint.parse(null).toJson()});
+        throws(function(){$.dayPoint.parse(null).toJson()});
+        throws(function(){$.dayPoint.parse(undefined).toJson()});
+        equal($.dayPoint.parse("1/1/2011").toJson(), new Date("01/01/2011").toJSON());
+        equal($.dayPoint.parse(new Date("1/1/2011")).toJson(), new Date("01/01/2011").toJSON());
+    });
     test('navigation', function (test) {
         expect(15);
         ok(date.equals($.dayPoint.parse("1/1/2011")));
