@@ -357,8 +357,9 @@ $.str.decodeUtf8 = function(strng) {
 }
 
 $.uid = function(str) {
-	var s = str || "kuid", u = Math.random().toString().replace(/\b\.\b/, "");
-	return $.str.format("{0}{1}", s, u);
+	var a = Math.random().toString().replace(/\b\.\b/, ""),
+	    b = Math.random().toString().replace(/\b\.\b/, "");
+	return $.str.encodeBase64($.str.format("{0}x{1}", a, b)).replace(/=+/g,"0").substr(3,32);
 }
 
 function hash(obj) {
