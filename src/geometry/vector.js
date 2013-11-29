@@ -1,6 +1,6 @@
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw $.exception("args", $.str.format("at $.vector({0},{1})", x, y));
+        throw new Error($.str.format("at $.vector({0},{1})", x, y));
     
     vector.base.call(this, x, y);
     
@@ -11,7 +11,7 @@ function vector(x, y) {
 }
 
 vector.prototype = {
-    magnatude: function(){ return this.get("length"); },
+    magnitude: function(){ return this.get("length"); },
     equals: function(other) {
         return (other instanceof vector) &&
             ((this._x === other.x()) && (this._y === other.y()));
@@ -68,5 +68,5 @@ function vector_calculateLengthSquared(v, x, y) {
 }
 function vector_calculateUnitNormal (v, scalar) {
    if (v.isZero()) return 0;
-   return scalar / v.magnatude();
+   return scalar / v.magnitude();
 }

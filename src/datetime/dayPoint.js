@@ -1,6 +1,6 @@
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
-    if ((month < 1) || (month > 12)) throw new $.exception("arg", "Invalid month at $.dayPoint");
-    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new $.exception("arg", "Invalid date at $.dayPoint");
+    if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
+    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
     
     this._value = (arguments.length >= 3)
         ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)

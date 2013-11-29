@@ -1,5 +1,5 @@
 function money(amt, type) {
-    if (isNaN(amt)) throw new $.exception("arg", $.str.format("$.money requires a number. Passed {0}", amt));
+    if (isNaN(amt)) throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
     var x = amt.toString().split(/\./), d = x[0], c = x[1];
     function cents(c) { return (amt < 0) ? -c : c; }
     
@@ -87,7 +87,7 @@ $.money.tryParse = function(o){
 }
 
 money_checkType = function(money, other) {
-    if (!money.isOfType(other)) throw new $.exception("operation","Invalid operation on non-conforming currencies.");
+    if (!money.isOfType(other)) throw new Error("Invalid operation on non-conforming currencies.");
 }
 money_formatDollars = function(money) {
     var dollars = money.dollars(),

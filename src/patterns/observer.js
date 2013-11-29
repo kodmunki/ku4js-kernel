@@ -17,8 +17,11 @@ observer.prototype = {
         return this;
     },
     notify: function() {
-        var it = new $.iterator(this._methods.listValues().toArray()), a = arguments;
-        it.each(function(c) { $.refcheck(c.m).apply(c.s, a); });
+        var it = new $.iterator(this._methods.values()), args = arguments;
+        it.each(function(subscriber) {
+            if(!$.exists(subscriber.m)) throw new Error($.str("Invalid function: {0} in observer."));
+            subscriber.m.apply(subscriber.s, args);
+        });
         return this;
     },
     isEmpty: function(){ return this._methods.isEmpty(); }

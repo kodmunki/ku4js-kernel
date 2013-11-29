@@ -8,8 +8,12 @@ function hash(obj) {
 
 hash.prototype = {
     count: function(){ return this.get("count"); },
+    keys: function(){ return $.obj.keys(this.$h); },
+    values: function(){ return $.obj.values(this.$h); },
+
     add: function(k, v) {
-        if (!$.exists(k) || this.containsKey(k)) return this;
+        if ((!($.isString(k) || $.isNumber(k))) || this.containsKey(k))
+            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string", k));
         this.$h[k] = v;
         this._count++;
         return this;
@@ -25,9 +29,8 @@ hash.prototype = {
         return this.$h[k];
     },
     findKey: function(v){
-        if (!$.exists(v)) return null;
         var h = this.$h;
-        for (n in h) if(h[n] == v) return n;
+        for (n in h) if($.areEqual(h[n], v)) return n;
         return null;
     },
     findValue: function(k) { return this.find(k) },
@@ -39,19 +42,13 @@ hash.prototype = {
         return this;
     },
     isEmpty: function() { return this._count < 1; },
-    listKeys: function() {
-        return new $.list($.obj.keys(this.$h));
-    },
-    listValues: function() {
-        return new $.list($.obj.values(this.$h));
-    },
     containsKey: function(k) {
         if (!$.exists(k)) return false;
         return $.exists(this.$h[k]);
     },
     containsValue: function(v) {
-        var a = $.obj.values(this.$h), i = a.length;
-        while(i--) { if(a[i] == v) return true; }
+        var values = $.obj.values(this.$h), i=values.length;
+        while(i--) if($.areEqual(values[i], v)) return true;
         return false;
     },
     merge: function(obj){
@@ -62,8 +59,8 @@ hash.prototype = {
     },
     remove: function(k) {
         var h = this.$h;
-        if (!$.exists(k) || !$.exists(h[k])) return this;
-        delete h[k]; 
+        if (!$.exists(k)) return this;
+        delete h[k];
         this._count--;
         return this;
     },

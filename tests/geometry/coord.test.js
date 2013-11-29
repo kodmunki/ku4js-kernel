@@ -4,11 +4,11 @@ $(function(){
     module("coord");
     
     test("create", function(){
-        raises(function(){ $.coord(null, null); });
-        raises(function(){ $.coord(undefined, undefined); });
-        raises(function(){ $.coord("", ""); });
-        raises(function(){ $.coord("1", "1"); });
-        raises(function(){ $.coord("a", "a"); });
+        raises(function(){ $.coord(null, null); }, "");
+        raises(function(){ $.coord(undefined, undefined); }, "");
+        raises(function(){ $.coord("", ""); }, "");
+        raises(function(){ $.coord("1", "1"); }, "");
+        raises(function(){ $.coord("a", "a"); }), "";
         
         ok($.coord(0, 0));
         ok($.coord(1, 1));

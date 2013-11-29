@@ -3,13 +3,13 @@ $(function(){
 
     module("asserters");
 
-    test('isArray', function (test) {
+    test('isArray', function () {
         expect(2);
         ok($.isArray([]));
         ok($.isArray(new Array()));
     });
 
-    test('isNotArray',  function (test) {
+    test('isNotArray',  function () {
         expect(13);
         ok(!$.isArray(null));
         ok(!$.isArray(undefined));
@@ -26,13 +26,13 @@ $(function(){
         ok(!$.isArray(new Function()));
     });
 
-    test('isBool',  function (test) {
+    test('isBool',  function () {
         expect(2);
         ok($.isBool(true));
         ok($.isBool(false));
     });
 
-    test('isNotBool',  function (test) {
+    test('isNotBool',  function () {
         expect(13);        ok(!$.isBool(null));
         ok(!$.isBool(undefined));
         ok(!$.isBool([]));
@@ -48,12 +48,12 @@ $(function(){
         ok(!$.isBool(new Function()));
     });
 
-    test('isDate',  function (test) {
+    test('isDate',  function () {
         expect(1);
         ok($.isDate(new Date()));
     });
 
-    test('isNotDate',  function (test) {
+    test('isNotDate',  function () {
         expect(14);
         ok(!$.isDate(null));
         ok(!$.isDate(undefined));
@@ -71,13 +71,13 @@ $(function(){
         ok(!$.isDate(new Function()));
     });
 
-    test('isNumber',  function (test) {
+    test('isNumber',  function () {
         expect(2);
         ok($.isNumber(0));
         ok(!$.isNumber(new Number()));
     });
 
-    test('isNotNumber',  function (test) {
+    test('isNotNumber',  function () {
         expect(12);
         ok(!$.isNumber(null));
         ok(!$.isNumber(undefined));
@@ -94,7 +94,7 @@ $(function(){
     });
 
 
-    test('isObject',  function (test) {
+    test('isObject',  function () {
         expect(6);
         ok($.isObject([]));
         ok($.isObject(new Array()));
@@ -105,7 +105,7 @@ $(function(){
     });
 
 
-    test('isNotObject',  function (test) {
+    test('isNotObject',  function () {
         expect(8);
         ok(!$.isObject(null));
         ok(!$.isObject(undefined));
@@ -117,13 +117,13 @@ $(function(){
         ok(!$.isObject(new Function()));
     });
 
-    test('isFunction',  function (test) {
+    test('isFunction',  function () {
         expect(2);
         ok($.isFunction(function() { }));
         ok($.isFunction(new Function()));
     });
 
-    test('isNotFunction',  function (test) {
+    test('isNotFunction',  function () {
         expect(12);
         ok(!$.isFunction(null));
         ok(!$.isFunction(undefined));
@@ -139,13 +139,13 @@ $(function(){
         ok(!$.isFunction(new Object()));
     });
 
-    test('isString',  function (test) {
+    test('isString',  function () {
         expect(2);
         ok($.isString(""));
         ok($.isString(new String()));
     });
 
-    test('isNotString',  function (test) {
+    test('isNotString',  function () {
         expect(12);
         ok(!$.isString(null));
         ok(!$.isString(undefined));
@@ -161,12 +161,12 @@ $(function(){
         ok(!$.isString(new Function()));
     });
 
-    test('isUndefined',  function (test) {
+    test('isUndefined',  function () {
         expect(1);
         ok($.isUndefined(undefined));
     });
 
-    test('isNotUndefined',  function (test) {
+    test('isNotUndefined',  function () {
         expect(13);
         ok(!$.isUndefined(null));
         ok(!$.isUndefined(true));
@@ -183,7 +183,7 @@ $(function(){
         ok(!$.isUndefined(new Function()));
     });
 
-    test('isEmpty',  function (test) {
+    test('isEmpty',  function () {
         expect(4);
         ok($.isNullOrEmpty(null));
         ok($.isNullOrEmpty(undefined));
@@ -191,7 +191,7 @@ $(function(){
         ok($.isNullOrEmpty(new String()));
     });
 
-    test('isNotEmpty',  function (test) {
+    test('isNotEmpty',  function () {
         expect(7);
         ok(!$.isNullOrEmpty("null"));
         ok(!$.isNullOrEmpty("undefined"));
@@ -202,7 +202,7 @@ $(function(){
         ok(!$.isNullOrEmpty(" 1 "));
     });
 
-    test('isNullOrEmpty',  function (test) {
+    test('isNullOrEmpty',  function () {
         expect(4);
         ok($.isNullOrEmpty(null));
         ok($.isNullOrEmpty(undefined));
@@ -210,7 +210,7 @@ $(function(){
         ok($.isNullOrEmpty(new String()));
     });
 
-    test('isNotNullOrEmpty',  function (test) {
+    test('isNotNullOrEmpty',  function () {
         expect(11);
         ok(!$.isNullOrEmpty(true));
         ok(!$.isNullOrEmpty(false));
@@ -225,7 +225,7 @@ $(function(){
         ok(!$.isNullOrEmpty(new Function()));
     });
 
-    test('exists',  function (test) {
+    test('exists',  function () {
         expect(12);
         ok($.exists(true));
         ok($.exists(false));
@@ -240,19 +240,48 @@ $(function(){
         ok($.exists(function() { } ));
         ok($.exists(new Function()));
     });
-    test('notExists',  function (test) {
+
+    test('areEqual', function () {
+        expect(10);
+        ok($.areEqual(null, null));
+        ok($.areEqual(undefined, undefined));
+        ok($.areEqual(true, true));
+        ok($.areEqual(false, false));
+        ok($.areEqual(0, 0));
+        ok($.areEqual(Math.min(), Math.min()));
+        ok($.areEqual(Math.max(), Math.max()));
+        ok($.areEqual("", ""));
+        ok($.areEqual("string", "string"));
+        ok($.areEqual(new Date(2013, 1, 1), new Date(2013, 1, 1)));
+    });
+
+    test('areNotEqual', function () {
+        expect(10);
+        ok(!$.areEqual(null, undefined));
+        ok(!$.areEqual(null, 0));
+        ok(!$.areEqual(null, false));
+        ok(!$.areEqual(null, ""));
+        ok(!$.areEqual(undefined, 0));
+        ok(!$.areEqual(undefined, false));
+        ok(!$.areEqual(undefined, ""));
+        ok(!$.areEqual(0, false));
+        ok(!$.areEqual(0, ""));
+        ok(!$.areEqual(false, ""));
+    });
+
+    test('notExists',  function () {
         expect(2);
         ok(!$.exists(null));
         ok(!$.exists(undefined));
     });
 
-    test('xor',  function (test) {
+    test('xor',  function () {
         expect(2);
         ok($.xor(true, false));
         ok($.xor(false, true));
     });
 
-    test('notXor',  function (test) {
+    test('notXor',  function () {
         expect(2);
         ok(!$.xor(false, false));
         ok(!$.xor(true, true));

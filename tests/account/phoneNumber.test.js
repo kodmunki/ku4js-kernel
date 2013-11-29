@@ -3,19 +3,19 @@ $(function(){
 
     module("phoneNumber");
 
-    test('create', function (test) {
+    test('create', function () {
         var phoneNumber = $.phoneNumber(223344)
         expect(1);
         ok(phoneNumber);
     });
 
-    test('value', function (test) {
+    test('value', function () {
         var phoneNumber = $.phoneNumber(223344)
         expect(1);
         equal(phoneNumber.value(), 223344);
     });
 
-    test('equals', function (test) {
+    test('equals', function () {
         var phoneNumber1 = $.phoneNumber(223344),
             phoneNumber2 = $.phoneNumber(223344),
             phoneNumber3 = $.phoneNumber(556677)
@@ -24,14 +24,14 @@ $(function(){
         ok(!phoneNumber1.equals(phoneNumber3));
     });
 
-    test('toStringWithFormat', function (test) {
+    test('toStringWithFormat', function () {
         var phoneNumber = $.phoneNumber(2223334444)
         expect(2);
         ok(phoneNumber.toStringWithFormat("(###) ###-####"), "(222) 333-4444");
         ok(phoneNumber.toStringWithFormat("(##) ##-###"), "(22) 23-3344");
     });
 
-    test('parse', function (test) {
+    test('parse', function () {
         var phoneNumber = $.phoneNumber.parse("(222) 333-4444");
         expect(1);
         equal(phoneNumber.value(), 2223334444);

@@ -15,6 +15,14 @@ $.isUndefined = function(x) { return (/undefined/i.test(typeof (x))); }
 $.isEmpty = function(s) { return $.isString(s) && $.isZero(s.split(/\B/).length); }
 $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); }
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); }
+$.areEqual = function(value1, value2) {
+    if(this.exists(value1) && this.exists(value2)) {
+        if(this.exists(value1.equals) && value.equals(value2)) return true;
+        if(this.exists(value1.getTime) && this.exists(value2.getTime) && value1.getTime() == value2.getTime()) return true;
+        if(value1 === value2) return true;
+    }
+    else if (value1 === value2) return true;
+}
 $.xor = function(a, b) { return !a != !b; }
 
 $.replicate = function(value) {
@@ -101,112 +109,6 @@ lock.prototype = {
 }
 $.Class.extend(lock, $.Class);
 $.lock = function(isLocked){return new lock(isLocked);}
-
-var exception = function(type, info, browserTrace, ku4jTrace){
-    this._type = type;
-    this._info = info || "";
-    this._browserTrace = browserTrace;
-    this._ku4jTrace = ku4jTrace;
-}
-exception.prototype = {
-    message: "",
-    type: function(){ return this._type; },
-    info: function(){ return this._info; },
-    browserTrace: function(){ return this._browserTrace; },
-    ku4jTrace: function(){ return this._ku4jTrace; },
-    toString: function(){
-        var format = "EXCEPTION: {0}: {1}\n\nBowser stack trace:\n{2}\n\nku4j stack:\n{3}";
-        return $.str.format(format, this._type, this._info, this._browserTrace, this._ku4jTrace);
-    },
-    toObject: function(){
-        return {
-            type: this._type,
-            message: this._info,
-            browserTrace: this._browserTrace,
-            ku4jTrace: this._ku4jTrace
-        }
-    }
-}
-
-$.kulog = function(){
-    try { console.log.apply(console, arguments); }
-    catch(e){ alert(Array.prototype.slice.call(arguments).join("\n")); }
-}
-
-$.refcheck = function(member, message){
-    if(!$.exists(member)) throw $.exception("null", message);
-    return member;
-}
-
-$.exception = function(type, message){
-    var types = {
-            "generic" : {
-                type: "GENERIC EXCEPTION",
-                message: "Generic exception. Use $.exception(\"[null|arg]\") for more detail."
-            },
-            "operation" : {
-                type: "OPERATION EXCEPTION",
-                message: "Invalid operation."
-            },
-            "null" : {
-                type: "REFERENCE EXCEPTION",
-                message: "Invalid reference to type null or undefined."
-            },
-            "arg" : {
-                type: "ARGUMENT EXCEPTION",
-                message: "Invalid argument"
-            }
-        },
-        caller = arguments.callee.caller,
-        ku4jTrace = "",
-        browserTrace = "",
-        typ = ($.exists(types[type])) ? types[type] : types.generic,
-        msg = ($.exists(message)) ? " - " + message : "";
-        
-        (function(){
-            try{ generate.exeception; }
-            catch(e){
-                browserTrace = ($.exists(e.stack)) ? e.stack.replace(/generate is.+/, ""): "[Unavailable]";
-                var i = 0, method, m;
-                while(caller && (i < 10)){
-                    method = caller.toString().replace(/[\n\t\r\s]+/g, " ").substring(0, 100);
-                    m = method
-                        .replace(/\W/g, "a")
-                        .replace(/\s/g, "")
-                        .replace(/.*base\.js:216/, "")
-                        .split(/\B/)
-                        .length > 99
-                            ? method + "..."
-                            : method;
-                    ku4jTrace += $.str.format("<kuidx[{0}]>:{1}\n", i, m);
-                    caller = caller.caller;
-                    i++;
-                }
-            }
-        })();
-    return new exception(typ.type, typ.message + msg, browserTrace, ku4jTrace);
-}
-
-/*
-//IE
-LOG: message 
-LOG: description 
-LOG: number 
-LOG: name 
- 
-//firefox
-fileName
-lineNumber
- 
-//Safari
-message
-line
-sourceId
-expressionBeginOffset
-expressionCaretOffset
-expressionEndOffset
-name
-*/
 
 if(!$.exists($.math)) $.math = { }
 $.math.round = function(n, d){
@@ -465,8 +367,12 @@ function hash(obj) {
 
 hash.prototype = {
     count: function(){ return this.get("count"); },
+    keys: function(){ return $.obj.keys(this.$h); },
+    values: function(){ return $.obj.values(this.$h); },
+
     add: function(k, v) {
-        if (!$.exists(k) || this.containsKey(k)) return this;
+        if ((!($.isString(k) || $.isNumber(k))) || this.containsKey(k))
+            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string", k));
         this.$h[k] = v;
         this._count++;
         return this;
@@ -482,9 +388,8 @@ hash.prototype = {
         return this.$h[k];
     },
     findKey: function(v){
-        if (!$.exists(v)) return null;
         var h = this.$h;
-        for (n in h) if(h[n] == v) return n;
+        for (n in h) if($.areEqual(h[n], v)) return n;
         return null;
     },
     findValue: function(k) { return this.find(k) },
@@ -496,19 +401,13 @@ hash.prototype = {
         return this;
     },
     isEmpty: function() { return this._count < 1; },
-    listKeys: function() {
-        return new $.list($.obj.keys(this.$h));
-    },
-    listValues: function() {
-        return new $.list($.obj.values(this.$h));
-    },
     containsKey: function(k) {
         if (!$.exists(k)) return false;
         return $.exists(this.$h[k]);
     },
     containsValue: function(v) {
-        var a = $.obj.values(this.$h), i = a.length;
-        while(i--) { if(a[i] == v) return true; }
+        var values = $.obj.values(this.$h), i=values.length;
+        while(i--) if($.areEqual(values[i], v)) return true;
         return false;
     },
     merge: function(obj){
@@ -519,8 +418,8 @@ hash.prototype = {
     },
     remove: function(k) {
         var h = this.$h;
-        if (!$.exists(k) || !$.exists(h[k])) return this;
-        delete h[k]; 
+        if (!$.exists(k)) return this;
+        delete h[k];
         this._count--;
         return this;
     },
@@ -562,7 +461,6 @@ list.prototype = {
     add: function(item) {
         var k = this._keys, id = $.uid(); 
         k[k.length] = id;
-        
         this._hash.add(id, item); 
         this._count = this._keys.length;
         return this;
@@ -600,27 +498,19 @@ list.prototype = {
         var value = [];
         this._hash.each(function(kv){ value.push(kv.value); });
         return value;
-    },
-    sort: function(sortFunction){
-        var a = this.toArray().sort(sortFunction);
-        this.clear();
-        var i = 0, l = a.length;
-        while(i < l) { this.add(a[i]); i++; }
-        return this;
     }
 }
 $.Class.extend(list, $.Class);
 
 $.list = function(a){ return new list(a); }
 $.list.Class = list;
-
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
 }
 
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
-    if ((month < 1) || (month > 12)) throw new $.exception("arg", "Invalid month at $.dayPoint");
-    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new $.exception("arg", "Invalid date at $.dayPoint");
+    if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
+    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
     
     this._value = (arguments.length >= 3)
         ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)
@@ -774,7 +664,7 @@ function dayPoint_createDay(dp, d, m, y) {
 }
 
 function money(amt, type) {
-    if (isNaN(amt)) throw new $.exception("arg", $.str.format("$.money requires a number. Passed {0}", amt));
+    if (isNaN(amt)) throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
     var x = amt.toString().split(/\./), d = x[0], c = x[1];
     function cents(c) { return (amt < 0) ? -c : c; }
     
@@ -862,7 +752,7 @@ $.money.tryParse = function(o){
 }
 
 money_checkType = function(money, other) {
-    if (!money.isOfType(other)) throw new $.exception("operation","Invalid operation on non-conforming currencies.");
+    if (!money.isOfType(other)) throw new Error("Invalid operation on non-conforming currencies.");
 }
 money_formatDollars = function(money) {
     var dollars = money.dollars(),
@@ -891,7 +781,7 @@ money_formatCents = function(money) {
 
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw new Error($.str.format("at $.coord({0},{1})", x, y));
+        throw new Error($.str.format("at $.coord({0},{1}). Requires valid numbers.", x, y));
 
     coord.base.call(this);
     this.x(x).y(y);
@@ -1025,7 +915,7 @@ $.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bott
 
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw $.exception("args", $.str.format("at $.vector({0},{1})", x, y));
+        throw new Error($.str.format("at $.vector({0},{1})", x, y));
     
     vector.base.call(this, x, y);
     
@@ -1036,7 +926,7 @@ function vector(x, y) {
 }
 
 vector.prototype = {
-    magnatude: function(){ return this.get("length"); },
+    magnitude: function(){ return this.get("length"); },
     equals: function(other) {
         return (other instanceof vector) &&
             ((this._x === other.x()) && (this._y === other.y()));
@@ -1093,7 +983,7 @@ function vector_calculateLengthSquared(v, x, y) {
 }
 function vector_calculateUnitNormal (v, scalar) {
    if (v.isZero()) return 0;
-   return scalar / v.magnatude();
+   return scalar / v.magnitude();
 }
 
 $.abstractContext = function(state) {
@@ -1209,12 +1099,10 @@ mediator.prototype = {
             isFilteredCall = !isFirstArgData || (args.count() > 1),
             data = isFirstArgData ? firstArg : null,
             nameList = isFirstArgData ? args.remove(firstArg) : args;
-
+        console.log()
         return (isFilteredCall)
             ? this._notify(data, nameList)
             : this._notifyAll(data);
-
-        return this;
     },
     clear: function(){
         this._observers
@@ -1226,14 +1114,14 @@ mediator.prototype = {
         return this._observers.isEmpty();
     },
     _notifyAll: function(data){
-        this._observers.listValues().each(function(o){ o.notify(data); });
+        $.list(this._observers.values()).each(function(observer){ observer.notify(data); });
         return this;
     },
     _notify: function(data, list) {
         var o = this._observers;
         list.each(function(name){
             try { o.find(name).notify(data); }
-            catch(e){ $.kulog(e); }
+            catch(e){ throw new Error($.str.format("{0}: {1}", e.message, name)); }
         });
         return this;
     }
@@ -1261,8 +1149,11 @@ observer.prototype = {
         return this;
     },
     notify: function() {
-        var it = new $.iterator(this._methods.listValues().toArray()), a = arguments;
-        it.each(function(c) { $.refcheck(c.m).apply(c.s, a); });
+        var it = new $.iterator(this._methods.values()), args = arguments;
+        it.each(function(subscriber) {
+            if(!$.exists(subscriber.m)) throw new Error($.str("Invalid function: {0} in observer."));
+            subscriber.m.apply(subscriber.s, args);
+        });
         return this;
     },
     isEmpty: function(){ return this._methods.isEmpty(); }

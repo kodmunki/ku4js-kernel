@@ -21,12 +21,10 @@ mediator.prototype = {
             isFilteredCall = !isFirstArgData || (args.count() > 1),
             data = isFirstArgData ? firstArg : null,
             nameList = isFirstArgData ? args.remove(firstArg) : args;
-
+        console.log()
         return (isFilteredCall)
             ? this._notify(data, nameList)
             : this._notifyAll(data);
-
-        return this;
     },
     clear: function(){
         this._observers
@@ -38,14 +36,14 @@ mediator.prototype = {
         return this._observers.isEmpty();
     },
     _notifyAll: function(data){
-        this._observers.listValues().each(function(o){ o.notify(data); });
+        $.list(this._observers.values()).each(function(observer){ observer.notify(data); });
         return this;
     },
     _notify: function(data, list) {
         var o = this._observers;
         list.each(function(name){
             try { o.find(name).notify(data); }
-            catch(e){ $.kulog(e); }
+            catch(e){ throw new Error($.str.format("{0}: {1}", e.message, name)); }
         });
         return this;
     }

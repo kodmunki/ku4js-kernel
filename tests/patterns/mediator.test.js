@@ -12,11 +12,22 @@ $(function(){
     });
 
     test('methods', function (test) {
-        expect(10);
+        expect(14);
         mediator
             .subscribe("method.a", function(value){ test1 = value; }, null, "1")
             .subscribe("method.a", function(value){ test2 = value; }, null, "2")
             .subscribe("method.b", function(value){ test3 = value; }, null, "1");
+
+        raises(function(){ mediator.notify("0", "method.c")}, "");
+
+        mediator.notify(null, "method.a");
+        equal(test1, null);
+
+        mediator.notify(null, "method.a");
+        equal(test1, undefined);
+
+        mediator.notify("", "method.a");
+        equal(test1, "");
 
         mediator.notify("value1");
 

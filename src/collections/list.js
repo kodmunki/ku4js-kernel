@@ -13,7 +13,6 @@ list.prototype = {
     add: function(item) {
         var k = this._keys, id = $.uid(); 
         k[k.length] = id;
-        
         this._hash.add(id, item); 
         this._count = this._keys.length;
         return this;
@@ -51,20 +50,12 @@ list.prototype = {
         var value = [];
         this._hash.each(function(kv){ value.push(kv.value); });
         return value;
-    },
-    sort: function(sortFunction){
-        var a = this.toArray().sort(sortFunction);
-        this.clear();
-        var i = 0, l = a.length;
-        while(i < l) { this.add(a[i]); i++; }
-        return this;
     }
 }
 $.Class.extend(list, $.Class);
 
 $.list = function(a){ return new list(a); }
 $.list.Class = list;
-
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
 }
