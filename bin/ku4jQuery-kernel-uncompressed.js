@@ -664,12 +664,12 @@ function dayPoint_createDay(dp, d, m, y) {
 }
 
 function money(amt, type) {
-    if (isNaN(amt)) throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
-    var x = amt.toString().split(/\./), d = x[0], c = x[1];
-    function cents(c) { return (amt < 0) ? -c : c; }
-    
-    this._cents = ($.exists(c)) ? cents(parseFloat("." + c)) : 0;
-    this._dollars = parseInt(d);
+    if (!$.exists(amt) || isNaN(amt))
+        throw new Error($str.format("$.money requires a number. Passed {0}", amt));
+
+    var dollars = $.math.roundDown(amt);
+    this._cents = amt - dollars;
+    this._dollars = dollars;
     this._type = type || "$";
     this._value = amt;
 }
