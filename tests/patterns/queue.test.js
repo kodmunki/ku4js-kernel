@@ -5,13 +5,13 @@ $(function(){
 
     test('create', function (test) {
         expect(1);
-        ok($.queue());
+        ok($.fifo());
     });
 
     test('methods', function (test) {
         expect(7);
 
-        var queue = $.queue();
+        var queue = $.fifo();
         ok(queue.isEmpty());
 
         queue.enqueue(1).enqueue(2).enqueue(3);

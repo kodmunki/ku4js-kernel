@@ -1180,8 +1180,8 @@ queue.prototype = {
     },
     clear: function() { this._q = []; }
 }
-$.queue = function(){ return new queue(); }
-$.queue.Class = queue;
+$.fifo = function(){ return new queue(); }
+$.fifo.Class = queue;
 
 function rolodex(subj) {
     rolodex.base.call(this, subj);
@@ -1303,7 +1303,7 @@ stack.prototype = {
     },
     clear: function() { this._q = []; }
 }
-$.stack = function(){ return new stack(); }
-$.stack.Class = stack;
+$.lifo = function(){ return new stack(); }
+$.lifo.Class = stack;
 
 })(jQuery);

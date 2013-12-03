@@ -16,5 +16,5 @@ queue.prototype = {
     },
     clear: function() { this._q = []; }
 }
-$.queue = function(){ return new queue(); }
-$.queue.Class = queue;
+$.fifo = function(){ return new queue(); }
+$.fifo.Class = queue;

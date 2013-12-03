@@ -5,13 +5,13 @@ $(function(){
 
     test('create', function (test) {
         expect(1);
-        ok($.stack());
+        ok($.lifo());
     });
     
     test('methods', function (test) {
         expect(7);
     
-        var stack = $.stack();
+        var stack = $.lifo();
         ok(stack.isEmpty());
     
         stack.push(1).push(2).push(3);
