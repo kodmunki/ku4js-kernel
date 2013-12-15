@@ -153,6 +153,13 @@ $.str.format = function() {
     }
     return s;
 }
+$.str.render = function(template, obj) {
+    var s = "" + template;
+    for (var n in obj) {
+        s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
+    }
+    return s;
+}
 $.str.parse = function(){
     return String.fromCharCode.apply(String, arguments);
 }
@@ -1099,7 +1106,6 @@ mediator.prototype = {
             isFilteredCall = !isFirstArgData || (args.count() > 1),
             data = isFirstArgData ? firstArg : null,
             nameList = isFirstArgData ? args.remove(firstArg) : args;
-        console.log()
         return (isFilteredCall)
             ? this._notify(data, nameList)
             : this._notifyAll(data);

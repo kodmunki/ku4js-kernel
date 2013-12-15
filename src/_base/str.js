@@ -12,6 +12,13 @@ $.str.format = function() {
     }
     return s;
 }
+$.str.render = function(template, obj) {
+    var s = "" + template;
+    for (var n in obj) {
+        s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
+    }
+    return s;
+}
 $.str.parse = function(){
     return String.fromCharCode.apply(String, arguments);
 }

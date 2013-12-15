@@ -20,6 +20,15 @@ $(function(){
         equal($.str.format("{0}{1}{2}","1","2","3"), "123");
         equal($.str.format("{0}{0}{1}","1","2","3"), "112");
     });
+
+    test('render', function (test) {
+        var template = "{{greeting}}, my name is {{name}}. I am {{age}} years old. Born on {{month}}, {{ordinal}} {{year}}.",
+            person1 = {greeting:"Hello", name:"John", age:"30", month:"January", ordinal:"1st", year:"1980"},
+            person2 = {greeting:"Yo", name:"Jane", age:"20", month:"February", ordinal:"7th", year:"1990"};
+        expect(2)
+        equal($.str.render(template, person1), "Hello, my name is John. I am 30 years old. Born on January, 1st 1980.");
+        equal($.str.render(template, person2), "Yo, my name is Jane. I am 20 years old. Born on February, 7th 1990.");
+    });
     
     test('trimStart', function (test) {
         expect(4);
