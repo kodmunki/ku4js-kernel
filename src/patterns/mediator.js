@@ -1,8 +1,11 @@
 function mediator() {
     mediator.base.call(this);
     this._observers = $.hash();
+    this._throwErrors = false;
 }
 mediator.prototype = {
+    throwErrors: function() { this._throwErrors = true; return this; },
+    catchErrors: function() { this._throwErrors = false; return this; },
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
         if(observers.containsKey(name)) observers.find(name).add(method, scope, id);
@@ -39,10 +42,11 @@ mediator.prototype = {
         return this;
     },
     _notify: function(data, list) {
-        var o = this._observers;
+        var o = this._observers,
+            t = this._throwErrors;
         list.each(function(name){
             try { o.find(name).notify(data); }
-            catch(e){ throw new Error($.str.format("{0}: {1}", e.message, name)); }
+            catch(e) { if(t) throw new Error($.str.format("{0}: {1}", e.message, name)); }
         });
         return this;
     }
