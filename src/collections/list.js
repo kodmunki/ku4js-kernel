@@ -6,7 +6,11 @@ function list(a) {
     
     if(!$.exists(a)) return;
     var i = 0, l = a.length;
-    while(i < l) { this.add(a[i]); i++; }
+    while(i < l) {
+        var v = a[i];
+        if(!$.isUndefined(v)) this.add(v);
+        i++;
+    }
 }
 list.prototype = {
     count: function(){ return this.get("count"); },
@@ -37,10 +41,9 @@ list.prototype = {
     },
     isEmpty: function() { return this._count < 1; },
     remove: function(item) {
-        var h = this._hash, k;
+        var h = this._hash;
         if (!this.contains(item)) return this;
-        
-        k = h.findKey(item);
+        var k = h.findKey(item);
         this._keys.splice(k, 1);
         h.remove(k);
         this._count = h.count();

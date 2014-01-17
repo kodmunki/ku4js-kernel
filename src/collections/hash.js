@@ -12,8 +12,14 @@ hash.prototype = {
     values: function(){ return $.obj.values(this.$h); },
 
     add: function(k, v) {
-        if ((!($.isString(k) || $.isNumber(k))) || this.containsKey(k))
-            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string", k));
+        if ((!($.isString(k) || $.isNumber(k))) ||
+            /(null)|(undefined)/.test(k)
+            || this.containsKey(k))
+            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string.", k));
+
+        if($.isUndefined(v))
+            throw new Error($.str.format("Invalid value: {0}. Cannot be undefined.", v));
+
         this.$h[k] = v;
         this._count++;
         return this;
@@ -42,9 +48,23 @@ hash.prototype = {
         return this;
     },
     isEmpty: function() { return this._count < 1; },
+    contains: function(other) {
+        if(!$.exists(other) || $.isNullOrEmpty(other) || $.hash(other).isEmpty()) return false;
+        var test = $.exists(other.toObject) ? other : $.hash(other),
+            contains = true;
+        test.each(function(obj) {
+            if(!$.exists(obj)) { contains = false; test.quit(); }
+            else {
+                var key = obj.key;
+                contains = this.containsKey(key) && $.areEqual(this.findValue(key), obj.value);
+                if(!contains) test.quit();
+            }
+        }, this);
+        return contains;
+    },
     containsKey: function(k) {
         if (!$.exists(k)) return false;
-        return $.exists(this.$h[k]);
+        return !$.isUndefined(this.$h[k]);
     },
     containsValue: function(v) {
         var values = $.obj.values(this.$h), i=values.length;
@@ -58,8 +78,9 @@ hash.prototype = {
         return hash_combine(this, obj, "meld");
     },
     remove: function(k) {
+        if (!this.containsKey(k)) return this;
         var h = this.$h;
-        if (!$.exists(k)) return this;
+        h[k] = "value";
         delete h[k];
         this._count--;
         return this;
