@@ -1,4 +1,5 @@
 function emailAddress(username, domain, topLevelDomain) {
+    emailAddress.base.call(this);
     this._username = username;
     this._domain = domain;
     this._topLevelDomain = topLevelDomain;
@@ -17,9 +18,13 @@ emailAddress.prototype = {
         return $.str.format("{0}@{1}.{2}", this._username, this._domain, this._topLevelDomain);
     }
 }
+$.Class.extend(emailAddress, $.Class);
+
 $.emailAddress = function(username, domain, topLevelDomain) {
     return new emailAddress(username, domain, topLevelDomain);
 }
+$.emailAddress.Class = emailAddress;
+
 $.emailAddress.parse = function(str){
     if (!($.exists(str)) && /@{1}/.test(str)) return null;
 

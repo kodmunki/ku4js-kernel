@@ -1,4 +1,5 @@
 function properName(first, middle, last) {
+    properName.base.call(this);
     this._first = first;
     this._middle = middle || "";
     this._last = last;
@@ -34,4 +35,7 @@ properName.prototype = {
                      .replace("{l}", lastInitial);
     }
 }
+$.Class.extend(properName, $.Class);
+
 $.properName = function(first, middle, last) { return new properName(first, middle, last); }
+$.properName.Class = properName;

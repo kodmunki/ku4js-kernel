@@ -85,6 +85,9 @@ $.Class.prototype = {
         return ($.isUndefined(v))
             ? this.get(p)
             : this.set(p, v);
+    },
+    isTypeOf: function(type) {
+        return this instanceof type;
     }
 }
 
@@ -272,6 +275,7 @@ $.uid = function(str) {
 }
 
 function emailAddress(username, domain, topLevelDomain) {
+    emailAddress.base.call(this);
     this._username = username;
     this._domain = domain;
     this._topLevelDomain = topLevelDomain;
@@ -290,9 +294,13 @@ emailAddress.prototype = {
         return $.str.format("{0}@{1}.{2}", this._username, this._domain, this._topLevelDomain);
     }
 }
+$.Class.extend(emailAddress, $.Class);
+
 $.emailAddress = function(username, domain, topLevelDomain) {
     return new emailAddress(username, domain, topLevelDomain);
 }
+$.emailAddress.Class = emailAddress;
+
 $.emailAddress.parse = function(str){
     if (!($.exists(str)) && /@{1}/.test(str)) return null;
 
@@ -306,7 +314,10 @@ $.emailAddress.parse = function(str){
     return new emailAddress(username, domain, topLevelDomain);
 }
 
-function phoneNumber(number) { this._value = number; }
+function phoneNumber(number) {
+    phoneNumber.base.call(this);
+    this._value = number;
+}
 phoneNumber.prototype = {
     value: function() { return this._value; },
     equals: function(other) {
@@ -321,12 +332,17 @@ phoneNumber.prototype = {
         return formattedValue.replace(/#/g, "");
     }
 }
+$.Class.extend(phoneNumber, $.Class);
+
 $.phoneNumber = function(number){ return new phoneNumber(number); }
+$.phoneNumber.Class = phoneNumber;
+
 $.phoneNumber.parse = function(str) {
     return new phoneNumber(parseInt(str.replace(/[^0-9]/gi, "")));
 }
 
 function properName(first, middle, last) {
+    properName.base.call(this);
     this._first = first;
     this._middle = middle || "";
     this._last = last;
@@ -362,7 +378,10 @@ properName.prototype = {
                      .replace("{l}", lastInitial);
     }
 }
+$.Class.extend(properName, $.Class);
+
 $.properName = function(first, middle, last) { return new properName(first, middle, last); }
+$.properName.Class = properName;
 
 function hash(obj) {
     hash.base.call(this);
@@ -540,6 +559,7 @@ $.list.parseArguments = function(a){
 }
 
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
+    dayPoint.base.call(this);
     if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
     if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
     
@@ -577,8 +597,7 @@ dayPoint.prototype = {
     millisecond: function(){ return this._millisecond; },
     isWeekday: function(){ return this._isWeekday; },
     isWeekend: function(){ return this._isWeekend; },
-    
-    equals: function(other) { return this._value == other.value(); },
+
     nextDay: function() { return dayPoint_createDay(this, 1, 0, 0); },
     prevDay: function() { return dayPoint_createDay(this, -1, 0, 0); },
     nextMonth: function() { return dayPoint_createDay(this, 0, 1, 0); },
@@ -611,8 +630,7 @@ dayPoint.prototype = {
             om = other.month();
         if (ty > oy) return true;
         if ((ty == oy) && (tm > om)) return true;
-        if ((ty == oy) && (tm == om) && (this._date > other.date())) return true;
-        return false;
+        return ((ty == oy) && (tm == om) && (this._date > other.date()));
     },
     equals: function(other) {
         return (this._year == other.year()) && (this._month == other.month()) && (this._date == other.date());
@@ -626,7 +644,8 @@ dayPoint.prototype = {
     },
     toDate: function() { return this.value(); },
     toJson: function() { return this.value().toJSON(); }
-}
+};
+$.Class.extend(dayPoint, $.Class);
 
 $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){
     if(!($.isDate(year) ||
@@ -634,14 +653,16 @@ $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){
           $.isNumber(month) &&
           $.isNumber(date)))) return null;
     return new dayPoint(year, month, date, hours, minutes, seconds, milliseconds);
-}
+};
+$.dayPoint.Class = dayPoint;
+
 $.dayPoint.canParse = function(v) {
     return ($.isString(v) ||
             $.isNumber(v) ||
             $.isDate(v))
         ? !isNaN(new Date(v).valueOf())
         : false;
-}
+};
 $.dayPoint.parse = function(v) {
         if (v instanceof dayPoint) return v;
         if (!($.isDate(v) || this.canParse(v))) return null;
@@ -656,17 +677,17 @@ $.dayPoint.parse = function(v) {
             ms = D.getMilliseconds();
 
         return $.dayPoint(y, m, d, h, M, s, ms);
-}
+};
 $.dayPoint.tryParse = function(v){
     return $.dayPoint.canParse(v)
         ? $.dayPoint.parse(v)
         : null;
-}
+};
 
 var dayPoint_assumeNow;
 
-$.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.parse(dayPoint); }
-$.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); }
+$.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.parse(dayPoint); };
+$.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); };
 
 function dayPoint_findDaysInMonth(month, year) {
     var m = month, y = year;
@@ -696,8 +717,8 @@ function dayPoint_createDay(dp, d, m, y) {
 
 function money(amt, type) {
     if (!$.exists(amt) || isNaN(amt))
-        throw new Error($str.format("$.money requires a number. Passed {0}", amt));
-
+        throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
+    money.base.call(this);
     var dollars = $.math.roundDown(amt);
     this._cents = amt - dollars;
     this._dollars = dollars;
@@ -756,7 +777,11 @@ money.prototype = {
         return $.str.format(format, this._type, money_formatDollars(this), money_formatCents(this));
     }
 }
+$.Class.extend(money, $.Class);
+
 $.money = function(number, type){ return new money(number, type); }
+$.money.Class = money;
+
 $.money.zero = function() { return $.money(0); }
 $.money.isMoney = function(o) { return o instanceof money; }
 $.money.canParse = function(v){
@@ -943,6 +968,7 @@ rectangle.prototype = {
 }
 $.Class.extend(rectangle, $.Class);
 $.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); }
+$.rectangle.Class = rectangle
 
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))

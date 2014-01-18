@@ -1,7 +1,7 @@
 function money(amt, type) {
     if (!$.exists(amt) || isNaN(amt))
-        throw new Error($str.format("$.money requires a number. Passed {0}", amt));
-
+        throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
+    money.base.call(this);
     var dollars = $.math.roundDown(amt);
     this._cents = amt - dollars;
     this._dollars = dollars;
@@ -60,7 +60,11 @@ money.prototype = {
         return $.str.format(format, this._type, money_formatDollars(this), money_formatCents(this));
     }
 }
+$.Class.extend(money, $.Class);
+
 $.money = function(number, type){ return new money(number, type); }
+$.money.Class = money;
+
 $.money.zero = function() { return $.money(0); }
 $.money.isMoney = function(o) { return o instanceof money; }
 $.money.canParse = function(v){

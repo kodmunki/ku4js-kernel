@@ -6,12 +6,13 @@ $(function(){
     module("dayPoint");
 
     test('create', function (test) {
-        expect(15);
+        expect(16);
         ok(!$.dayPoint(null));
         ok(!$.dayPoint(undefined));
         ok($.dayPoint(2011, 1, 1));
         ok($.dayPoint.parse("01/01/2011"));
         ok($.dayPoint.parse(new Date("1/1/2011")));
+        ok($.dayPoint(2011, 1, 1).isTypeOf($.dayPoint.Class));
         equal(date.day(), 6);
         equal(date.date(), 1);
         equal(date.month(), 1);

@@ -8,11 +8,12 @@ $(function(){
     module("money");
 
     test("create", function() {
-        expect(8);
+        expect(9);
         raises(function(){$.money(null);});
         raises(function(){$.money(undefined);});
         ok($.money(4));
         ok($.money.parse("$5.99"));
+        ok($.money(4).isTypeOf($.money.Class));
         
         equal(two.cents(), .625);
         equal(two.dollars(), 2);

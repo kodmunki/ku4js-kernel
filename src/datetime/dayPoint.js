@@ -1,4 +1,5 @@
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
+    dayPoint.base.call(this);
     if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
     if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
     
@@ -36,8 +37,7 @@ dayPoint.prototype = {
     millisecond: function(){ return this._millisecond; },
     isWeekday: function(){ return this._isWeekday; },
     isWeekend: function(){ return this._isWeekend; },
-    
-    equals: function(other) { return this._value == other.value(); },
+
     nextDay: function() { return dayPoint_createDay(this, 1, 0, 0); },
     prevDay: function() { return dayPoint_createDay(this, -1, 0, 0); },
     nextMonth: function() { return dayPoint_createDay(this, 0, 1, 0); },
@@ -70,8 +70,7 @@ dayPoint.prototype = {
             om = other.month();
         if (ty > oy) return true;
         if ((ty == oy) && (tm > om)) return true;
-        if ((ty == oy) && (tm == om) && (this._date > other.date())) return true;
-        return false;
+        return ((ty == oy) && (tm == om) && (this._date > other.date()));
     },
     equals: function(other) {
         return (this._year == other.year()) && (this._month == other.month()) && (this._date == other.date());
@@ -85,7 +84,8 @@ dayPoint.prototype = {
     },
     toDate: function() { return this.value(); },
     toJson: function() { return this.value().toJSON(); }
-}
+};
+$.Class.extend(dayPoint, $.Class);
 
 $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){
     if(!($.isDate(year) ||
@@ -93,14 +93,16 @@ $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){
           $.isNumber(month) &&
           $.isNumber(date)))) return null;
     return new dayPoint(year, month, date, hours, minutes, seconds, milliseconds);
-}
+};
+$.dayPoint.Class = dayPoint;
+
 $.dayPoint.canParse = function(v) {
     return ($.isString(v) ||
             $.isNumber(v) ||
             $.isDate(v))
         ? !isNaN(new Date(v).valueOf())
         : false;
-}
+};
 $.dayPoint.parse = function(v) {
         if (v instanceof dayPoint) return v;
         if (!($.isDate(v) || this.canParse(v))) return null;
@@ -115,17 +117,17 @@ $.dayPoint.parse = function(v) {
             ms = D.getMilliseconds();
 
         return $.dayPoint(y, m, d, h, M, s, ms);
-}
+};
 $.dayPoint.tryParse = function(v){
     return $.dayPoint.canParse(v)
         ? $.dayPoint.parse(v)
         : null;
-}
+};
 
 var dayPoint_assumeNow;
 
-$.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.parse(dayPoint); }
-$.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); }
+$.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.parse(dayPoint); };
+$.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); };
 
 function dayPoint_findDaysInMonth(month, year) {
     var m = month, y = year;

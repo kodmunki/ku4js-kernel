@@ -4,8 +4,9 @@ $(function(){
     module("hash");
 
     test('create', function (test) {
-        expect(1);
+        expect(2);
         ok($.hash());
+        ok($.hash().isTypeOf($.hash.Class));
     });
     
     test('add', function (test) {

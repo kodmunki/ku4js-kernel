@@ -5,8 +5,9 @@ $(function(){
 
     test('create', function () {
         var phoneNumber = $.phoneNumber(223344)
-        expect(1);
+        expect(2);
         ok(phoneNumber);
+        ok(phoneNumber.isTypeOf($.phoneNumber.Class));
     });
 
     test('value', function () {

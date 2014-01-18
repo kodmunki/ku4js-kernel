@@ -1,7 +1,7 @@
 $(function(){
     function notOk(s, m) {equal(s,false,m);}
 
-    var mediator = $.mediator(),
+    var mediator = $.mediator().throwErrors(),
         test1, test2, test3;
 
     module("mediator");

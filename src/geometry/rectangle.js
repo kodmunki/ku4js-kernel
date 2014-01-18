@@ -21,3 +21,4 @@ rectangle.prototype = {
 }
 $.Class.extend(rectangle, $.Class);
 $.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); }
+$.rectangle.Class = rectangle

@@ -6,6 +6,9 @@ $.Class.prototype = {
         return ($.isUndefined(v))
             ? this.get(p)
             : this.set(p, v);
+    },
+    isTypeOf: function(type) {
+        return this instanceof type;
     }
 }
 

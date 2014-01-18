@@ -13,6 +13,7 @@ $(function(){
         ok($.point(0, 0));
         ok($.point(1, 1));
         ok($.point(-1, -1));
+        ok($.point(-1, -1).isTypeOf($.point.Class));
     });
 
     var zero = $.point.zero(),
