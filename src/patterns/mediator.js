@@ -46,7 +46,11 @@ mediator.prototype = {
             t = this._throwErrors;
         list.each(function(name){
             try { o.find(name).notify(data); }
-            catch(e) { if(t) throw new Error($.str.format("{0}: {1}", e.message, name)); }
+            catch(e) {
+                if(t) {
+                    var messageFormat = "MEDIATOR NOTIFY EXCEPTION:\nMessage:{0}\nObserver:{1}\nCall Stack:{2}";
+                    throw new Error($.str.format(messageFormat, e.message, name, e.stack));
+                } }
         });
         return this;
     }
