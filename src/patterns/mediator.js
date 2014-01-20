@@ -47,7 +47,7 @@ mediator.prototype = {
         list.each(function(name){
             try { o.find(name).notify(data); }
             catch(e) {
-                if(t) throw $.ku4exception("$.mediator", e.message);
+                if(t) throw $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key= {1}", e.message, name));
             }
         });
         return this;
