@@ -19,7 +19,8 @@ observer.prototype = {
     notify: function() {
         var it = new $.iterator(this._methods.values()), args = arguments;
         it.each(function(subscriber) {
-            if(!$.exists(subscriber.m)) throw new Error($.str("Invalid function: {0} in observer."));
+            if(!$.exists(subscriber.m))
+                throw $.ku4exception("$.observer", $.str.format("Invalid or null method"));
             subscriber.m.apply(subscriber.s, args);
         });
         return this;

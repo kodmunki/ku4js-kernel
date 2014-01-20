@@ -1,6 +1,6 @@
 function money(amt, type) {
     if (!$.exists(amt) || isNaN(amt))
-        throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
+        throw $.ku4exception("$.money", $.str.format("Invalid amount= {0}. Amount must be a number.", amt));
     money.base.call(this);
     var dollars = $.math.roundDown(amt);
     this._cents = amt - dollars;
@@ -20,7 +20,7 @@ money.prototype = {
     },
     divide: function(value) {
         if(!$.isNumber(value))
-            throw new Error();
+            throw $.ku4exception("$.money", $.str.format("Invalid divisor value= {0}", value));
         return new money(this._value / value);
     },
     equals: function(other) {
@@ -39,7 +39,7 @@ money.prototype = {
     },
     multiply: function(value) {
         if(!$.isNumber(value))
-            throw new Error();
+            throw $.ku4exception("$.money", $.str.format("Invalid multiplier value= {0}", value));
         return new money(this._value * value);
     },
     round: function() {
@@ -91,7 +91,8 @@ $.money.tryParse = function(o){
 }
 
 money_checkType = function(money, other) {
-    if (!money.isOfType(other)) throw new Error("Invalid operation on non-conforming currencies.");
+    if (!money.isOfType(other))
+        throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
 }
 money_formatDollars = function(money) {
     var dollars = money.dollars(),

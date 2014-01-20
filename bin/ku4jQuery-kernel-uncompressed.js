@@ -25,6 +25,66 @@ $.areEqual = function(value1, value2) {
 }
 $.xor = function(a, b) { return !a != !b; }
 
+function exception(className, message, browserTrace, ku4Trace){
+    var format = "ku4EXCEPTION @ {0}: {1}\n\nBrowser Stack Trace:\n{2}\n\nku4Trace:\n{3}";
+    return new Error($.str.format(format, className.toUpperCase(), message, browserTrace, ku4Trace));
+}
+
+$.ku4exception = function(className, message) {
+    var caller = arguments.callee.caller,
+        ku4Trace = "",
+        browserTrace = "";
+        
+        (function(){
+            try{ generate.exeception; }
+            catch(e){
+                browserTrace = ($.exists(e.stack)) ? e.stack.replace(/generate is.+/, ""): "[Unavailable]";
+                var i = 0, method, m;
+                while(caller && (i < 10)){
+                    method = caller.toString().replace(/[\n\t\r\s]+/g, " ").substring(0, 100);
+                    m = method
+                        .replace(/\W/g, "a")
+                        .replace(/\s/g, "")
+                        .replace(/.*base\.js:216/, "")
+                        .split(/\B/)
+                        .length > 99
+                            ? method + "..."
+                            : method;
+                    ku4Trace += $.str.format("<ku4Idx[{0}]>:{1}\n", i, m);
+                    caller = caller.caller;
+                    i++;
+                }
+            }
+        })();
+    return exception(className, message, browserTrace, ku4Trace);
+}
+
+$.ku4Log = function(){
+    try { console.log.apply(console, arguments); }
+    catch(e){ alert(Array.prototype.slice.call(arguments).join("\n")); }
+}
+
+/*
+//IE
+LOG: message 
+LOG: description 
+LOG: number 
+LOG: name 
+ 
+//firefox
+fileName
+lineNumber
+ 
+//Safari
+message
+line
+sourceId
+expressionBeginOffset
+expressionCaretOffset
+expressionEndOffset
+name
+*/
+
 $.replicate = function(value) {
     var result = ($.isDate(value))
         ? new Date(value)
@@ -136,9 +196,7 @@ $.math.factorial = function(n){
 }
 $.math.divide = function(a, b){
     var isValid = $.isNumber(a) && $.isNumber(b) && !$.isZero(b);
-    if(!isValid)
-        throw new Error($.str.format("Invalid division. value: {0}/{1} | type: {2}/{3}",
-                                     a, b, typeof a, typeof b));
+    if(!isValid) throw $.ku4exception("$.math", $.str.format("Invalid division. value: {0}/{1} | type: {2}/{3}", a, b, typeof a, typeof b));
     return a / b;
 }
 
@@ -400,10 +458,10 @@ hash.prototype = {
         if ((!($.isString(k) || $.isNumber(k))) ||
             /(null)|(undefined)/.test(k)
             || this.containsKey(k))
-            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string.", k));
+            throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be unique number or string.", k));
 
         if($.isUndefined(v))
-            throw new Error($.str.format("Invalid value: {0}. Cannot be undefined.", v));
+            throw $.ku4exception("$.hash", $.str.format("Invalid value: {0}. Cannot be undefined.", v));
 
         this.$h[k] = v;
         this._count++;
@@ -560,8 +618,10 @@ $.list.parseArguments = function(a){
 
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
     dayPoint.base.call(this);
-    if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
-    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
+    if ((month < 1) || (month > 12))
+        throw $.ku4exception("$.dayPoint", $.str.format("Invalid month= {0}", month));
+    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year)))
+        throw $.ku4exception("$.dayPoint", $.str.format("Invalid date= {0}", date));
     
     this._value = (arguments.length >= 3)
         ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)
@@ -717,7 +777,7 @@ function dayPoint_createDay(dp, d, m, y) {
 
 function money(amt, type) {
     if (!$.exists(amt) || isNaN(amt))
-        throw new Error($.str.format("$.money requires a number. Passed {0}", amt));
+        throw $.ku4exception("$.money", $.str.format("Invalid amount= {0}. Amount must be a number.", amt));
     money.base.call(this);
     var dollars = $.math.roundDown(amt);
     this._cents = amt - dollars;
@@ -737,7 +797,7 @@ money.prototype = {
     },
     divide: function(value) {
         if(!$.isNumber(value))
-            throw new Error();
+            throw $.ku4exception("$.money", $.str.format("Invalid divisor value= {0}", value));
         return new money(this._value / value);
     },
     equals: function(other) {
@@ -756,7 +816,7 @@ money.prototype = {
     },
     multiply: function(value) {
         if(!$.isNumber(value))
-            throw new Error();
+            throw $.ku4exception("$.money", $.str.format("Invalid multiplier value= {0}", value));
         return new money(this._value * value);
     },
     round: function() {
@@ -808,7 +868,8 @@ $.money.tryParse = function(o){
 }
 
 money_checkType = function(money, other) {
-    if (!money.isOfType(other)) throw new Error("Invalid operation on non-conforming currencies.");
+    if (!money.isOfType(other))
+        throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
 }
 money_formatDollars = function(money) {
     var dollars = money.dollars(),
@@ -837,7 +898,7 @@ money_formatCents = function(money) {
 
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw new Error($.str.format("at $.coord({0},{1}). Requires valid numbers.", x, y));
+        throw $.ku4exception("$.coord", $.str.format("Invalid arguments x= {0}, y= {1} ", x, y));
 
     coord.base.call(this);
     this.x(x).y(y);
@@ -972,7 +1033,7 @@ $.rectangle.Class = rectangle
 
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw new Error($.str.format("at $.vector({0},{1})", x, y));
+        throw $.ku4exception("$.vector", $.str.format("Invalid arguments x= {0}, y= {1} ", x, y));
     
     vector.base.call(this, x, y);
     
@@ -1182,14 +1243,12 @@ mediator.prototype = {
         list.each(function(name){
             try { o.find(name).notify(data); }
             catch(e) {
-                if(t) {
-                    var messageFormat = "MEDIATOR NOTIFY EXCEPTION:\nMessage:{0}\nObserver:{1}\nCall Stack:{2}";
-                    throw new Error($.str.format(messageFormat, e.message, name, e.stack));
-                } }
+                if(t) throw $.ku4exception("$.mediator", e.message);
+            }
         });
         return this;
     }
-}
+};
 $.Class.extend(mediator, $.Class);
 $.mediator = function() { return new mediator(); }
 $.mediator.Class = mediator;
@@ -1215,7 +1274,8 @@ observer.prototype = {
     notify: function() {
         var it = new $.iterator(this._methods.values()), args = arguments;
         it.each(function(subscriber) {
-            if(!$.exists(subscriber.m)) throw new Error($.str("Invalid function: {0} in observer."));
+            if(!$.exists(subscriber.m))
+                throw $.ku4exception("$.observer", $.str.format("Invalid or null method"));
             subscriber.m.apply(subscriber.s, args);
         });
         return this;

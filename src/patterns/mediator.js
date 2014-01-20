@@ -47,14 +47,12 @@ mediator.prototype = {
         list.each(function(name){
             try { o.find(name).notify(data); }
             catch(e) {
-                if(t) {
-                    var messageFormat = "MEDIATOR NOTIFY EXCEPTION:\nMessage:{0}\nObserver:{1}\nCall Stack:{2}";
-                    throw new Error($.str.format(messageFormat, e.message, name, e.stack));
-                } }
+                if(t) throw $.ku4exception("$.mediator", e.message);
+            }
         });
         return this;
     }
-}
+};
 $.Class.extend(mediator, $.Class);
 $.mediator = function() { return new mediator(); }
 $.mediator.Class = mediator;

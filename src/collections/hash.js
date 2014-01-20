@@ -15,10 +15,10 @@ hash.prototype = {
         if ((!($.isString(k) || $.isNumber(k))) ||
             /(null)|(undefined)/.test(k)
             || this.containsKey(k))
-            throw new Error($.str.format("Invalid key: {0}. Must be unique number or string.", k));
+            throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be unique number or string.", k));
 
         if($.isUndefined(v))
-            throw new Error($.str.format("Invalid value: {0}. Cannot be undefined.", v));
+            throw $.ku4exception("$.hash", $.str.format("Invalid value: {0}. Cannot be undefined.", v));
 
         this.$h[k] = v;
         this._count++;

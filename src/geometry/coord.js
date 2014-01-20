@@ -1,6 +1,6 @@
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw new Error($.str.format("at $.coord({0},{1}). Requires valid numbers.", x, y));
+        throw $.ku4exception("$.coord", $.str.format("Invalid arguments x= {0}, y= {1} ", x, y));
 
     coord.base.call(this);
     this.x(x).y(y);

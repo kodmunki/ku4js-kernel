@@ -1,6 +1,6 @@
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
-        throw new Error($.str.format("at $.vector({0},{1})", x, y));
+        throw $.ku4exception("$.vector", $.str.format("Invalid arguments x= {0}, y= {1} ", x, y));
     
     vector.base.call(this, x, y);
     

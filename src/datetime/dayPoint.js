@@ -1,7 +1,9 @@
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
     dayPoint.base.call(this);
-    if ((month < 1) || (month > 12)) throw new Error("Invalid month at $.dayPoint");
-    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year))) throw new Error("Invalid date at $.dayPoint");
+    if ((month < 1) || (month > 12))
+        throw $.ku4exception("$.dayPoint", $.str.format("Invalid month= {0}", month));
+    if ((date < 1) || (date > dayPoint_findDaysInMonth(month, year)))
+        throw $.ku4exception("$.dayPoint", $.str.format("Invalid date= {0}", date));
     
     this._value = (arguments.length >= 3)
         ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)
