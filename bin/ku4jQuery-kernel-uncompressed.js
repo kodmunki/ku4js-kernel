@@ -1203,6 +1203,9 @@ mediator.prototype = {
     throwErrors: function() { this._throwErrors = 2; return this; },
     logErrors: function() { this._throwErrors = 1; return this; },
     catchErrors: function() { this._throwErrors = 0; return this; },
+    isEmpty: function(){ return this._observers.isEmpty(); },
+    count: function() { return this._observers.count(); },
+    activeSubscriptionKeys: function() { return this._observers.keys(); },
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
         if(observers.containsKey(name)) observers.find(name).add(method, scope, id);
@@ -1230,9 +1233,6 @@ mediator.prototype = {
             .each(function(o){ o.value.clear(); })
             .clear();
         return this;
-    },
-    isEmpty: function(){
-        return this._observers.isEmpty();
     },
     _notifyAll: function(data){
         $.list(this._observers.values()).each(function(observer){ observer.notify(data); });
