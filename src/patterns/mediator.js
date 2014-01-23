@@ -1,11 +1,12 @@
 function mediator() {
     mediator.base.call(this);
     this._observers = $.hash();
-    this._throwErrors = false;
+    this._throwErrors = 0;
 }
 mediator.prototype = {
-    throwErrors: function() { this._throwErrors = true; return this; },
-    catchErrors: function() { this._throwErrors = false; return this; },
+    throwErrors: function() { this._throwErrors = 2; return this; },
+    logErrors: function() { this._throwErrors = 1; return this; },
+    catchErrors: function() { this._throwErrors = 0; return this; },
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
         if(observers.containsKey(name)) observers.find(name).add(method, scope, id);
@@ -47,7 +48,9 @@ mediator.prototype = {
         list.each(function(name){
             try { o.find(name).notify(data); }
             catch(e) {
-                if(t) throw $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key= {1}", e.message, name));
+                var exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key= {1}", e.message, name));
+                if(t == 2) throw exception;
+                if(t == 1) $.ku4Log(exception.message);
             }
         });
         return this;
