@@ -33,6 +33,15 @@ The following is documentation for each class in the ku4jQuery-kernel library or
 directory structure found in /src.
 
 ##Account
+
+###emailAddress
 | API | Return type | Description |
 | --- | --- | --- |
 |  |  |  |
+
+###phoneNumber
+| API | Return type | Description |
+| --- | --- | --- |
+|  |  |  |
+
+###properName
