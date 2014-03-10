@@ -6,7 +6,7 @@ ku4jQuery-kernel contains numerous useful classes including collections, math, g
 design patterns.
 
 #Dependencies
-* jQuery - http://jquery.com/
+* jQuery - http://jquery.com/ -- _This is not a dependency if kernel is compiled as such. See the [kodmunki™ build process](#kodmunki-build-process)_.
 
 #kodmunki™ build process
 
