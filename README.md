@@ -72,12 +72,12 @@ _Coming soon_
 | findValue(key:_String_) | Object | Returns the value at key.  |
 | each(func:_function_, scope:_Object?_) | this | Calls func for each item in the hash passing the object {"key": key, "value": value} on each pass. If scope is passed function will be called in the passed scope. |
 | quit() | this | Breaks the call. |
-| contains(value:_hash|object_) | Boolean | Returns true if the hash contains the passed value.  |
+| contains(value:_hash/object_) | Boolean | Returns true if the hash contains the passed value.  |
 | containsKey(key:_String_) | Boolean | Returns true if the hash contains the key. |
 | containsValue(value:_Object_) | Boolean | Returns true if the hash contains the value. |
 | isEmpty() | Boolean | Returns true if the hash is empty. |
-| merge(other:_hash|object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys. |
-| meld(other:_hash|object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the other hash for common keys. |
+| merge(other:_hash/object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys. |
+| meld(other:_hash/object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the other hash for common keys. |
 | replicate() | hash | Returns a copy of the current hash. |
 | toObject() | object | Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash. |
 
