@@ -56,13 +56,13 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 ##Account
 
 ###emailAddress
-_Coming soon_
+_Documentation Coming Soon_
 
 ###phoneNumber
-_Coming soon_
+_Documentation Coming Soon_
 
 ###properName
-_Coming soon_
+_Documentation Coming Soon_
 
 ##Collections
 
@@ -106,31 +106,31 @@ _Coming soon_
 ##Datetime
 
 ###dayPoint
-_Coming soon_
+_Documentation Coming Soon_
 
 ##Finance
 
 ###money
-_Coming soon_
+_Documentation Coming Soon_
 
 ##Geometry
 
 ###coord
-_Coming soon_
+_Documentation Coming Soon_
 
 ###point
-_Coming soon_
+_Documentation Coming Soon_
 
 ###rectangle
-_Coming soon_
+_Documentation Coming Soon_
 
 ###vector
-_Coming soon_
+_Documentation Coming Soon_
 
 ##Patterns
 
 ###iterator
-_Coming soon_
+_Documentation Coming Soon_
 
 ###mediator
 | API | Return | Description |
@@ -147,10 +147,10 @@ _Coming soon_
 | clear() | this | Clears all subscribers. |
 
 ###observer
-_Coming soon_
+_Documentation Coming Soon_
 
 ###queue
-_Coming soon_
+_Documentation Coming Soon_
 
 ###specification
 Constructor: $.spec(func:_function_). The function passed must take a value parameter and return a boolean value.
@@ -176,4 +176,4 @@ console.log(oneOrTwoSpec.isSatisfiedBy(3)) //Evaluates as false
 | isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
 
 ###stack
-_Coming soon_
+_Documentation Coming Soon_
