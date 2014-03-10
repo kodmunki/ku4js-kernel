@@ -1219,14 +1219,17 @@ mediator.prototype = {
     },
     notify: function() {
         var args = $.list.parseArguments(arguments),
-            firstArg = args.find(0),
-            isFirstArgData = !this._observers.containsKey(firstArg),
-            isFilteredCall = !isFirstArgData || (args.count() > 1),
-            data = isFirstArgData ? firstArg : null,
-            nameList = isFirstArgData ? args.remove(firstArg) : args;
-        return (isFilteredCall)
-            ? this._notify(data, nameList)
-            : this._notifyAll(data);
+            data = $.list(),
+            nameList = $.list();
+
+        args.each(function(arg) {
+            if(this._observers.containsKey(arg)) nameList.add(arg);
+            else data.add(arg);
+        }, this);
+
+        return (nameList.isEmpty())
+            ? this._notifyAll(data.toArray())
+            : this._notify(data.toArray(), nameList);
     },
     clear: function(){
         this._observers
@@ -1235,14 +1238,17 @@ mediator.prototype = {
         return this;
     },
     _notifyAll: function(data){
-        $.list(this._observers.values()).each(function(observer){ observer.notify(data); });
+        $.list(this._observers.values()).each(function(observer){ observer.notify.apply(observer, data); });
         return this;
     },
     _notify: function(data, list) {
         var o = this._observers,
             t = this._throwErrors;
         list.each(function(name){
-            try { o.find(name).notify(data); }
+            try {
+                var observer = o.find(name);
+                observer.notify.apply(observer, data);
+            }
             catch(e) {
                 var exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key= {1}", e.message, name));
                 if(t == 2) throw exception;

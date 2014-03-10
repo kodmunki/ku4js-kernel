@@ -98,7 +98,7 @@ $(function(){
     test('filteredNofiy', function (test) {
         var test1, test2, test3,
             mediator = $.mediator()
-            .subscribe("method.a", function(value){ test1 = value; }, null, "1")
+            .subscribe("method.a", function(value){ console.log(arguments); test1 = value; }, null, "1")
             .subscribe("method.a", function(value){ test2 = value; }, null, "2")
             .subscribe("method.b", function(value){ test3 = value; }, null, "1"),
 
@@ -110,7 +110,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3, "method.a");
+        mediator.notify(3, 5, 4, "test", "method.a");
 
         equal(test1, 3);
         equal(test2, 3);
