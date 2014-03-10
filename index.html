@@ -1,0 +1,460 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ku4jquery-kernel by kodmunki</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ku4jquery-kernel</h1>
+        <p>kodmunki™ utilities for jQuery kernel</p>
+
+        <p class="view"><a href="https://github.com/kodmunki/ku4jQuery-kernel">View the Project on GitHub <small>kodmunki/ku4jQuery-kernel</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="ku4jquery-kernel" class="anchor" href="#ku4jquery-kernel"><span class="octicon octicon-link"></span></a>ku4jQuery-kernel</h1>
+
+<p>kodmunki™ utilities for jQuery kernel is a jQuery plugin for OO JavaScript development.</p>
+
+<p>ku4jQuery-kernel contains numerous useful classes including collections, math, geometry, and numerous common
+design patterns.</p>
+
+<h1>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
+
+<ul>
+<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> --:<em>This is not a dependency if kernel is compiled as such. See the:</em>kodmunki™ build process_(#kodmunki-build-process)_.</li>
+</ul><h1>
+<a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
+
+<p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
+
+<ul>
+<li>root
+*:_build (This build script and the yuicompressor)
+
+<ul>
+<li>bin (The compiled scripts will appear here)</li>
+<li>src (All script files go here)</li>
+</ul>
+</li>
+</ul><p>The following variables found in setup () are
+expected to be changed by the developer running
+this process:</p>
+
+<ul>
+<li>LIBRARY (The library to build for or {} for none)</li>
+<li>PROJNAME (The name of your project)</li>
+<li>STARTMSG (A message to echo at start of build)</li>
+<li>ENDMSG (A message to echo at end of build)</li>
+</ul><hr><h1>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<p>The following is documentation for each class in the ku4jQuery-kernel library organized by common domain to follow the
+directory structure found in /src. All constructors are empty unless otherwise noted.</p>
+
+<h2>
+<a name="class" class="anchor" href="#class"><span class="octicon octicon-link"></span></a>Class</h2>
+
+<p>Class is a foundational class that numerous other classes inherit from offering the subclasses a common property API
+that includes get(), set(), and property() which is a getter/setter. It also exposes the inheritance API. To subclass
+JavaScript classes using the kernel Class one would first create their class and then subclass as follows:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">myClass</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">myClass</span><span class="p">.</span><span class="nx">base</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">//This line scopes the class hierarchy.</span>
+<span class="p">}</span>
+<span class="nx">myClass</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="cm">/*All prototype methods go here*/</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">Class</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">myClass</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Class</span><span class="p">);</span> <span class="c1">//We are creating our subclass here.</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">myApp</span><span class="p">.</span><span class="nx">myClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">myClass</span><span class="p">();</span> <span class="p">}</span> <span class="c1">//We are exposing myClass for use here</span>
+</pre></div>
+
+<p>With the above implementation. A developer can now call $.myApp.myClass() from within their application to instantiate
+a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
+inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
+$.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)</p>
+
+<h2>
+<a name="account" class="anchor" href="#account"><span class="octicon octicon-link"></span></a>Account</h2>
+
+<h3>
+<a name="emailaddress" class="anchor" href="#emailaddress"><span class="octicon octicon-link"></span></a>emailAddress</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="phonenumber" class="anchor" href="#phonenumber"><span class="octicon octicon-link"></span></a>phoneNumber</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="propername" class="anchor" href="#propername"><span class="octicon octicon-link"></span></a>properName</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h2>
+<a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h2>
+
+<h3>
+<a name="hash" class="anchor" href="#hash"><span class="octicon octicon-link"></span></a>hash</h3>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>count()</td>
+<td>Number</td>
+<td>Returns the number of items in the hash.</td>
+</tr>
+<tr>
+<td>keys()</td>
+<td>Array</td>
+<td>Returns an array of all keys.</td>
+</tr>
+<tr>
+<td>values()</td>
+<td>Array</td>
+<td>Returns an array of all values.</td>
+</tr>
+<tr>
+<td>add(key:<em>String</em>, value:<em>Object</em>)</td>
+<td>this</td>
+<td>Adds value to hash with key.</td>
+</tr>
+<tr>
+<td>update(key:<em>String</em>, value:<em>Object</em>)</td>
+<td>this</td>
+<td>Updates the value at key.</td>
+</tr>
+<tr>
+<td>remove(key:<em>String</em>)</td>
+<td>this</td>
+<td>Removes the key, value pair that has key.</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>this</td>
+<td>Removes all key, value pairs.</td>
+</tr>
+<tr>
+<td>findKey(value:<em>Object</em>)</td>
+<td>String</td>
+<td>Returns the key for value.</td>
+</tr>
+<tr>
+<td>findValue(key:<em>String</em>)</td>
+<td>Object</td>
+<td>Returns the value at key.</td>
+</tr>
+<tr>
+<td>each(func:<em>function</em>, scope:<em>Object?</em>)</td>
+<td>this</td>
+<td>Calls func for each item in the hash passing the object {"key": key, "value": value} on each pass. If scope is passed function will be called in the passed scope.</td>
+</tr>
+<tr>
+<td>quit()</td>
+<td>this</td>
+<td>Breaks the call.</td>
+</tr>
+<tr>
+<td>contains(value:<em>hash/object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the hash contains the passed value.</td>
+</tr>
+<tr>
+<td>containsKey(key:<em>String</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the hash contains the key.</td>
+</tr>
+<tr>
+<td>containsValue(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the hash contains the value.</td>
+</tr>
+<tr>
+<td>isEmpty()</td>
+<td>Boolean</td>
+<td>Returns true if the hash is empty.</td>
+</tr>
+<tr>
+<td>merge(other:<em>hash/object</em>)</td>
+<td>hash</td>
+<td>Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys.</td>
+</tr>
+<tr>
+<td>meld(other:<em>hash/object</em>)</td>
+<td>hash</td>
+<td>Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the other hash for common keys.</td>
+</tr>
+<tr>
+<td>replicate()</td>
+<td>hash</td>
+<td>Returns a copy of the current hash.</td>
+</tr>
+<tr>
+<td>toObject()</td>
+<td>object</td>
+<td>Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash.</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="list" class="anchor" href="#list"><span class="octicon octicon-link"></span></a>list</h3>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>count()</td>
+<td>Number</td>
+<td>Returns the number of items in the list.</td>
+</tr>
+<tr>
+<td>add(item:<em>Object</em>, value:<em>Object</em>)</td>
+<td>this</td>
+<td>Adds value to list with key.</td>
+</tr>
+<tr>
+<td>remove(item:<em>Object</em>)</td>
+<td>this</td>
+<td>Removes the item.</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>this</td>
+<td>Removes all items.</td>
+</tr>
+<tr>
+<td>find(index:<em>Number</em>)</td>
+<td>String</td>
+<td>Returns the key for value.</td>
+</tr>
+<tr>
+<td>each(func:<em>function</em>, scope:<em>Object?</em>)</td>
+<td>this</td>
+<td>Calls func for each item in the list passing the item on each pass. If scope is passed function will be called in the passed scope.</td>
+</tr>
+<tr>
+<td>quit()</td>
+<td>this</td>
+<td>Breaks the call.</td>
+</tr>
+<tr>
+<td>contains(item:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the list contains the value.</td>
+</tr>
+<tr>
+<td>toArray()</td>
+<td>object</td>
+<td>Returns an array that contains items equivalent to the items of the current list.</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="datetime" class="anchor" href="#datetime"><span class="octicon octicon-link"></span></a>Datetime</h2>
+
+<h3>
+<a name="daypoint" class="anchor" href="#daypoint"><span class="octicon octicon-link"></span></a>dayPoint</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h2>
+<a name="finance" class="anchor" href="#finance"><span class="octicon octicon-link"></span></a>Finance</h2>
+
+<h3>
+<a name="money" class="anchor" href="#money"><span class="octicon octicon-link"></span></a>money</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h2>
+<a name="geometry" class="anchor" href="#geometry"><span class="octicon octicon-link"></span></a>Geometry</h2>
+
+<h3>
+<a name="coord" class="anchor" href="#coord"><span class="octicon octicon-link"></span></a>coord</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="point" class="anchor" href="#point"><span class="octicon octicon-link"></span></a>point</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="rectangle" class="anchor" href="#rectangle"><span class="octicon octicon-link"></span></a>rectangle</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="vector" class="anchor" href="#vector"><span class="octicon octicon-link"></span></a>vector</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h2>
+<a name="patterns" class="anchor" href="#patterns"><span class="octicon octicon-link"></span></a>Patterns</h2>
+
+<h3>
+<a name="iterator" class="anchor" href="#iterator"><span class="octicon octicon-link"></span></a>iterator</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="mediator" class="anchor" href="#mediator"><span class="octicon octicon-link"></span></a>mediator</h3>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>throwErrors()</td>
+<td>this</td>
+<td>Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled.</td>
+</tr>
+<tr>
+<td>logErrors()</td>
+<td>this</td>
+<td>Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue.</td>
+</tr>
+<tr>
+<td>catchErrors()</td>
+<td>this</td>
+<td>Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue.</td>
+</tr>
+<tr>
+<td>isEmpty()</td>
+<td>Boolean</td>
+<td>Returns true if there are no subscribers.</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>Number</td>
+<td>Returns that number of subscription managers.</td>
+</tr>
+<tr>
+<td>activeSubscriptionKeys()</td>
+<td>Array</td>
+<td>Returns an array of active subscription keys.</td>
+</tr>
+<tr>
+<td>subscribe(name_String_, method:<em>function</em>, scope:<em>Object?</em>, id:<em>String?</em>)</td>
+<td>this</td>
+<td>Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe</td>
+</tr>
+<tr>
+<td>unsubscribe(name_String_, id:<em>String?</em>)</td>
+<td>this</td>
+<td>Removes subscriber of id from all name notifications</td>
+</tr>
+<tr>
+<td>notify(data:<em>Object</em>, ..., name:<em>String</em>, ...)</td>
+<td>this</td>
+<td>Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.</td>
+</tr>
+<tr>
+<td>clear()</td>
+<td>this</td>
+<td>Clears all subscribers.</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="observer" class="anchor" href="#observer"><span class="octicon octicon-link"></span></a>observer</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="queue" class="anchor" href="#queue"><span class="octicon octicon-link"></span></a>queue</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+
+<h3>
+<a name="specification" class="anchor" href="#specification"><span class="octicon octicon-link"></span></a>specification</h3>
+
+<p>Constructor: $.spec(func:<em>function</em>). The function passed must take a value parameter and return a boolean value.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">oneSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}),</span>
+    <span class="nx">twoSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}),</span>
+    <span class="nx">oneOrTwoSpec</span> <span class="o">=</span> <span class="nx">oneSpec</span><span class="p">.</span><span class="nx">or</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
+</pre></div>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>and(other:<em>spec</em>)</td>
+<td>spec</td>
+<td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec</td>
+</tr>
+<tr>
+<td>or(other:<em>spec</em>)</td>
+<td>spec</td>
+<td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec</td>
+</tr>
+<tr>
+<td>xor(other:<em>spec</em>)</td>
+<td>spec</td>
+<td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec</td>
+</tr>
+<tr>
+<td>not()</td>
+<td>spec</td>
+<td>Inverts the return value of isSatisfiedBy</td>
+</tr>
+<tr>
+<td>isSatisfiedBy(value)</td>
+<td>Boolean</td>
+<td>Returns a boolean value of true if the value passed satisfies the specification</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="stack" class="anchor" href="#stack"><span class="octicon octicon-link"></span></a>stack</h3>
+
+<p><em>Documentation Coming Soon</em></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/kodmunki">kodmunki</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
