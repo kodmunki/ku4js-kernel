@@ -54,6 +54,14 @@ inherited using the same convention as class. For example, to inherit from $.med
 $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)
 
 ##Account
+
+###emailAddress
+_Coming soon_
+
+###phoneNumber
+_Coming soon_
+
+###properName
 _Coming soon_
 
 ##Collections
@@ -96,15 +104,33 @@ _Coming soon_
 | toArray() | object | Returns an array that contains items equivalent to the items of the current list. |
 
 ##Datetime
+
+###dayPoint
 _Coming soon_
 
 ##Finance
+
+###money
 _Coming soon_
 
 ##Geometry
+
+###coord
+_Coming soon_
+
+###point
+_Coming soon_
+
+###rectangle
+_Coming soon_
+
+###vector
 _Coming soon_
 
 ##Patterns
+
+###iterator
+_Coming soon_
 
 ###mediator
 | API | Return | Description |
@@ -120,8 +146,13 @@ _Coming soon_
 | notify(data:_Object_, ..., name:_String_, ...) | this | Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.  |
 | clear() | this | Clears all subscribers. |
 
+###observer
+_Coming soon_
 
-###spec
+###queue
+_Coming soon_
+
+###specification
 Constructor: $.spec(func:_function_). The function passed must take a value parameter and return a boolean value.
 
 Example:
@@ -143,3 +174,6 @@ console.log(oneOrTwoSpec.isSatisfiedBy(3)) //Evaluates as false
 | xor(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec |
 | not() | spec | Inverts the return value of isSatisfiedBy |
 | isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
+
+###stack
+_Coming soon_
