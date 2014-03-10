@@ -1,4 +1,4 @@
-if(!$.exists($.obj)) $.obj = { }
+if(!$.exists($.obj)) $.obj = { };
 $.obj.keys = function(o) {
     var r = [];
     for (n in o) r[r.length] = n;
