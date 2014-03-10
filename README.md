@@ -32,16 +32,58 @@ this process:
 The following is documentation for each class in the ku4jQuery-kernel library organized by common domain to follow the
 directory structure found in /src.
 
-##Account
+##Class
+Class is a foundational class that numerous other classes inherit from offering the subclasses a common property API
+that includes get(), set(), and property() which is a getter/setter. It also exposes the inheritance API. To subclass
+JavaScript classes using the kernel Class one would first create their class and then subclass as follows:
 
-###emailAddress
+```javascript
+function myClass() {
+    myClass.base.call(this); //This line scopes the class hierarchy.
+}
+myClass.prototype = {
+    /*All prototype methods go here*/
+};
+$.Class.extend(myClass, $.Class); //We are creating our subclass here.
+
+$.myApp.myClass = function() { return new myClass(); } //We are exposing myClass for use here
+```
+With the above implementation. A developer can now call $.myApp.myClass() from within their application to instantiate
+a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
+inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
+$.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)
+
 | API | Return type | Description |
 | --- | --- | --- |
 |  |  |  |
 
-###phoneNumber
-| API | Return type | Description |
-| --- | --- | --- |
-|  |  |  |
+##account
+[Coming soon]
 
-###properName
+##collections
+[Coming soon]
+
+##datetime
+[Coming soon]
+
+##finance
+[Coming soon]
+
+##geometry
+[Coming soon]
+
+##patterns
+
+###mediator
+| API | returns | Description |
+| --- | --- | --- |
+| throwErrors() | self |  |
+| logErrors() | self |  |
+| catchErrors() | self |  |
+| isEmpty() | Boolean |  |
+| count() | Number |  |
+| activeSubscriptionKeys() | Array |  |
+| subscribe(name, method, scope, id) | self |  |
+| unsubscribe(name, id) | self |  |
+| notify([data, ...], [nameList, ...]) | self |  |
+| clear() | self |  |
