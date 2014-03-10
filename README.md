@@ -77,13 +77,13 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 ###mediator
 | API | returns | Description |
 | --- | --- | --- |
-| throwErrors() | self | Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled |
-| logErrors() | self | Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue |
-| catchErrors() | self | Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue |
-| isEmpty() | Boolean |  |
-| count() | Number |  |
-| activeSubscriptionKeys() | Array |  |
-| subscribe(name, method, scope, id) | self |  |
-| unsubscribe(name, id) | self |  |
-| notify([data, ...], [nameList, ...]) | self |  |
-| clear() | self |  |
+| throwErrors() | self | Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled. |
+| logErrors() | self | Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue. |
+| catchErrors() | self | Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue. |
+| isEmpty() | Boolean | Returns true if there are no subscribers. |
+| count() | Number | Returns that number of subscription managers. |
+| activeSubscriptionKeys() | Array | Returns an array of active subscription keys. |
+| subscribe(name, method, scope, id) | self | Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe |
+| unsubscribe(name, id) | self | Removes subscriber of id from all name notifications |
+| notify([data, ...], [name, ...]) | self | Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.  |
+| clear() | self | Clears all subscribers. |
