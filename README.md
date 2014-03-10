@@ -53,10 +53,6 @@ a new myClass that contains get(), set(), and property(). Also, it is important 
 inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
 $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)
 
-| API | Return type | Description |
-| --- | --- | --- |
-|  |  |  |
-
 ##account
 [Coming soon]
 
