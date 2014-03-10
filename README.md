@@ -77,9 +77,9 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 ###mediator
 | API | returns | Description |
 | --- | --- | --- |
-| throwErrors() | self |  |
-| logErrors() | self |  |
-| catchErrors() | self |  |
+| throwErrors() | self | Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled |
+| logErrors() | self | Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue |
+| catchErrors() | self | Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue |
 | isEmpty() | Boolean |  |
 | count() | Number |  |
 | activeSubscriptionKeys() | Array |  |
