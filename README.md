@@ -196,7 +196,15 @@ _Documentation Coming Soon_
 ###specification
 Constructor: $.spec(func:_function_). The function passed must take a value parameter and return a boolean value.
 
-Example:
+| API | Return | Description |
+| --- | --- | --- |
+| and(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec |
+| or(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec |
+| xor(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec |
+| not() | spec | Inverts the return value of isSatisfiedBy |
+| isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
+
+####Spec Example:
 ```javascript
 var oneSpec = $.spec(function(value) { return value === 1; }),
     twoSpec = $.spec(function(value) { return value === 2; }),
@@ -207,14 +215,6 @@ console.log(twoSpec.isSatisfiedBy(1)) //Evaluates as false
 console.log(oneOrTwoSpec.isSatisfiedBy(2)) //Evaluates as true
 console.log(oneOrTwoSpec.isSatisfiedBy(3)) //Evaluates as false
 ```
-
-| API | Return | Description |
-| --- | --- | --- |
-| and(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec |
-| or(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec |
-| xor(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec |
-| not() | spec | Inverts the return value of isSatisfiedBy |
-| isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
 
 ###stack
 _Documentation Coming Soon_
