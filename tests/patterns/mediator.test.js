@@ -110,7 +110,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3, 5, 4, "test", "method.a");
+        mediator.notify(3, "method.a");
 
         equal(test1, 3);
         equal(test2, 3);

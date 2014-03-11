@@ -173,6 +173,19 @@ _Documentation Coming Soon_
 | notify(data:_Object_, ..., name:_String_, ...) | this | Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.  |
 | clear() | this | Clears all subscribers. |
 
+####mediator gotchas!
+This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
+may arisen when used irresponsibly, ignorantly, or unknowingly.
+
+* When named notification, that is, when calling notify and passing one or more name arguments to filter the call, be
+mindful that a mediator will recognize your name as data and _**not**_ a filter if there are no subscribers under that
+name. This can lead to "Maximum call stack exceeded" exceptions if a developer has not been properly mindful of SoC and
+has pushed further notifications on the call stack that in turn cause a notification loop.
+
+* Do not be afraid of setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
+through notification can be difficult to debug. Setting how the mediator handles these exceptions can be of great help
+in development.
+
 ###observer
 _Documentation Coming Soon_
 
