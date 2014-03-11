@@ -53,6 +53,34 @@ a new myClass that contains get(), set(), and property(). Also, it is important 
 inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
 $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)
 
+##Base
+
+###math
+Convenient math operations, and some that fix some odd bugs.
+
+| API | Return | Description |
+| --- | --- | --- |
+| round(value:_Number_, nearest:_Number_) | Number | Rounds value to the nearest, where nearest is the base 10 exponent to which to round |
+| roundUp(value:_Number_, nearest:_Number_) | Number | Rounds value up to the nearest, where nearest is the base 10 exponent to which to round |
+| roundDown(value:_Number_, nearest:_Number_) | Number | Rounds value down to the nearest, where nearest is the base 10 exponent to which to round |
+
+###str
+Convenient string operations.
+
+| API | Return | Description |
+| --- | --- | --- |
+| trimStart(value:_String_) | String | Returns a string with leading whitespace trimmed. |
+| trimEnd(value:_String_) | String | Returns a string with trailing whitespace trimmed. |
+| trim(value:_String_) | String | Returns a string with leading and trailing whitespace trimmed. |
+| format(value:_String_, ...:_String_) | String | Returns a string replacing the format placeholders with the following arguments. |
+| render(value:_String_, obj:_object_) | String | Returns a string replacing the format placeholders with the values of the key, value pairs in the following object argument. |
+| encodeBase64(value:_String_) | String | Returns a base 64 encoded string from value. |
+| decodeBase64(value:_String_) | String | Returns a string from a base 64 encoded value. |
+| parse(value:_Number_, ...:_Number_) | String | Returns a string from the character code arguments. |
+
+###uid
+A 32 character random unique ID.
+
 ##Account
 
 ###emailAddress
@@ -90,7 +118,6 @@ _Documentation Coming Soon_
 | toObject() | object | Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash. |
 
 ###list
-
 | API | Return | Description |
 | --- | --- | --- |
 | count() | Number | Returns the number of items in the list. |
