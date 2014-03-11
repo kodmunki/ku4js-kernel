@@ -175,12 +175,13 @@ _Documentation Coming Soon_
 
 ####mediator gotchas!
 This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
-may arisen when used irresponsibly, ignorantly, or unknowingly.
+may arise when used irresponsibly, ignorantly, or unknowingly.
 
-* When named notification, that is, when calling notify and passing one or more name arguments to filter the call, be
-mindful that a mediator will recognize your name as data and _**not**_ a filter if there are no subscribers under that
+* When filtering a notification, that is, when calling notify and passing one or more name arguments to filter the call, be
+mindful that a mediator will recognize your name as _data_ and _**not**_ a filter if there are no subscribers under that
 name. This can lead to "Maximum call stack exceeded" exceptions if a developer has not been properly mindful of SoC and
-has pushed further notifications on the call stack that in turn cause a notification loop.
+has pushed further notifications on the call stack that in turn cause a notification loop. It is important to manage
+your mediators and subscribe and unsubscribe responsibly. This is easily avoidable with proper unit tests!
 
 * Do not be afraid of setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
 through notification can be difficult to debug. Setting how the mediator handles these exceptions can be of great help
