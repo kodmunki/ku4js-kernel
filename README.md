@@ -67,6 +67,13 @@ _Documentation Coming Soon_
 ##Collections
 
 ###hash
+
+| Name | ABV | Volume (oz) | Price | Picture |
+| --- | --- | --- | --- | --- |
+| Bud | 5 | 12 | $5.00 | (BUD)[http://www.budwieser.com] |
+
+
+
 | API | Return | Description |
 | --- | --- | --- |
 | count() | Number | Returns the number of items in the hash. |
