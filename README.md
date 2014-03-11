@@ -70,7 +70,7 @@ _Documentation Coming Soon_
 
 | Name | ABV | Volume (oz) | Price | Picture |
 | --- | --- | --- | --- | --- |
-| Bud | 5 | 12 | $5.00 | (BUD)[http://www.budwieser.com] |
+| Bud | 5 | 12 | $5.00 | [BUD](http://www.budwieser.com) |
 
 
 
