@@ -473,7 +473,22 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Clears all subscribers.</td>
 </tr>
 </tbody>
-</table><h3>
+</table><h4>
+<a name="mediator-gotchas" class="anchor" href="#mediator-gotchas"><span class="octicon octicon-link"></span></a>mediator gotchas!</h4>
+
+<p>This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
+may arise when used irresponsibly, ignorantly, or unknowingly.</p>
+
+<ul>
+<li><p>When filtering a notification, that is, when calling notify and passing one or more name arguments to filter the call, be
+mindful that a mediator will recognize your name as <em>data</em> and <em><strong>not</strong></em> a filter if there are no subscribers under that
+name. This can lead to "Maximum call stack exceeded" exceptions if a developer has not been properly mindful of SoC and
+has pushed further notifications on the call stack that in turn cause a notification loop. It is important to manage
+your mediators and subscribe and unsubscribe responsibly. This is easily avoidable with proper unit tests!</p></li>
+<li><p>Do not be afraid of setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
+through notification can be difficult to debug. Setting how the mediator handles these exceptions can be of great help
+in development.</p></li>
+</ul><h3>
 <a name="observer" class="anchor" href="#observer"><span class="octicon octicon-link"></span></a>observer</h3>
 
 <p><em>Documentation Coming Soon</em></p>
@@ -487,18 +502,6 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <a name="specification" class="anchor" href="#specification"><span class="octicon octicon-link"></span></a>specification</h3>
 
 <p>Constructor: $.spec(func:<em>function</em>). The function passed must take a value parameter and return a boolean value.</p>
-
-<p>Example:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">oneSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}),</span>
-    <span class="nx">twoSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}),</span>
-    <span class="nx">oneOrTwoSpec</span> <span class="o">=</span> <span class="nx">oneSpec</span><span class="p">.</span><span class="nx">or</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">);</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
-</pre></div>
 
 <table>
 <thead><tr>
@@ -533,7 +536,20 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Returns a boolean value of true if the value passed satisfies the specification</td>
 </tr>
 </tbody>
-</table><h3>
+</table><h4>
+<a name="spec-example" class="anchor" href="#spec-example"><span class="octicon octicon-link"></span></a>Spec Example:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">oneSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}),</span>
+    <span class="nx">twoSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}),</span>
+    <span class="nx">oneOrTwoSpec</span> <span class="o">=</span> <span class="nx">oneSpec</span><span class="p">.</span><span class="nx">or</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
+</pre></div>
+
+<h3>
 <a name="stack" class="anchor" href="#stack"><span class="octicon octicon-link"></span></a>stack</h3>
 
 <p><em>Documentation Coming Soon</em></p>
