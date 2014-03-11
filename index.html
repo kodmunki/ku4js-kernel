@@ -40,7 +40,7 @@ design patterns.</p>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
 <ul>
-<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> --:<em>This is not a dependency if kernel is compiled as such. See the:</em>kodmunki™ build process_(#kodmunki-build-process)_.</li>
+<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> -- <em>This is not a dependency if kernel is compiled as such. See the:</em>kodmunki™ build process_(#kodmunki-build-process)_.</li>
 </ul><h1>
 <a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
 
@@ -92,6 +92,95 @@ JavaScript classes using the kernel Class one would first create their class and
 a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
 inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
 $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)</p>
+
+<h2>
+<a name="base" class="anchor" href="#base"><span class="octicon octicon-link"></span></a>Base</h2>
+
+<h3>
+<a name="math" class="anchor" href="#math"><span class="octicon octicon-link"></span></a>math</h3>
+
+<p>Convenient math operations, and some that fix some odd bugs.</p>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>round(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value to the nearest, where nearest is the base 10 exponent to which to round</td>
+</tr>
+<tr>
+<td>roundUp(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value up to the nearest, where nearest is the base 10 exponent to which to round</td>
+</tr>
+<tr>
+<td>roundDown(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value down to the nearest, where nearest is the base 10 exponent to which to round</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="str" class="anchor" href="#str"><span class="octicon octicon-link"></span></a>str</h3>
+
+<p>Convenient string operations.</p>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>trimStart(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string with leading whitespace trimmed.</td>
+</tr>
+<tr>
+<td>trimEnd(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string with trailing whitespace trimmed.</td>
+</tr>
+<tr>
+<td>trim(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string with leading and trailing whitespace trimmed.</td>
+</tr>
+<tr>
+<td>format(value:<em>String</em>, ...:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string replacing the format placeholders with the following arguments.</td>
+</tr>
+<tr>
+<td>render(value:<em>String</em>, obj:<em>object</em>)</td>
+<td>String</td>
+<td>Returns a string replacing the format placeholders with the values of the key, value pairs in the following object argument.</td>
+</tr>
+<tr>
+<td>encodeBase64(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a base 64 encoded string from value.</td>
+</tr>
+<tr>
+<td>decodeBase64(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string from a base 64 encoded value.</td>
+</tr>
+<tr>
+<td>parse(value:<em>Number</em>, ...:<em>Number</em>)</td>
+<td>String</td>
+<td>Returns a string from the character code arguments.</td>
+</tr>
+</tbody>
+</table><h3>
+<a name="uid" class="anchor" href="#uid"><span class="octicon octicon-link"></span></a>uid</h3>
+
+<p>A 32 character random unique ID.</p>
 
 <h2>
 <a name="account" class="anchor" href="#account"><span class="octicon octicon-link"></span></a>Account</h2>
