@@ -66,8 +66,9 @@ function coord_canParse(candidate){
     catch(e) { return false; }
 }
 function coord_parse(obj) {
-    if (("left" in obj) && ("top" in obj)) return new coord(obj.left, obj.top);
-    if (("width" in obj) && ("height" in obj)) return new coord(obj.width, obj.height);
+    if(!$.exists(obj)) return null;
+    if ($.exists(obj.left) && $.exists(obj.top)) return new coord(obj.left, obj.top);
+    if ($.exists(obj.width) && $.exists(obj.height)) return new coord(obj.width, obj.height);
     return null;
 }
 
