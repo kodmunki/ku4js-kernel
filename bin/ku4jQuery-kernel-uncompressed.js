@@ -793,12 +793,12 @@ money.prototype = {
     
     add: function(other) {
         money_checkType(this, other);
-        return new money(this._value + other.value());
+        return new money(this._value + other.value(), this._type);
     },
     divide: function(value) {
         if(!$.isNumber(value))
             throw $.ku4exception("$.money", $.str.format("Invalid divisor value= {0}", value));
-        return new money(this._value / value);
+        return new money(this._value / value, this._type);
     },
     equals: function(other) {
         return (this.isOfType(other)) && (this._value == other.value());
@@ -817,40 +817,40 @@ money.prototype = {
     multiply: function(value) {
         if(!$.isNumber(value))
             throw $.ku4exception("$.money", $.str.format("Invalid multiplier value= {0}", value));
-        return new money(this._value * value);
+        return new money(this._value * value, this._type);
     },
     round: function() {
-        return new money($.math.round(this.value(), -2));
+        return new money($.math.round(this.value(), -2), this._type);
     },
     roundDown: function() {
-        return new money($.math.roundDown(this.value(), -2));
+        return new money($.math.roundDown(this.value(), -2), this._type);
     },
     roundUp: function() {
-        return new money($.math.roundUp(this.value(), -2));
+        return new money($.math.roundUp(this.value(), -2), this._type);
     },
     subtract: function(other) {
         money_checkType(this, other);
-        return new money(this._value - other.value());
+        return new money(this._value - other.value(), this._type);
     },
     toString: function() {
         var format = (this.value < 0) ? "({0}{1}.{2})" : "{0}{1}.{2}";
         return $.str.format(format, this._type, money_formatDollars(this), money_formatCents(this));
     }
-}
+};
 $.Class.extend(money, $.Class);
 
-$.money = function(number, type){ return new money(number, type); }
+$.money = function(number, type){ return new money(number, type); };
 $.money.Class = money;
 
-$.money.zero = function() { return $.money(0); }
-$.money.isMoney = function(o) { return o instanceof money; }
+$.money.zero = function(type) { return $.money(0, type); };
+$.money.isMoney = function(o) { return o instanceof money; };
 $.money.canParse = function(v){
     try {
         $.money.parse(v);
         return true;
     }
     catch(e){ return false; }
-}
+};
 $.money.parse = function(str) {
     if($.isNumber(str)) return $.money(str);
     var b = /(\(.*\))|(\-)/.test(str),
@@ -860,17 +860,17 @@ $.money.parse = function(str) {
         n = parseFloat(str.replace(/[^\d\.]/g, "")),
         v = (b) ? -n : n;
     return $.money(v, U);
-}
+};
 $.money.tryParse = function(o){
     return $.money.canParse(o)
         ? $.money.parse(o)
         : null;
-}
+};
 
 money_checkType = function(money, other) {
     if (!money.isOfType(other))
         throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
-}
+};
 money_formatDollars = function(money) {
     var dollars = money.dollars(),
         anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
@@ -886,7 +886,7 @@ money_formatDollars = function(money) {
         if ((i % 3 == 0) && b) a[a.length] = ",";
     }
     return $.str.build.apply(this, a.reverse());
-}
+};
 money_formatCents = function(money) {
     var C = $.math.round(money.cents(), -3),
         s = C.toString(),
@@ -894,7 +894,7 @@ money_formatCents = function(money) {
     if ($.isZero(l) || C >= .995) return "00";
     if (l < 2) return "0" + c[0];
     return (parseInt(c[2]) > 4) ? c[0] + (parseInt(c[1]) + 1) : c[0] + c[1];
-}
+};
 
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
