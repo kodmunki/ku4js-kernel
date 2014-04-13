@@ -6,7 +6,7 @@ $(function(){
 
     module("specifications");
 
-    test('create', function (test) {
+    test('create', function () {
         var lock1 = $.spec(),
             lock2 = $.spec(false),
             lock3 = $.spec(true);
@@ -15,7 +15,7 @@ $(function(){
         ok($.spec(function(v){return v == true;}));
     });
 
-    test('and', function (test) {
+    test('and', function () {
         expect(8);
         ok(True.and(True).isSatisfiedBy(true));
         ok(!True.and(True).isSatisfiedBy(false));
@@ -27,7 +27,7 @@ $(function(){
         ok(!False.and(True).isSatisfiedBy(false));
     });
 
-    test('or', function (test) {
+    test('or', function () {
         expect(8);
         ok(True.or(True).isSatisfiedBy(true));
         ok(!True.or(True).isSatisfiedBy(false));
@@ -39,7 +39,7 @@ $(function(){
         ok(False.or(True).isSatisfiedBy(false));
     });
 
-    test('xor', function (test) {
+    test('xor', function () {
         expect(8);
         ok(!True.xor(True).isSatisfiedBy(true));
         ok(!True.xor(True).isSatisfiedBy(false));
@@ -51,7 +51,7 @@ $(function(){
         ok(False.xor(True).isSatisfiedBy(false));
     });
 
-    test('not', function (test) {
+    test('not', function () {
         expect(4);
         ok(!True.not().isSatisfiedBy(true));
         ok(True.not().isSatisfiedBy(false));

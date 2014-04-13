@@ -3,13 +3,13 @@ $(function(){
 
     module("hash");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(2);
         ok($.hash());
         ok($.hash().isTypeOf($.hash.Class));
     });
     
-    test('add', function (test) {
+    test('add', function () {
         var hash = $.hash();
 
         expect(10);
@@ -31,7 +31,7 @@ $(function(){
         equal(hash.count(), 3, "Invalid key: duplicate");
     });
     
-    test('meld', function (test) {
+    test('meld', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -46,7 +46,7 @@ $(function(){
         equal(hash.findValue("three"), 3, "meld duplicate");
     });
     
-    test('merge', function (test) {
+    test('merge', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -60,7 +60,7 @@ $(function(){
         equal(5, hash.findValue("three"), "merge duplicate");
     });
     
-    test('containsKey', function (test) {
+    test('containsKey', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -74,7 +74,7 @@ $(function(){
         ok(hash.containsKey("zero"), "containsKey(\"zero\")");
     });
     
-    test('containsValue', function (test) {
+    test('containsValue', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -89,7 +89,7 @@ $(function(){
         ok(hash.containsValue(new Date(2013, 1, 1)), "containsValue(new Date(2013, 1, 1))");
     });
 
-    test('contains', function (test) {
+    test('contains', function () {
         var hash = $.hash({
             "a": 1,
             "b": 2,
@@ -116,7 +116,7 @@ $(function(){
         ok(hash.contains($.hash({"a": 1, "b": 2, "c": 3})), 'contains($.hash({"a": 1, "b": 2, "c": 3}))');
     });
     
-    test('remove', function (test) {
+    test('remove', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -130,7 +130,7 @@ $(function(){
         equal(hash.count(), 2, "remove(0)");
     });
     
-    test('update', function (test) {
+    test('update', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",
@@ -144,7 +144,7 @@ $(function(){
         equal(hash.count(), 3);
     });
 
-    test('clear', function (test) {
+    test('clear', function () {
         var hash = $.hash({
             "zero": 0,
             "empty": "",

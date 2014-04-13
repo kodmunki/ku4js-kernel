@@ -10,7 +10,6 @@ hash.prototype = {
     count: function(){ return this.get("count"); },
     keys: function(){ return $.obj.keys(this.$h); },
     values: function(){ return $.obj.values(this.$h); },
-
     add: function(k, v) {
         if ((!($.isString(k) || $.isNumber(k))) ||
             /(null)|(undefined)/.test(k)

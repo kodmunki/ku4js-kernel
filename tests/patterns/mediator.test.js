@@ -3,12 +3,12 @@ $(function(){
 
     module("mediator");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.mediator());
     });
 
-    test('subscribe', function (test) {
+    test('subscribe', function () {
         var test1, test2, test3,
             mediator = $.mediator()
             .subscribe("method.a", function(value){ test1 = value; }, null, "1")
@@ -31,7 +31,7 @@ $(function(){
     });
 
 
-    test('unsubscribe', function (test) {
+    test('unsubscribe', function () {
         var test1, test2, test3,
             mediator = $.mediator()
             .subscribe("method.a", function(value){ test1 = value; }, null, "1")
@@ -55,7 +55,7 @@ $(function(){
         equal(test3, 3);
     });
 
-    test('clear', function (test) {
+    test('clear', function () {
         var test1, test2, test3,
             mediator = $.mediator()
             .subscribe("method.a", function(value){ test1 = value; }, null, "1")
@@ -95,10 +95,10 @@ $(function(){
         equal(test3, 3);
     });
 
-    test('filteredNofiy', function (test) {
+    test('filteredNofiy', function () {
         var test1, test2, test3,
             mediator = $.mediator()
-            .subscribe("method.a", function(value){ console.log(arguments); test1 = value; }, null, "1")
+            .subscribe("method.a", function(value){ test1 = value; }, null, "1")
             .subscribe("method.a", function(value){ test2 = value; }, null, "2")
             .subscribe("method.b", function(value){ test3 = value; }, null, "1"),
 

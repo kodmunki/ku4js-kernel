@@ -7,7 +7,7 @@ $(function(){
         emailAddress2 = $.emailAddress("john.doe", "kodmunki", "com"),
         emailAddress3 = $.emailAddress("john.doe", "sales.kodmunki", "com");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(5);
         ok(emailAddress3);
         ok(emailAddress3.isTypeOf($.emailAddress.Class));
@@ -16,19 +16,19 @@ $(function(){
         equal(emailAddress3.topLevelDomain(), "com");
     });
 
-    test('equals', function (test) {
+    test('equals', function () {
         expect(2);
         ok(emailAddress1.equals(emailAddress2));
         ok(!emailAddress1.equals(emailAddress3))
     });
 
-    test('toString', function (test) {
+    test('toString', function () {
         expect(2);
         equal(emailAddress1.toString(), "john.doe@kodmunki.com");
         equal(emailAddress3.toString(), "john.doe@sales.kodmunki.com");
     });
 
-    test('parse', function (test) {
+    test('parse', function () {
         var emailAddress = $.emailAddress.parse("my.new.email@my.new_company.com")
         expect(3);
         equal(emailAddress.username(), "my.new.email");

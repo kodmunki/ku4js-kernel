@@ -3,7 +3,7 @@ $(function(){
 
     module("properName");
 
-    test('create', function (test) {
+    test('create', function () {
         var properName = $.properName("John", "David", "Doe")
         expect(5);
         ok(properName);
@@ -13,7 +13,7 @@ $(function(){
         equal(properName.last(), "Doe");
     });
 
-    test('equals', function (test) {
+    test('equals', function () {
         var properName1 = $.properName("John", "David", "Doe"),
             properName2 = $.properName("John", "David", "Doe"),
             properName3 = $.properName("John", "Dave", "Doe")
@@ -22,7 +22,7 @@ $(function(){
         ok(!properName1.equals(properName3))
     });
 
-    test('full', function (test) {
+    test('full', function () {
         var properName1 = $.properName("John", "David", "Doe"),
             properName2 = $.properName("John", null, "Doe");
         expect(2);
@@ -30,7 +30,7 @@ $(function(){
         equal(properName2.full(), "John Doe");
     });
 
-    test('initials', function (test) {
+    test('initials', function () {
         var properName1 = $.properName("John", "David", "Doe"),
             properName2 = $.properName("John", null, "Doe");
 
@@ -39,7 +39,7 @@ $(function(){
         equal(properName2.initials(), "J.D.");
     });
 
-    test('toStringWithFormat', function (test) {
+    test('toStringWithFormat', function () {
         var properName1 = $.properName("John", "David", "Doe"),
             properName2 = $.properName("John", null, "Doe");
 

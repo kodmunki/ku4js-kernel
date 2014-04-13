@@ -6,7 +6,7 @@ $(function(){
 
     module("obj");
 
-    test('keys', function (test) {
+    test('keys', function () {
         var keys = $.obj.keys(obj1),
             testValues = ["one", "two", "three"],
             i = 0, l = testValues.length;
@@ -17,7 +17,7 @@ $(function(){
         }
     });
 
-    test('values', function (test) {
+    test('values', function () {
         var values = $.obj.values(obj1),
             testValues = [1, 2, 3],
             i = 0, l = testValues.length;
@@ -28,7 +28,7 @@ $(function(){
         }
     });
 
-    test('values', function (test) {
+    test('values', function () {
         var values = $.obj.values(obj1),
             testValues = [1, 2, 3],
             i = 0, l = testValues.length;
@@ -39,13 +39,13 @@ $(function(){
         }
     });
 
-    test('count', function (test) {
+    test('count', function () {
         expect(2);
         equal($.obj.count(obj1), 3);
         equal($.obj.count(obj2), 4);
     });
 
-    test('hasProp', function (test) {
+    test('hasProp', function () {
         expect(4);
         ok($.obj.hasProp(obj1, "one"));
         ok($.obj.hasProp(obj1, "two"));
@@ -53,7 +53,7 @@ $(function(){
         ok(!$.obj.hasProp(obj1, "four"));
     });
 
-    test('merge', function (test) {
+    test('merge', function () {
         var merge = $.obj.merge(obj1, obj2);
         expect(6);
         equal($.obj.count(merge), 6);
@@ -64,7 +64,7 @@ $(function(){
         equal(merge.three, obj1.three);
     });
 
-    test('meld', function (test) {
+    test('meld', function () {
         var meld = $.obj.meld(obj1, obj2);
         expect(6);
         equal($.obj.count(meld), 6);

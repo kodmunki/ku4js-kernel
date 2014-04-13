@@ -7,7 +7,7 @@ $(function(){
 
     module("replicate");
 
-    test('replicate', function (test) {
+    test('replicate', function () {
         expect(5);
         ok($.replicate(null) ==  null);
         ok($.replicate(undefined) == undefined);

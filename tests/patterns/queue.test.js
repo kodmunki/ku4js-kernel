@@ -3,12 +3,12 @@ $(function(){
 
     module("queue");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.fifo());
     });
 
-    test('methods', function (test) {
+    test('methods', function () {
         expect(7);
 
         var queue = $.fifo();

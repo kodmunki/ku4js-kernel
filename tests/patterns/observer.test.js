@@ -5,12 +5,12 @@ $(function(){
 
     module("observer");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.observer());
     });
 
-    test('add', function (test) {
+    test('add', function () {
         expect(4);
         ok($.isUndefined(test1));
         ok($.isUndefined(test2));
@@ -23,7 +23,7 @@ $(function(){
         equal(2, test2);
     });
 
-    test('remove', function (test) {
+    test('remove', function () {
         expect(5);
 
         test1 = undefined;

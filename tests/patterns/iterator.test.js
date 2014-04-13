@@ -3,12 +3,12 @@ $(function(){
 
     module("iterator");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.iterator());
     });
 
-    test('propertySubject', function (test) {
+    test('propertySubject', function () {
         expect(32);
         var iterator = $.iterator(),
             array = [1,2,3,4,5],
@@ -31,7 +31,7 @@ $(function(){
         iterator.subject(hash); _test(iterator);
     });
 
-    test('methods', function (test) {
+    test('methods', function () {
         expect(18);
         var arr = [1, 2, 3],
             obj = { "a": 1, "b": 2, "c": 3 },

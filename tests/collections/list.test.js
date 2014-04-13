@@ -5,13 +5,13 @@ $(function(){
 
     module("list");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(2);
         ok($.list());
         ok($.list().isTypeOf($.list.Class));
     });
     
-    test('add', function (test) {
+    test('add', function () {
         var list = $.list();
 
         expect(1);
@@ -22,7 +22,7 @@ $(function(){
         equal(list.count(), 4, "add");
     });
     
-    test('contains', function (test) {
+    test('contains', function () {
         var list = $.list([null, 0, "", new Date(2013, 1, 1)]);
 
         expect(4);
@@ -32,7 +32,7 @@ $(function(){
         ok(list.contains(new Date(2013, 1, 1)));
     });
     
-    test('find', function (test) {
+    test('find', function () {
         var list = $.list([null, 0, "", new Date(2013, 1, 1)]);
 
         expect(4);
@@ -42,7 +42,7 @@ $(function(){
         deepEqual(list.find(3), new Date(2013, 1, 1));
     });
     
-    test('remove', function (test) {
+    test('remove', function () {
         var list = $.list([null, 0, "", new Date(2013, 1, 1)]);
 
         expect(1);
@@ -54,7 +54,7 @@ $(function(){
         equal(list.count(), 0, "remove");
     });
     
-    test('toArray', function (test) {
+    test('toArray', function () {
         var list = $.list([null, undefined, 0, "", new Date(2013, 1, 1)]);
 
         expect(2);
@@ -67,7 +67,7 @@ $(function(){
         equal(array.length, 8);
     });
     
-    test('clear', function (test) {
+    test('clear', function () {
         var list = $.list([null, 0, "", new Date(2013, 1, 1)]);
 
         expect(1);
@@ -75,7 +75,7 @@ $(function(){
         equal(list.count(), 0, "clear");
     });
     
-    test('isEmpty', function (test) {
+    test('isEmpty', function () {
         var list = $.list([null, 0, "", new Date(2013, 1, 1)]);
 
         expect(2);

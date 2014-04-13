@@ -5,7 +5,7 @@ $(function(){
 
     module("dayPoint");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(16);
         ok(!$.dayPoint(null));
         ok(!$.dayPoint(undefined));
@@ -24,7 +24,7 @@ $(function(){
         equal(date.isWeekday(), false);
         equal(date.isWeekend(), true);
     });
-    test('toString', function (test) {
+    test('toString', function () {
         expect(7);
         throws(function(){$.dayPoint(null).toString()});
         throws(function(){$.dayPoint(undefined).toString()});
@@ -34,7 +34,7 @@ $(function(){
         equal($.dayPoint.parse("1/1/2011").toString(), "01/01/2011");
         equal($.dayPoint.parse(new Date("1/1/2011")).toString(), "01/01/2011");
     });
-    test('toDate', function (test) {
+    test('toDate', function () {
         expect(8);
         throws(function(){$.dayPoint(null).toDate()});
         throws(function(){$.dayPoint(undefined).toDate()});
@@ -45,7 +45,7 @@ $(function(){
         equal($.dayPoint.parse("1/1/2011").toDate().toString(), new Date("01/01/2011").toString());
         equal($.dayPoint.parse(new Date("1/1/2011")).toDate().toString(), new Date("01/01/2011").toString());
     });
-    test('toJson', function (test) {
+    test('toJson', function () {
         expect(8);
         throws(function(){$.dayPoint(null).toJson()});
         throws(function(){$.dayPoint(undefined).toJson()});
@@ -56,7 +56,7 @@ $(function(){
         equal($.dayPoint.parse("1/1/2011").toJson(), new Date("01/01/2011").toJSON());
         equal($.dayPoint.parse(new Date("1/1/2011")).toJson(), new Date("01/01/2011").toJSON());
     });
-    test('navigation', function (test) {
+    test('navigation', function () {
         expect(15);
         ok(date.equals($.dayPoint.parse("1/1/2011")));
         ok(date.nextDay().equals($.dayPoint.parse("1/2/2011")));
@@ -74,7 +74,7 @@ $(function(){
         ok(date.isBefore($.dayPoint.parse("2/1/2011")));
         ok(date.isBefore($.dayPoint.parse("2/1/2011")));
     });
-    test('canParse', function (test) {
+    test('canParse', function () {
         expect(10);
         ok($.dayPoint.canParse("1/1/2011"));
         ok($.dayPoint.canParse(new Date("1/1/2011")));
@@ -87,7 +87,7 @@ $(function(){
         ok(!$.dayPoint.canParse({}));
         ok(!$.dayPoint.canParse(function() { }));
     });
-    test('parse', function (test) {
+    test('parse', function () {
         expect(10);
         ok($.dayPoint.parse("1/1/2011"));
         ok($.dayPoint.parse(new Date("1/1/2011")));
@@ -100,12 +100,12 @@ $(function(){
         ok(!$.dayPoint.parse({}));
         ok(!$.dayPoint.parse(function() { }));
     });
-    test('today', function (test) {
+    test('today', function () {
         expect(1);
         ok($.dayPoint.today());
 
     });
-    test('now', function (test) {
+    test('now', function () {
         expect(4);
         ok($.dayPoint.today().equals($.dayPoint.parse(new Date())));
         $.dayPoint.assumeNow($.dayPoint.parse("1/1/2011"));

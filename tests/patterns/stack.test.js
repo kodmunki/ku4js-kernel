@@ -3,12 +3,12 @@ $(function(){
 
     module("stack");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.lifo());
     });
     
-    test('methods', function (test) {
+    test('methods', function () {
         expect(7);
     
         var stack = $.lifo();

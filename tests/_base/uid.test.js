@@ -3,7 +3,7 @@ $(function(){
 
     module("uid");
 
-    test('uid', function (test) {
+    test('uid', function () {
         expect(2);
         equal($.uid().length, 32);
         ok(/[^=]/.test($.uid()));

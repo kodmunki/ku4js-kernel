@@ -3,7 +3,7 @@ $(function(){
 
     module("math");
     
-    test('methods round', function (test) {
+    test('methods round', function () {
         expect(10);
         equal($.math.round(0), 0);
         equal($.math.round(555.555, -4), 555.555, "-4");
@@ -17,7 +17,7 @@ $(function(){
         equal($.math.round(555.555, 4), 0, "4");
     });
     
-    test('methods roundUp', function (test) {
+    test('methods roundUp', function () {
         expect(10);
         equal($.math.roundUp(0), 1);
         equal($.math.roundUp(555.554, -4), 555.5541, "-4");
@@ -31,7 +31,7 @@ $(function(){
         equal($.math.roundUp(555.554, 4), 10000, "4");
     });
     
-    test('methods roundDown', function (test) {
+    test('methods roundDown', function () {
         expect(10);
         equal($.math.roundUp(0), 1);
         equal($.math.roundUp(555.554, -4), 555.5541, "-4");

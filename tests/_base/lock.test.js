@@ -3,7 +3,7 @@ $(function(){
 
     module("lock");
 
-    test('create', function (test) {
+    test('create', function () {
         var lock1 = $.lock(),
             lock2 = $.lock(false),
             lock3 = $.lock(true);
@@ -15,14 +15,14 @@ $(function(){
     });
 
     var lock = $.lock();
-    test('lock', function (test) {
+    test('lock', function () {
         lock.unlock().lock();
 
         expect(1);
         ok(lock.isLocked());
     });
 
-    test('unlock', function (test) {
+    test('unlock', function () {
         lock.lock().unlock();
 
         expect(1);

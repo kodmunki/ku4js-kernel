@@ -3,12 +3,12 @@ $(function(){
 
     module("rolodex");
 
-    test('create', function (test) {
+    test('create', function () {
         expect(1);
         ok($.rolodex());
     });
 
-    test('methods', function (test) {
+    test('methods', function () {
         var arr = [1, 2, 3],
             obj = { "a": 1, "b": 2, "c": 3 },
             chk = [0,1,2,3,4,5],

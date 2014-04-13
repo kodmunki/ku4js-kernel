@@ -3,7 +3,7 @@ $(function(){
 
     module("str");
 
-    test('build', function (test) {
+    test('build', function () {
         expect(5);
         equal($.str.build(null), "null");
         equal($.str.build(undefined), "undefined");
@@ -12,7 +12,7 @@ $(function(){
         equal($.str.build("a","b","c"), "abc");
     });
     
-    test('format', function (test) {
+    test('format', function () {
         expect(5);
         equal($.str.format(null), null);
         equal($.str.format(undefined), undefined);
@@ -21,7 +21,7 @@ $(function(){
         equal($.str.format("{0}{0}{1}","1","2","3"), "112");
     });
 
-    test('render', function (test) {
+    test('render', function () {
         var template = "{{greeting}}, my name is {{name}}. I am {{age}} years old. Born on {{month}}, {{ordinal}} {{year}}.",
             person1 = {greeting:"Hello", name:"John", age:"30", month:"January", ordinal:"1st", year:"1980"},
             person2 = {greeting:"Yo", name:"Jane", age:"20", month:"February", ordinal:"7th", year:"1990"};
@@ -30,7 +30,7 @@ $(function(){
         equal($.str.render(template, person2), "Yo, my name is Jane. I am 20 years old. Born on February, 7th 1990.");
     });
     
-    test('trimStart', function (test) {
+    test('trimStart', function () {
         expect(4);
         throws(function() { $.str.trimStart(null); });
         throws(function() { $.str.trimStart(undefined); });
@@ -38,7 +38,7 @@ $(function(){
         equal($.str.trimStart(" string"), "string");
     });
     
-    test('trimEnd', function (test) {
+    test('trimEnd', function () {
         expect(4);
         throws(function() { $.str.trimEnd(null); });
         throws(function() { $.str.trimEnd(undefined); });
@@ -46,7 +46,7 @@ $(function(){
         equal($.str.trimEnd("string "), "string");
     });
     
-    test('trim', function (test) {
+    test('trim', function () {
         expect(4);
         throws(function() { $.str.trim(null); });
         throws(function() { $.str.trim(undefined); });
@@ -54,7 +54,7 @@ $(function(){
         equal($.str.trim(" string "), "string");
     });
     
-    test('encodeBase64', function (test) {
+    test('encodeBase64', function () {
         expect(5);
         throws(function() { $.str.encodeBase64(null); });
         throws(function() { $.str.encodeBase64(undefined); });
@@ -63,7 +63,7 @@ $(function(){
         equal($.str.encodeBase64(" This Is an (* excellenter _+} Test "), "IFRoaXMgSXMgYW4gKCogZXhjZWxsZW50ZXIgXyt9IFRlc3Qg");
     });
     
-    test('decodeBase64', function (test) {
+    test('decodeBase64', function () {
         expect(5);
         throws(function() { $.str.decodeBase64(null); });
         throws(function() { $.str.decodeBase64(undefined); });
