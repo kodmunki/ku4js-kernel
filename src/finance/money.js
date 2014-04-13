@@ -43,13 +43,13 @@ money.prototype = {
         return new money(this._value * value);
     },
     round: function() {
-        return new money($.math.round(this.value, -2));
+        return new money($.math.round(this.value(), -2));
     },
     roundDown: function() {
-        return new money($.math.roundDown(this.value, -2));
+        return new money($.math.roundDown(this.value(), -2));
     },
     roundUp: function() {
-        return new money($.math.roundUp(this.value, -2));
+        return new money($.math.roundUp(this.value(), -2));
     },
     subtract: function(other) {
         money_checkType(this, other);

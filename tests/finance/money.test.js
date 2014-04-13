@@ -74,7 +74,22 @@ $(function(){
         ok(six.divide(2).equals($.money(3.0625)));
         ok(six.divide(-2).equals($.money(-3.0625)));
     });
-    
+
+    test("round", function() {
+        expect(1);
+        ok(six.round().equals($.money(6.13)));
+    });
+
+    test("roundUp", function() {
+        expect(1);
+        ok(six.roundUp().equals($.money(6.13)));
+    });
+
+    test("roundDown", function() {
+        expect(1);
+        ok(six.roundDown().equals($.money(6.12)));
+    });
+
     test("isOfType", function() {
         expect(1);
         ok(six.isOfType(two));
