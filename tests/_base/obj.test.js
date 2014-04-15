@@ -74,4 +74,13 @@ $(function(){
         equal(meld.six, obj2.six);
         equal(meld.three, obj2.three);
     });
+
+    test('filter', function () {
+        var filter = $.obj.filter({a:1, b:2, c:3, d:null}, "a", "c", "d");
+        expect(4);
+        equal(filter.a, 1);
+        equal(filter.b, undefined);
+        equal(filter.c, 3);
+        equal(filter.d, undefined);
+    });
 });

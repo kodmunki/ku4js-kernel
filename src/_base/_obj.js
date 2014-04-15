@@ -32,3 +32,16 @@ $.obj.meld = function(obj1, obj2){
     }
     return meldee;
 };
+$.obj.filter = function(/*obj, keys...*/) {
+    var args = Array.prototype.slice.call(arguments),
+        value = {},
+        obj = args[0],
+        keys = args.slice(1);
+
+    for (var n in keys) {
+        var key = keys[n];
+        value[key] = obj[key];
+    }
+
+    return value;
+};

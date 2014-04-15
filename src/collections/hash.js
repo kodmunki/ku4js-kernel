@@ -76,6 +76,10 @@ hash.prototype = {
     meld: function(obj){
         return hash_combine(this, obj, "meld");
     },
+    filter: function(/*keys*/) {
+        var args = [this.$h].concat(Array.prototype.slice.call(arguments));
+        return $.hash($.obj.filter.apply($.obj, args));
+    },
     remove: function(k) {
         if (!this.containsKey(k)) return this;
         var h = this.$h;

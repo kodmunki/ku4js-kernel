@@ -68,8 +68,8 @@ $(function(){
         });
 
         expect(4);
-        ok(!hash.containsKey("null"), "containsKey(\"zero\")");
-        ok(!hash.containsKey("undefined"), "containsKey(\"zero\")");
+        ok(!hash.containsKey("null"), "containsKey(\"null\")");
+        ok(!hash.containsKey("undefined"), "containsKey(\"undefined\")");
         ok(!hash.containsKey("five"), "!containsKey(\"five\")");
         ok(hash.containsKey("zero"), "containsKey(\"zero\")");
     });
@@ -114,6 +114,21 @@ $(function(){
         ok(hash.contains($.hash({"a": 1, "b": 2})), 'contains($.hash({"a": 1, "b": 2}))');
         ok(hash.contains($.hash({"a": 1, "c": 3})), 'contains($.hash({"a": 1, "c": 3}))');
         ok(hash.contains($.hash({"a": 1, "b": 2, "c": 3})), 'contains($.hash({"a": 1, "b": 2, "c": 3}))');
+    });
+
+    test('filter', function () {
+        var hash = $.hash({
+            "zero": 0,
+            "empty": "",
+            "date": new Date(2013, 1, 1)
+        }).filter("zero", "date");
+
+        expect(5);
+        ok(hash.containsKey("zero"), "containsKey(\"zero\")");
+        ok(hash.containsKey("date"), "containsKey(\"date\")");
+        equal(hash.count(), 2, "count");
+        equal(hash.find("zero"), 0);
+        deepEqual(hash.find("date"), new Date(2013, 1, 1));
     });
     
     test('remove', function () {

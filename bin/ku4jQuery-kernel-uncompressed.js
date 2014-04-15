@@ -137,6 +137,19 @@ $.obj.meld = function(obj1, obj2){
     }
     return meldee;
 };
+$.obj.filter = function(/*obj, keys...*/) {
+    var args = Array.prototype.slice.call(arguments),
+        value = {},
+        obj = args[0],
+        keys = args.slice(1);
+
+    for (var n in keys) {
+        var key = keys[n];
+        value[key] = obj[key];
+    }
+
+    return value;
+};
 
 $.Class = function(){ }
 $.Class.prototype = {
@@ -519,6 +532,10 @@ hash.prototype = {
     },
     meld: function(obj){
         return hash_combine(this, obj, "meld");
+    },
+    filter: function(/*keys*/) {
+        var args = [this.$h].concat(Array.prototype.slice.call(arguments));
+        return $.hash($.obj.filter.apply($.obj, args));
     },
     remove: function(k) {
         if (!this.containsKey(k)) return this;
