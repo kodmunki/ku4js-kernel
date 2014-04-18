@@ -2,8 +2,9 @@ $.isArray = function(x) { return x instanceof Array; };
 $.isBool = function(x) { return (/boolean/i.test(typeof (x))); };
 $.isDate = function(x) { return x instanceof Date; };
 $.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x === window.event; }};
-$.isNumber = function(x) { return (/number/i.test(typeof (x))) && !isNaN(x); };
-$.isObject = function(x) { return $.exists(x) && (/object/i.test(typeof (x))); };
+$.isNumber = function(x) { return ((/number/i.test(typeof (x))) || x instanceof Number) && !isNaN(x); };
+$.isObject = function(x) { return $.exists(x) && (/object/i.test(typeof (x))) &&
+                                  !($.isBool(x) || $.isNumber(x) || $.isDate(x) || $.isArray(x) || $.isString(x) ||  $.isFunction(x)); };
 $.isFunction = function(x) { return (x instanceof Function); };
 $.isString = function(x) { return (/string/i.test(typeof (x))) || x instanceof String; };
 $.isZero = function(n) { return n === 0; };

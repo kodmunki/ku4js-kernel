@@ -10,25 +10,28 @@ $(function(){
     });
     
     test('add', function () {
-        var hash = $.hash();
+        var hash = $.hash({"a": undefined, b: null});
 
         expect(10);
-        ok(hash.isEmpty());
+        equal(hash.count(), 1);
 
         raises(function() { hash.add(null, 0) }, "Invalid key: null");
         raises(function() { hash.add(undefined, 0) }, "Invalid key: undefined");
         raises(function() { hash.add("null", 0); }, "Invalid key: null");
         raises(function() { hash.add("undefined", 0); }, "Invalid key: undefined");
 
+        hash.add("_null", 0);
+        hash.add("_undefined", 0);
+
         hash.add("zero", 0);
-        equal(hash.count(), 1, "add(\"zero\", 0)");
+        equal(hash.count(), 4, "add(\"zero\", 0)");
         hash.add("empty", "");
-        equal(hash.count(), 2, "add(\"empty\", \"\")");
+        equal(hash.count(), 5, "add(\"empty\", \"\")");
         hash.add("date", new Date(2013, 1, 1));
-        equal(hash.count(), 3, "add(\"date\",new Date(2013, 1, 1))");
+        equal(hash.count(), 6, "add(\"date\",new Date(2013, 1, 1))");
 
         raises(function() { hash.add("empty", 3); }, "Invalid key: duplicate");
-        equal(hash.count(), 3, "Invalid key: duplicate");
+        equal(hash.count(), 6, "Invalid key: duplicate");
     });
     
     test('meld', function () {
@@ -45,7 +48,7 @@ $(function(){
         equal(hash.count(), 4,  "meld");
         equal(hash.findValue("three"), 3, "meld duplicate");
     });
-    
+
     test('merge', function () {
         var hash = $.hash({
             "zero": 0,
@@ -59,7 +62,7 @@ $(function(){
         hash.merge($.hash({"three":5}));
         equal(5, hash.findValue("three"), "merge duplicate");
     });
-    
+
     test('containsKey', function () {
         var hash = $.hash({
             "zero": 0,

@@ -74,7 +74,7 @@ $(function(){
     test('isNumber',  function () {
         expect(2);
         ok($.isNumber(0));
-        ok(!$.isNumber(new Number()));
+        ok($.isNumber(new Number()));
     });
 
     test('isNotNumber',  function () {
@@ -93,28 +93,27 @@ $(function(){
         ok(!$.isNumber(new Function()));
     });
 
-
     test('isObject',  function () {
-        expect(6);
-        ok($.isObject([]));
-        ok($.isObject(new Array()));
-        ok($.isObject(new String()));
-        ok($.isObject(new Number()));
+        expect(2);
         ok($.isObject({}));
         ok($.isObject(new Object()));
     });
 
-
     test('isNotObject',  function () {
-        expect(8);
+        expect(12);
         ok(!$.isObject(null));
         ok(!$.isObject(undefined));
         ok(!$.isObject(true));
         ok(!$.isObject(false));
         ok(!$.isObject(""));
+        ok(!$.isObject(new String()));
         ok(!$.isObject(0));
+        ok(!$.isObject(new Number()));
+        ok(!$.isObject([]));
+        ok(!$.isObject(new Array()));
         ok(!$.isObject(function() { } ));
         ok(!$.isObject(new Function()));
+
     });
 
     test('isFunction',  function () {

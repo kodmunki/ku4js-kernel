@@ -1,9 +1,11 @@
 function hash(obj) {
     hash.base.call(this);
-    var o = (!$.exists(obj) || !obj.toObject) ? obj : obj.toObject();
-    this.$h = ($.exists(o)) ? o : {};
+
+    this.$h = {};
     this._count = 0;
-    for (n in this.$h) { this._count++; }
+
+    var o = ($.exists(obj) && $.exists(obj.toObject)) ? obj.toObject() : obj;
+    for(var n in o) this.add(n, o[n]);
 }
 
 hash.prototype = {
@@ -12,13 +14,11 @@ hash.prototype = {
     values: function(){ return $.obj.values(this.$h); },
     add: function(k, v) {
         if ((!($.isString(k) || $.isNumber(k))) ||
-            /(null)|(undefined)/.test(k)
+            /(^null$)|(^undefined$)/.test(k)
             || this.containsKey(k))
             throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be unique number or string.", k));
 
-        if($.isUndefined(v))
-            throw $.ku4exception("$.hash", $.str.format("Invalid value: {0}. Cannot be undefined.", v));
-
+        if($.isUndefined(v)) return;
         this.$h[k] = v;
         this._count++;
         return this;
@@ -108,5 +108,5 @@ function hash_combine(hash, obj, m) {
     return hash;
 }
 
-$.hash = function(obj){ return new hash(obj); }
+$.hash = function(obj){ return new hash(obj); };
 $.hash.Class = hash;
