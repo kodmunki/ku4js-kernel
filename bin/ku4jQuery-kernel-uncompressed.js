@@ -215,11 +215,11 @@ $.math.divide = function(a, b){
     return a / b;
 };
 
-if(!$.exists($.str)) $.str = { }
+if(!$.exists($.str)) $.str = { };
 var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 $.str.build = function() {
     return "".concat.apply(new String(), arguments);
-}
+};
 $.str.format = function() {
     var a = arguments, s = a[0], l = a.length,  A, S;
     for (i = 1; i < l; i++) {
@@ -228,30 +228,30 @@ $.str.format = function() {
         s = s.replace(RegExp("\\{" + (i - 1) + "\\}", "g"), S);
     }
     return s;
-}
-$.str.render = function(template, obj) {
+};
+$.str.render = function(template, obj, alt) {
     var s = "" + template;
     for (var n in obj) {
         s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
     }
-    return s;
-}
+    return $.exists(alt) ? s.replace(/\{\{.*\}\}/g, alt) : s;
+};
 $.str.parse = function(){
     return String.fromCharCode.apply(String, arguments);
-}
+};
 $.str.trim = function(s) {
     return $.str.trimStart($.str.trimEnd(s));
-}
+};
 $.str.trimStart = function(s) {
     if(!$.isString(s)) throw new Error("Cannot trim non-string values");
     return ($.exists(s.replace))
         ? s.replace(/^\s*\b/, "") : s;
-}
+};
 $.str.trimEnd = function(s) {
     if(!$.isString(s)) throw new Error("Cannot trim non-string values");
     return ($.exists(s.replace))
         ? s.replace(/\b\s*$/, "") : s;
-}
+};
 $.str.encodeBase64 = function(strng) {
     var value = "", i = 0, s = $.str.encodeUtf8(strng),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
@@ -273,7 +273,7 @@ $.str.encodeBase64 = function(strng) {
         value += (chr(enc1) + chr(enc2) + chr(enc3) + chr(enc4));
     }
     return value;
-}
+};
 $.str.decodeBase64 = function(strng) {
     var value = "", i = 0, s = strng.replace(/[^A-Za-z0-9\+\/\=]/g, ""),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
@@ -295,7 +295,7 @@ $.str.decodeBase64 = function(strng) {
 
     }
     return $.str.decodeUtf8(value);
-}
+};
 $.str.encodeUtf8 = function(strng) {
     var value = "", s = strng.replace(/\r\n/g,"\n"),
         code = function(n) { return s.charCodeAt(n); },
@@ -314,7 +314,7 @@ $.str.encodeUtf8 = function(strng) {
                      chr((c & 63) | 128);
     }
     return value;
-}
+};
 $.str.decodeUtf8 = function(strng) {
     var value = "", i = 0, c = 0, c1 = 0, c2 = 0, s = strng,
         code = function(n) { return s.charCodeAt(n); },
@@ -339,7 +339,7 @@ $.str.decodeUtf8 = function(strng) {
         }
     }
     return value;
-}
+};
 
 $.uid = function() {
 	var a = Math.random().toString().replace(/\b\.\b/, ""),
