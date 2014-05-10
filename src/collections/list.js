@@ -54,11 +54,11 @@ list.prototype = {
         this._hash.each(function(kv){ value.push(kv.value); });
         return value;
     }
-}
+};
 $.Class.extend(list, $.Class);
 
 $.list = function(a){ return new list(a); }
 $.list.Class = list;
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
-}
+};
