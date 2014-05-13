@@ -11,7 +11,6 @@ $(function(){
     
     test('add', function () {
         var hash = $.hash({"a": undefined, b: null});
-
         expect(10);
         equal(hash.count(), 1);
 
