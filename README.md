@@ -84,13 +84,33 @@ A 32 character random unique ID.
 ##Account
 
 ###emailAddress
-_Documentation Coming Soon_
+| API | Return | Description |
+| --- | --- | --- |
+| user() |  |  |
+| domain() |  |  |
+| topLevelDomain() |  |  |
+| equals() |  |  |
+| toString() |  |  |
+| parse() |  |  |
 
 ###phoneNumber
-_Documentation Coming Soon_
+| API | Return | Description |
+| --- | --- | --- |
+| value() |  |  |
+| equals() |  |  |
+| toStringWithFormat() |  |  |
+| parse() |  |  |
 
 ###properName
-_Documentation Coming Soon_
+| API | Return | Description |
+| --- | --- | --- |
+| first() |  |  |
+| middle() |  |  |
+| last() |  |  |
+| full() |  |  |
+| initials() |  |  |
+| equals() |  |  |
+| toStringWithFormat() |  |  |
 
 ##Collections
 
@@ -133,31 +153,98 @@ _Documentation Coming Soon_
 ##Datetime
 
 ###dayPoint
-_Documentation Coming Soon_
+| API | Return | Description |
+| --- | --- | --- |
+| value() | Date | Returns the Date value |
+| day() | Number | Returns the zero indexed day of the week |
+| date() | Number | Returns the date |
+| month() | Number | Returns the month |
+| year() | Number | Returns the year |
+| isWeekday() | Boolean | Returns true if the day is 1-5 |
+| isWeekend() | Boolean | Returns true if the day is 0 or 6 |
+| nextDay() | dayPoint | Returns the next day |
+| prevDay() | dayPoint | Returns the previous day |
+| add(years:_Number_, months:_Number_, days:_Number_) | dayPoint |  |
+| firstDayOfMonth() | dayPoint | Returns the first day of the current month |
+| LastDayOfMonth() | dayPoint | Returns the last day of the current month |
+| isBefore(other:_dayPoint_) | Boolean | Returns true if other is earlier than this dayPoint |
+| isAfter(other:_dayPoint_) | Boolean | Returns true if other is later than this dayPoint |
+| equals(other:_dayPoint_) | Boolean | Returns true if other is equal to than this dayPoint |
+| toString() | String | Returns the string value of the dayPoint |
+| toStringWithFormat(format:_String_) | String | Returns a string formatted per the passed format. Example: $.dayPoint(2013, 5, 24).toStringWithFormat("mm/dd/yy") == "05/24/13" |
+| toDate() | Date | Returns a Date value |
+| toJson() | String | Returns the JSON string value |
+| canParse(string:_String_) | Boolean | Returns true if the string can be parsed into a dayPoint |
+| parse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value |
+| tryParse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value or null if the string value cannot be parsed |
+| today() | dayPoint | Returns a dayPoint with the value, today |
+| assumeNow(dayPoint:_dayPoint_) | void | Sets today as dayPoint. Can be very useful in testing application features that are date dependent. This feature allows the development of date dependent features without the need to manipulate system time. |
 
 ##Finance
 
 ###money
-_Documentation Coming Soon_
+| API | Return | Description |
+| --- | --- | --- |
+| cents() |  |  |
+| dollars() |  |  |
+| type() |  |  |
+| value() |  |  |
+| add() |  |  |
+| divide() |  |  |
+| equals() |  |  |
+| isOfType() |  |  |
+| isGreaterThan() |  |  |
+| isLessThan() |  |  |
+| multiply() |  |  |
+| round() |  |  |
+| roundDown() |  |  |
+| roundUp() |  |  |
+| subtract() |  |  |
+| toString() |  |  |
+| zero() |  |  |
+| isMoney() |  |  |
+| canParse() |  |  |
+| parse() |  |  |
+| tryParse() |  |  |
 
 ##Geometry
 
 ###coord
 _Documentation Coming Soon_
 
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
+
 ###point
 _Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
 
 ###rectangle
 _Documentation Coming Soon_
 
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
+
 ###vector
 _Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
 
 ##Patterns
 
 ###iterator
 _Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
 
 ###mediator
 | API | Return | Description |
@@ -190,8 +277,16 @@ in development.
 ###observer
 _Documentation Coming Soon_
 
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
+
 ###queue
 _Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |
 
 ###specification
 Constructor: $.spec(func:_function_). The function passed must take a value parameter and return a boolean value.
@@ -218,3 +313,7 @@ console.log(oneOrTwoSpec.isSatisfiedBy(3)) //Evaluates as false
 
 ###stack
 _Documentation Coming Soon_
+
+| API | Return | Description |
+| --- | --- | --- |
+|  |  |  |

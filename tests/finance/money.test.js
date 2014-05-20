@@ -106,7 +106,11 @@ $(function(){
     });
 
     test("toString", function() {
-        expect(1);
-        ok(two.toString("$2.13"));
+        expect(5);
+        equal(two.toString(), "$2.63");
+        equal($.money(298765.54).toString(), "$298,765.54");
+        equal($.money(298765.54).toString("-"), "$298-765.54");
+        equal($.money(298765.54).toString(",", "."), "$298,765.54");
+        equal($.money(298765.54).toString(".", ","), "$298.765,54");
     });
 });

@@ -24,6 +24,13 @@ $(function(){
         equal(date.isWeekday(), false);
         equal(date.isWeekend(), true);
     });
+    test('shortYear', function() {
+        expect();
+        equal($.dayPoint(2011, 1, 1).shortYear(), 11);
+        equal($.dayPoint(21011, 1, 1).shortYear(), 11);
+        equal($.dayPoint(2014, 1, 1).shortYear(), 14);
+        equal($.dayPoint(1, 1, 1).shortYear(), 1);
+    }),
     test('toString', function () {
         expect(7);
         throws(function(){$.dayPoint(null).toString()});
@@ -33,6 +40,24 @@ $(function(){
         throws(function(){$.dayPoint.parse(undefined).toString()});
         equal($.dayPoint.parse("1/1/2011").toString(), "01/01/2011");
         equal($.dayPoint.parse(new Date("1/1/2011")).toString(), "01/01/2011");
+    });
+    test('toStringWithFormat', function () {
+        expect(12);
+        throws(function(){$.dayPoint(null).toStringWithFormat()});
+        throws(function(){$.dayPoint(undefined).toStringWithFormat()});
+
+        equal($.dayPoint(2011, 2, 1).toStringWithFormat("mm/dd/yy"), "02/01/11");
+        equal($.dayPoint(2011, 2, 1).toStringWithFormat("mm/dd/yyyy"), "02/01/2011");
+        equal($.dayPoint(2011, 2, 1).toStringWithFormat("dd/mm/yyyy"), "01/02/2011");
+        equal($.dayPoint(2011, 2, 1).toStringWithFormat("yy/mm/dd"), "11/02/01");
+
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("mm/dd/yy"), "12/31/11");
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("mm/dd/yyyy"), "12/31/2011");
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("dd/mm/yyyy"), "31/12/2011");
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("yy/mm/dd"), "11/12/31");
+
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("mm-dd-yyyy"), "12-31-2011");
+        equal($.dayPoint(2011, 12, 31).toStringWithFormat("mm.dd.yyyy--yyyy--m"), "12.31.2011--2011--12");
     });
     test('toDate', function () {
         expect(8);

@@ -425,11 +425,11 @@ properName.prototype = {
     middle: function(){ return this._middle; },
     last: function(){ return this._last; },
     full: function() {
-        var format = ($.isNullOrEmpty(this._middle)) ? "{F} {L}" : "{F} {M} {L}"
+        var format = ($.isNullOrEmpty(this._middle)) ? "{F} {L}" : "{F} {M} {L}";
         return this.toStringWithFormat(format);
     },
     initials: function() {
-        var format = ($.isNullOrEmpty(this._middle)) ? "{f}.{l}." : "{f}.{m}.{l}."
+        var format = ($.isNullOrEmpty(this._middle)) ? "{f}.{l}." : "{f}.{m}.{l}.";
         return this.toStringWithFormat(format);
     },
     equals: function(other) {
@@ -450,7 +450,7 @@ properName.prototype = {
                      .replace("{m}", middleInitial)
                      .replace("{l}", lastInitial);
     }
-}
+};
 $.Class.extend(properName, $.Class);
 
 $.properName = function(first, middle, last) { return new properName(first, middle, last); }
@@ -625,14 +625,14 @@ list.prototype = {
         this._hash.each(function(kv){ value.push(kv.value); });
         return value;
     }
-}
+};
 $.Class.extend(list, $.Class);
 
 $.list = function(a){ return new list(a); }
 $.list.Class = list;
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
-}
+};
 
 function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
     dayPoint.base.call(this);
@@ -669,6 +669,10 @@ dayPoint.prototype = {
     date: function(){ return this._date; },
     month: function(){ return this._month; },
     year: function(){ return this._year; },
+    shortYear: function(){
+        var y = this._year.toString();
+        return parseInt(y.substr(y.length-2));
+    },
     hour: function(){ return this._hour; },
     minute: function(){ return this._minute; },
     second: function(){ return this._second; },
@@ -714,10 +718,18 @@ dayPoint.prototype = {
         return (this._year == other.year()) && (this._month == other.month()) && (this._date == other.date());
     },
     toString: function() {
-        var y = this._year, m = this._month, d = this._date,
-            f = (m < 10 && d < 10) ? "0{1}/0{2}/{0}" : 
-                (m < 10) ? "0{1}/{2}/{0}" :
-                (d < 10) ? "{1}/0{2}/{0}" : "{1}/{2}/{0}";
+        return this.toStringWithFormat("mm/dd/yyyy");
+    },
+    toStringWithFormat: function(format)
+    {
+        var y = (/y{3,}/i.test(format)) ? this._year : this.shortYear(),
+            m = this._month,
+            d = this._date,
+            yf = "{0}",
+            mf = (/m{2}/i.test(format) && m < 10) ? "0{1}" : "{1}",
+            df = (/d{2}/i.test(format) && d < 10) ? "0{2}" : "{2}";
+            f = format.replace(/y{1,}/gi, yf).replace(/m{1,}/gi, mf).replace(/d{1,}/gi, df);
+
         return $.str.format(f, y, m, d);
     },
     toDate: function() { return this.value(); },
@@ -850,9 +862,10 @@ money.prototype = {
         money_checkType(this, other);
         return new money(this._value - other.value(), this._type);
     },
-    toString: function() {
-        var format = (this.value < 0) ? "({0}{1}.{2})" : "{0}{1}.{2}";
-        return $.str.format(format, this._type, money_formatDollars(this), money_formatCents(this));
+    toString: function(tens, tenths) {
+        var format = (this.value < 0) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
+            separator = tenths || "."
+        return $.str.format(format, this._type, money_formatDollars(this, tens), separator, money_formatCents(this));
     }
 };
 $.Class.extend(money, $.Class);
@@ -889,7 +902,7 @@ money_checkType = function(money, other) {
     if (!money.isOfType(other))
         throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
 };
-money_formatDollars = function(money) {
+money_formatDollars = function(money, separator) {
     var dollars = money.dollars(),
         anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
         s = anount.toString(),
@@ -901,7 +914,7 @@ money_formatDollars = function(money) {
     while (i < l) {
         a[a.length] = d[i]; i++;
         if (!$.exists(d[i])) break; 
-        if ((i % 3 == 0) && b) a[a.length] = ",";
+        if ((i % 3 == 0) && b) a[a.length] = separator || ",";
     }
     return $.str.build.apply(this, a.reverse());
 };

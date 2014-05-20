@@ -9,11 +9,11 @@ properName.prototype = {
     middle: function(){ return this._middle; },
     last: function(){ return this._last; },
     full: function() {
-        var format = ($.isNullOrEmpty(this._middle)) ? "{F} {L}" : "{F} {M} {L}"
+        var format = ($.isNullOrEmpty(this._middle)) ? "{F} {L}" : "{F} {M} {L}";
         return this.toStringWithFormat(format);
     },
     initials: function() {
-        var format = ($.isNullOrEmpty(this._middle)) ? "{f}.{l}." : "{f}.{m}.{l}."
+        var format = ($.isNullOrEmpty(this._middle)) ? "{f}.{l}." : "{f}.{m}.{l}.";
         return this.toStringWithFormat(format);
     },
     equals: function(other) {
@@ -34,7 +34,7 @@ properName.prototype = {
                      .replace("{m}", middleInitial)
                      .replace("{l}", lastInitial);
     }
-}
+};
 $.Class.extend(properName, $.Class);
 
 $.properName = function(first, middle, last) { return new properName(first, middle, last); }

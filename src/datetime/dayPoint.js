@@ -33,6 +33,10 @@ dayPoint.prototype = {
     date: function(){ return this._date; },
     month: function(){ return this._month; },
     year: function(){ return this._year; },
+    shortYear: function(){
+        var y = this._year.toString();
+        return parseInt(y.substr(y.length-2));
+    },
     hour: function(){ return this._hour; },
     minute: function(){ return this._minute; },
     second: function(){ return this._second; },
@@ -78,10 +82,18 @@ dayPoint.prototype = {
         return (this._year == other.year()) && (this._month == other.month()) && (this._date == other.date());
     },
     toString: function() {
-        var y = this._year, m = this._month, d = this._date,
-            f = (m < 10 && d < 10) ? "0{1}/0{2}/{0}" : 
-                (m < 10) ? "0{1}/{2}/{0}" :
-                (d < 10) ? "{1}/0{2}/{0}" : "{1}/{2}/{0}";
+        return this.toStringWithFormat("mm/dd/yyyy");
+    },
+    toStringWithFormat: function(format)
+    {
+        var y = (/y{3,}/i.test(format)) ? this._year : this.shortYear(),
+            m = this._month,
+            d = this._date,
+            yf = "{0}",
+            mf = (/m{2}/i.test(format) && m < 10) ? "0{1}" : "{1}",
+            df = (/d{2}/i.test(format) && d < 10) ? "0{2}" : "{2}";
+            f = format.replace(/y{1,}/gi, yf).replace(/m{1,}/gi, mf).replace(/d{1,}/gi, df);
+
         return $.str.format(f, y, m, d);
     },
     toDate: function() { return this.value(); },

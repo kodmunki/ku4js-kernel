@@ -55,9 +55,10 @@ money.prototype = {
         money_checkType(this, other);
         return new money(this._value - other.value(), this._type);
     },
-    toString: function() {
-        var format = (this.value < 0) ? "({0}{1}.{2})" : "{0}{1}.{2}";
-        return $.str.format(format, this._type, money_formatDollars(this), money_formatCents(this));
+    toString: function(tens, tenths) {
+        var format = (this.value < 0) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
+            separator = tenths || "."
+        return $.str.format(format, this._type, money_formatDollars(this, tens), separator, money_formatCents(this));
     }
 };
 $.Class.extend(money, $.Class);
@@ -94,7 +95,7 @@ money_checkType = function(money, other) {
     if (!money.isOfType(other))
         throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
 };
-money_formatDollars = function(money) {
+money_formatDollars = function(money, separator) {
     var dollars = money.dollars(),
         anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
         s = anount.toString(),
@@ -106,7 +107,7 @@ money_formatDollars = function(money) {
     while (i < l) {
         a[a.length] = d[i]; i++;
         if (!$.exists(d[i])) break; 
-        if ((i % 3 == 0) && b) a[a.length] = ",";
+        if ((i % 3 == 0) && b) a[a.length] = separator || ",";
     }
     return $.str.build.apply(this, a.reverse());
 };
