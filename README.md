@@ -205,7 +205,7 @@ A 32 character random unique ID.
 | isMoney(other:_money_) | Boolean | Returns true if other is and instance of money |
 | canParse(string:_String_) | money | Returns true if the string can be parsed to money. |
 | parse(string:_String_) | money | Returns a money with corresponding value. |
-| tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null.  |
+| tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null. |
 
 ##Geometry
 
