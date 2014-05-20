@@ -86,31 +86,31 @@ A 32 character random unique ID.
 ###emailAddress
 | API | Return | Description |
 | --- | --- | --- |
-| user() | String |  |
-| domain() | String |  |
-| topLevelDomain() | String |  |
-| equals(other:_emailAddress_) | Boolean |  |
-| toString() | String |  |
-| parse(string:_String_) | emailAddress |  |
+| user() | String | Returns the user portion of the email address. |
+| domain() | String | Returns the domain portion of the email address. |
+| topLevelDomain() | String | Returns the top level domain portion of the email address. |
+| equals(other:_emailAddress_) | Boolean | Returns true if the email addresses are equal. |
+| toString() | String | Returns a string representation of the email address. |
+| parse(string:_String_) | emailAddress | Returns an email address containing the corresponding components. |
 
 ###phoneNumber
 | API | Return | Description |
 | --- | --- | --- |
-| value() | Number |  |
-| equals(other:_phoneNumber_) | Boolean |  |
-| toStringWithFormat(format:_String_) |  |  |
-| parse(string:_String_) | phoneNumber |  |
+| value() | Number | Returns a number value of the phone number. |
+| equals(other:_phoneNumber_) | Boolean | Returns true if the this is equal to other. |
+| toStringWithFormat(format:_String_) | String | Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234" |
+| parse(string:_String_) | phoneNumber | Returns a phoneNumber with corresponding value. |
 
 ###properName
 | API | Return | Description |
 | --- | --- | --- |
-| first() | String |  |
-| middle() | String |  |
-| last() | String |  |
-| full() | String |  |
-| initials() | String |  |
-| equals(other_properName_) | String |  |
-| toStringWithFormat(format:_String_) | String |  |
+| first() | String | Returns the first name. |
+| middle() | String | Returns the middle name. |
+| last() | String | Returns the last name. |
+| full() | String | Returns the first middle and last name concatenated with space character separators. |
+| initials() | String | Returns the first letter of each name part capitalized and followed by a . character and a space character separator. |
+| equals(other_properName_) | String | Returns true if each part of this is equal to the corresponding part of other. |
+| toStringWithFormat(format:_String_) | String | Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J." |
 
 ##Collections
 
@@ -185,27 +185,27 @@ A 32 character random unique ID.
 ###money
 | API | Return | Description |
 | --- | --- | --- |
-| cents() | Number |  |
-| dollars() | Number |  |
-| type() | String |  |
-| value() | Number |  |
-| add(other:_money_) | money |  |
-| divide(divisor:_Number_) | money |  |
-| equals(other:_money_) |Boolean  |  |
-| isOfType(other:_money_) | Boolean |  |
-| isGreaterThan(other:_money_) | Boolean |  |
-| isLessThan(other:_money_) | Boolean |  |
-| multiply(multiplier:_Number_) | money |  |
-| round() | money |  |
-| roundDown() | money |  |
-| roundUp() | money |  |
-| subtract(other:_money_) | money |  |
-| toString(tens:_String_, tenths:_String_) | String |  |
-| zero() | money |  |
-| isMoney(other:_money_) | Boolean |  |
-| canParse(string:_String_) | money |  |
-| parse(string:_String_) | money |  |
-| tryParse(string:_String_) | money |  |
+| cents() | Number | Returns the fractional value of the money. |
+| dollars() | Number | Returns the whole value of the money. |
+| type() | String | Returns the denomination. "$" is the default. |
+| value() | Number | Returns the entire value of the money. |
+| add(other:_money_) | money | Returns a money whose value is the sum on this value plus other value. |
+| divide(divisor:_Number_) | money | Returns a money whose value is the quotient of this value divided by divisor.  |
+| equals(other:_money_) |Boolean  | Return true if this value equals other value. |
+| isOfType(other:_money_) | Boolean | Return true if this type is equal to other type. |
+| isGreaterThan(other:_money_) | Boolean | Return true if this value > other value. |
+| isLessThan(other:_money_) | Boolean | Returns true if this value < other value. |
+| multiply(multiplier:_Number_) | money | Returns a money whose value is the product of this value times the multiplier. |
+| round() | money | Returns a money whose value is the value of this money rounded to the nearest hundredth. |
+| roundDown() | money | Returns a money whose value is the value of this money rounded down to the nearest hundredth. |
+| roundUp() | money | Returns a money whose value is the value of this money rounded up to the nearest hundredth. |
+| subtract(other:_money_) | money | Returns a money whose value is the difference of this value minus other value. |
+| toString(tens:_String_, tenths:_String_) | String | Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "|") == "$12-345-678|90". |
+| zero() | money | Returns a money with value 0. |
+| isMoney(other:_money_) | Boolean | Returns true if other is and instance of money |
+| canParse(string:_String_) | money | Returns true if the string can be parsed to money. |
+| parse(string:_String_) | money | Returns a money with corresponding value. |
+| tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null.  |
 
 ##Geometry
 
