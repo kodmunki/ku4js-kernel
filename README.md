@@ -86,31 +86,31 @@ A 32 character random unique ID.
 ###emailAddress
 | API | Return | Description |
 | --- | --- | --- |
-| user() |  |  |
-| domain() |  |  |
-| topLevelDomain() |  |  |
-| equals() |  |  |
-| toString() |  |  |
-| parse() |  |  |
+| user() | String |  |
+| domain() | String |  |
+| topLevelDomain() | String |  |
+| equals(other:_emailAddress_) | Boolean |  |
+| toString() | String |  |
+| parse(string:_String_) | emailAddress |  |
 
 ###phoneNumber
 | API | Return | Description |
 | --- | --- | --- |
-| value() |  |  |
-| equals() |  |  |
-| toStringWithFormat() |  |  |
-| parse() |  |  |
+| value() | Number |  |
+| equals(other:_phoneNumber_) | Boolean |  |
+| toStringWithFormat(format:_String_) |  |  |
+| parse(string:_String_) | phoneNumber |  |
 
 ###properName
 | API | Return | Description |
 | --- | --- | --- |
-| first() |  |  |
-| middle() |  |  |
-| last() |  |  |
-| full() |  |  |
-| initials() |  |  |
-| equals() |  |  |
-| toStringWithFormat() |  |  |
+| first() | String |  |
+| middle() | String |  |
+| last() | String |  |
+| full() | String |  |
+| initials() | String |  |
+| equals(other_properName_) | String |  |
+| toStringWithFormat(format:_String_) | String |  |
 
 ##Collections
 
@@ -185,27 +185,27 @@ A 32 character random unique ID.
 ###money
 | API | Return | Description |
 | --- | --- | --- |
-| cents() |  |  |
-| dollars() |  |  |
-| type() |  |  |
-| value() |  |  |
-| add() |  |  |
-| divide() |  |  |
-| equals() |  |  |
-| isOfType() |  |  |
-| isGreaterThan() |  |  |
-| isLessThan() |  |  |
-| multiply() |  |  |
-| round() |  |  |
-| roundDown() |  |  |
-| roundUp() |  |  |
-| subtract() |  |  |
-| toString() |  |  |
-| zero() |  |  |
-| isMoney() |  |  |
-| canParse() |  |  |
-| parse() |  |  |
-| tryParse() |  |  |
+| cents() | Number |  |
+| dollars() | Number |  |
+| type() | String |  |
+| value() | Number |  |
+| add(other:_money_) | money |  |
+| divide(divisor:_Number_) | money |  |
+| equals(other:_money_) |Boolean  |  |
+| isOfType(other:_money_) | Boolean |  |
+| isGreaterThan(other:_money_) | Boolean |  |
+| isLessThan(other:_money_) | Boolean |  |
+| multiply(multiplier:_Number_) | money |  |
+| round() | money |  |
+| roundDown() | money |  |
+| roundUp() | money |  |
+| subtract(other:_money_) | money |  |
+| toString(tens:_String_, tenths:_String_) | String |  |
+| zero() | money |  |
+| isMoney(other:_money_) | Boolean |  |
+| canParse(string:_String_) | money |  |
+| parse(string:_String_) | money |  |
+| tryParse(string:_String_) | money |  |
 
 ##Geometry
 
