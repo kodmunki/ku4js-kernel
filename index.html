@@ -40,7 +40,7 @@ design patterns.</p>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
 
 <ul>
-<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> -- <em>This is not a dependency if kernel is compiled as such. See the:</em>kodmunki™ build process_(#kodmunki-build-process)_.</li>
+<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> -- <em>This is not a dependency if kernel is compiled as such. See the:_kodmunki™ build process</em>(#kodmunki-build-process)_.</li>
 </ul><h1>
 <a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
 
@@ -188,19 +188,122 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <h3>
 <a name="emailaddress" class="anchor" href="#emailaddress"><span class="octicon octicon-link"></span></a>emailAddress</h3>
 
-<p><em>Documentation Coming Soon</em></p>
-
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>local()</td>
+<td>String</td>
+<td>Returns the local portion of the email address.</td>
+</tr>
+<tr>
+<td>domain()</td>
+<td>String</td>
+<td>Returns the domain portion of the email address.</td>
+</tr>
+<tr>
+<td>topLevelDomain()</td>
+<td>String</td>
+<td>Returns the top level domain portion of the email address.</td>
+</tr>
+<tr>
+<td>equals(other:<em>emailAddress</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the email addresses are equal.</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>String</td>
+<td>Returns a string representation of the email address.</td>
+</tr>
+<tr>
+<td>parse(string:<em>String</em>)</td>
+<td>emailAddress</td>
+<td>Returns an email address containing the corresponding components.</td>
+</tr>
+</tbody>
+</table><h3>
 <a name="phonenumber" class="anchor" href="#phonenumber"><span class="octicon octicon-link"></span></a>phoneNumber</h3>
 
-<p><em>Documentation Coming Soon</em></p>
-
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>value()</td>
+<td>Number</td>
+<td>Returns a number value of the phone number.</td>
+</tr>
+<tr>
+<td>equals(other:<em>phoneNumber</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the this is equal to other.</td>
+</tr>
+<tr>
+<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234"</td>
+</tr>
+<tr>
+<td>parse(string:<em>String</em>)</td>
+<td>phoneNumber</td>
+<td>Returns a phoneNumber with corresponding value.</td>
+</tr>
+</tbody>
+</table><h3>
 <a name="propername" class="anchor" href="#propername"><span class="octicon octicon-link"></span></a>properName</h3>
 
-<p><em>Documentation Coming Soon</em></p>
-
-<h2>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>first()</td>
+<td>String</td>
+<td>Returns the first name.</td>
+</tr>
+<tr>
+<td>middle()</td>
+<td>String</td>
+<td>Returns the middle name.</td>
+</tr>
+<tr>
+<td>last()</td>
+<td>String</td>
+<td>Returns the last name.</td>
+</tr>
+<tr>
+<td>full()</td>
+<td>String</td>
+<td>Returns the first middle and last name concatenated with space character separators.</td>
+</tr>
+<tr>
+<td>initials()</td>
+<td>String</td>
+<td>Returns the first letter of each name part capitalized and followed by a . character and a space character separator.</td>
+</tr>
+<tr>
+<td>equals(other_properName_)</td>
+<td>String</td>
+<td>Returns true if each part of this is equal to the corresponding part of other.</td>
+</tr>
+<tr>
+<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J."</td>
+</tr>
+</tbody>
+</table><h2>
 <a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h2>
 
 <h3>
@@ -371,17 +474,254 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <h3>
 <a name="daypoint" class="anchor" href="#daypoint"><span class="octicon octicon-link"></span></a>dayPoint</h3>
 
-<p><em>Documentation Coming Soon</em></p>
-
-<h2>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>value()</td>
+<td>Date</td>
+<td>Returns the Date value</td>
+</tr>
+<tr>
+<td>day()</td>
+<td>Number</td>
+<td>Returns the zero indexed day of the week</td>
+</tr>
+<tr>
+<td>date()</td>
+<td>Number</td>
+<td>Returns the date</td>
+</tr>
+<tr>
+<td>month()</td>
+<td>Number</td>
+<td>Returns the month</td>
+</tr>
+<tr>
+<td>year()</td>
+<td>Number</td>
+<td>Returns the year</td>
+</tr>
+<tr>
+<td>isWeekday()</td>
+<td>Boolean</td>
+<td>Returns true if the day is 1-5</td>
+</tr>
+<tr>
+<td>isWeekend()</td>
+<td>Boolean</td>
+<td>Returns true if the day is 0 or 6</td>
+</tr>
+<tr>
+<td>nextDay()</td>
+<td>dayPoint</td>
+<td>Returns the next day</td>
+</tr>
+<tr>
+<td>prevDay()</td>
+<td>dayPoint</td>
+<td>Returns the previous day</td>
+</tr>
+<tr>
+<td>add(years:<em>Number</em>, months:<em>Number</em>, days:<em>Number</em>)</td>
+<td>dayPoint</td>
+<td></td>
+</tr>
+<tr>
+<td>firstDayOfMonth()</td>
+<td>dayPoint</td>
+<td>Returns the first day of the current month</td>
+</tr>
+<tr>
+<td>LastDayOfMonth()</td>
+<td>dayPoint</td>
+<td>Returns the last day of the current month</td>
+</tr>
+<tr>
+<td>isBefore(other:<em>dayPoint</em>)</td>
+<td>Boolean</td>
+<td>Returns true if other is earlier than this dayPoint</td>
+</tr>
+<tr>
+<td>isAfter(other:<em>dayPoint</em>)</td>
+<td>Boolean</td>
+<td>Returns true if other is later than this dayPoint</td>
+</tr>
+<tr>
+<td>equals(other:<em>dayPoint</em>)</td>
+<td>Boolean</td>
+<td>Returns true if other is equal to than this dayPoint</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td>String</td>
+<td>Returns the string value of the dayPoint</td>
+</tr>
+<tr>
+<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string formatted per the passed format. Example: $.dayPoint(2013, 5, 24).toStringWithFormat("mm/dd/yy") == "05/24/13"</td>
+</tr>
+<tr>
+<td>toDate()</td>
+<td>Date</td>
+<td>Returns a Date value</td>
+</tr>
+<tr>
+<td>toJson()</td>
+<td>String</td>
+<td>Returns the JSON string value</td>
+</tr>
+<tr>
+<td>canParse(string:<em>String</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the string can be parsed into a dayPoint</td>
+</tr>
+<tr>
+<td>parse(string:<em>String</em>)</td>
+<td>dayPoint</td>
+<td>Returns a dayPoint with the appropriate value</td>
+</tr>
+<tr>
+<td>tryParse(string:<em>String</em>)</td>
+<td>dayPoint</td>
+<td>Returns a dayPoint with the appropriate value or null if the string value cannot be parsed</td>
+</tr>
+<tr>
+<td>today()</td>
+<td>dayPoint</td>
+<td>Returns a dayPoint with the value, today</td>
+</tr>
+<tr>
+<td>assumeNow(dayPoint:<em>dayPoint</em>)</td>
+<td>void</td>
+<td>Sets today as dayPoint. Can be very useful in testing application features that are date dependent. This feature allows the development of date dependent features without the need to manipulate system time.</td>
+</tr>
+</tbody>
+</table><h2>
 <a name="finance" class="anchor" href="#finance"><span class="octicon octicon-link"></span></a>Finance</h2>
 
 <h3>
 <a name="money" class="anchor" href="#money"><span class="octicon octicon-link"></span></a>money</h3>
 
-<p><em>Documentation Coming Soon</em></p>
-
-<h2>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>cents()</td>
+<td>Number</td>
+<td>Returns the fractional value of the money.</td>
+</tr>
+<tr>
+<td>dollars()</td>
+<td>Number</td>
+<td>Returns the whole value of the money.</td>
+</tr>
+<tr>
+<td>type()</td>
+<td>String</td>
+<td>Returns the denomination. "$" is the default.</td>
+</tr>
+<tr>
+<td>value()</td>
+<td>Number</td>
+<td>Returns the entire value of the money.</td>
+</tr>
+<tr>
+<td>add(other:<em>money</em>)</td>
+<td>money</td>
+<td>Returns a money whose value is the sum on this value plus other value.</td>
+</tr>
+<tr>
+<td>divide(divisor:<em>Number</em>)</td>
+<td>money</td>
+<td>Returns a money whose value is the quotient of this value divided by divisor.</td>
+</tr>
+<tr>
+<td>equals(other:<em>money</em>)</td>
+<td>Boolean</td>
+<td>Return true if this value equals other value.</td>
+</tr>
+<tr>
+<td>isOfType(other:<em>money</em>)</td>
+<td>Boolean</td>
+<td>Return true if this type is equal to other type.</td>
+</tr>
+<tr>
+<td>isGreaterThan(other:<em>money</em>)</td>
+<td>Boolean</td>
+<td>Return true if this value &gt; other value.</td>
+</tr>
+<tr>
+<td>isLessThan(other:<em>money</em>)</td>
+<td>Boolean</td>
+<td>Returns true if this value &lt; other value.</td>
+</tr>
+<tr>
+<td>multiply(multiplier:<em>Number</em>)</td>
+<td>money</td>
+<td>Returns a money whose value is the product of this value times the multiplier.</td>
+</tr>
+<tr>
+<td>round()</td>
+<td>money</td>
+<td>Returns a money whose value is the value of this money rounded to the nearest hundredth.</td>
+</tr>
+<tr>
+<td>roundDown()</td>
+<td>money</td>
+<td>Returns a money whose value is the value of this money rounded down to the nearest hundredth.</td>
+</tr>
+<tr>
+<td>roundUp()</td>
+<td>money</td>
+<td>Returns a money whose value is the value of this money rounded up to the nearest hundredth.</td>
+</tr>
+<tr>
+<td>subtract(other:<em>money</em>)</td>
+<td>money</td>
+<td>Returns a money whose value is the difference of this value minus other value.</td>
+</tr>
+<tr>
+<td>toString(tens:<em>String</em>, tenths:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "</td>
+</tr>
+<tr>
+<td>zero()</td>
+<td>money</td>
+<td>Returns a money with value 0.</td>
+</tr>
+<tr>
+<td>isMoney(other:<em>money</em>)</td>
+<td>Boolean</td>
+<td>Returns true if other is and instance of money</td>
+</tr>
+<tr>
+<td>canParse(string:<em>String</em>)</td>
+<td>money</td>
+<td>Returns true if the string can be parsed to money.</td>
+</tr>
+<tr>
+<td>parse(string:<em>String</em>)</td>
+<td>money</td>
+<td>Returns a money with corresponding value.</td>
+</tr>
+<tr>
+<td>tryParse(string:<em>String</em>)</td>
+<td>money</td>
+<td>Returns a money with corresponding value if string can be parsed. Otherwise, null.</td>
+</tr>
+</tbody>
+</table><h2>
 <a name="geometry" class="anchor" href="#geometry"><span class="octicon octicon-link"></span></a>Geometry</h2>
 
 <h3>
@@ -389,22 +729,66 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="point" class="anchor" href="#point"><span class="octicon octicon-link"></span></a>point</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="rectangle" class="anchor" href="#rectangle"><span class="octicon octicon-link"></span></a>rectangle</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="vector" class="anchor" href="#vector"><span class="octicon octicon-link"></span></a>vector</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h2>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h2>
 <a name="patterns" class="anchor" href="#patterns"><span class="octicon octicon-link"></span></a>Patterns</h2>
 
 <h3>
@@ -412,7 +796,18 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="mediator" class="anchor" href="#mediator"><span class="octicon octicon-link"></span></a>mediator</h3>
 
 <table>
@@ -493,12 +888,34 @@ in development.</p></li>
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="queue" class="anchor" href="#queue"><span class="octicon octicon-link"></span></a>queue</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
-<h3>
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table><h3>
 <a name="specification" class="anchor" href="#specification"><span class="octicon octicon-link"></span></a>specification</h3>
 
 <p>Constructor: $.spec(func:<em>function</em>). The function passed must take a value parameter and return a boolean value.</p>
@@ -553,6 +970,19 @@ in development.</p></li>
 <a name="stack" class="anchor" href="#stack"><span class="octicon octicon-link"></span></a>stack</h3>
 
 <p><em>Documentation Coming Soon</em></p>
+
+<table>
+<thead><tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr></tbody>
+</table>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/kodmunki">kodmunki</a></p>
