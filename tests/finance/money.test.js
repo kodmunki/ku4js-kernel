@@ -113,4 +113,13 @@ $(function(){
         equal($.money(298765.54).toString(",", "."), "$298,765.54");
         equal($.money(298765.54).toString(".", ","), "$298.765,54");
     });
+
+    test("zero", function() {
+        var zero = $.money.zero();
+        expect(4);
+        equal(zero.dollars(), 0);
+        equal(zero.cents(), 0);
+        equal(zero.value(), 0);
+        equal(zero.toString(), "$0.00");
+    });
 });

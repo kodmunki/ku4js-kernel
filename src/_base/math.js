@@ -10,6 +10,7 @@ $.math.roundUp = function(n, d){
     return $.math.round(n + r, d);
 };
 $.math.roundDown = function(n, d){
+    if(n === 0) return 0;
     var p = d || 0,
         r = 5 * (Math.pow(10, p - 1));
     return $.math.round(n - r, d);

@@ -57,7 +57,7 @@ money.prototype = {
     },
     toString: function(tens, tenths) {
         var format = (this.value < 0) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
-            separator = tenths || "."
+            separator = tenths || ".";
         return $.str.format(format, this._type, money_formatDollars(this, tens), separator, money_formatCents(this));
     }
 };
@@ -91,11 +91,11 @@ $.money.tryParse = function(o){
         : null;
 };
 
-money_checkType = function(money, other) {
+function money_checkType(money, other) {
     if (!money.isOfType(other))
         throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
-};
-money_formatDollars = function(money, separator) {
+}
+function money_formatDollars(money, separator) {
     var dollars = money.dollars(),
         anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
         s = anount.toString(),
@@ -110,12 +110,12 @@ money_formatDollars = function(money, separator) {
         if ((i % 3 == 0) && b) a[a.length] = separator || ",";
     }
     return $.str.build.apply(this, a.reverse());
-};
-money_formatCents = function(money) {
+}
+function money_formatCents(money) {
     var C = $.math.round(money.cents(), -3),
         s = C.toString(),
         c = s.replace(/\-|(0\.)/g, "").concat("0").split(/\B/), l = c.length;
     if ($.isZero(l) || C >= .995) return "00";
     if (l < 2) return "0" + c[0];
     return (parseInt(c[2]) > 4) ? c[0] + (parseInt(c[1]) + 1) : c[0] + c[1];
-};
+}

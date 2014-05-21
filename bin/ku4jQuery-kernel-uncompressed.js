@@ -200,6 +200,7 @@ $.math.roundUp = function(n, d){
     return $.math.round(n + r, d);
 };
 $.math.roundDown = function(n, d){
+    if(n === 0) return 0;
     var p = d || 0,
         r = 5 * (Math.pow(10, p - 1));
     return $.math.round(n - r, d);
@@ -347,31 +348,31 @@ $.uid = function() {
 	return $.str.encodeBase64($.str.format("{0}x{1}", a, b)).replace(/=+/g,"0").substr(3,32);
 };
 
-function emailAddress(username, domain, topLevelDomain) {
+function emailAddress(local, domain, topLevelDomain) {
     emailAddress.base.call(this);
-    this._username = username;
+    this._local = local;
     this._domain = domain;
     this._topLevelDomain = topLevelDomain;
 }
 emailAddress.prototype = {
-    username: function(){ return this._username; },
+    local: function(){ return this._local; },
     domain: function(){ return this._domain; },
     topLevelDomain: function(){ return this._topLevelDomain; },
     equals: function(other) {
         if(!$.exists(other)) return false;
-        return  other.username() == this._username &&
-                other.domain() == this._domain &&
-                other.topLevelDomain() == this._topLevelDomain;
+        return  other.local() == this._local &&
+                other.domain().toUpperCase() == this._domain.toUpperCase() &&
+                other.topLevelDomain().toUpperCase() == this._topLevelDomain.toUpperCase();
     },
     toString: function() {
-        return $.str.format("{0}@{1}.{2}", this._username, this._domain, this._topLevelDomain);
+        return $.str.format("{0}@{1}.{2}", this._local, this._domain, this._topLevelDomain);
     }
-}
+};
 $.Class.extend(emailAddress, $.Class);
 
-$.emailAddress = function(username, domain, topLevelDomain) {
-    return new emailAddress(username, domain, topLevelDomain);
-}
+$.emailAddress = function(local, domain, topLevelDomain) {
+    return new emailAddress(local, domain, topLevelDomain);
+};
 $.emailAddress.Class = emailAddress;
 
 $.emailAddress.parse = function(str){
@@ -380,12 +381,12 @@ $.emailAddress.parse = function(str){
     var splitOnAt = str.split("@"),
         lastPart = splitOnAt[1],
         split = lastPart.split("."),
-        username = splitOnAt[0]
+        local = splitOnAt[0],
         topLevelDomain = split.splice(split.length-1, 1),
         domain = split.join(".");
 
-    return new emailAddress(username, domain, topLevelDomain);
-}
+    return new emailAddress(local, domain, topLevelDomain);
+};
 
 function phoneNumber(number) {
     phoneNumber.base.call(this);
@@ -400,19 +401,19 @@ phoneNumber.prototype = {
     toStringWithFormat: function(format) {
         var formattedValue = format;
         $.list((this._value.toString().split(""))).each(function(number){
-            formattedValue.replace("#", number);
+            formattedValue = formattedValue.replace("#", number);
         });
         return formattedValue.replace(/#/g, "");
     }
-}
+};
 $.Class.extend(phoneNumber, $.Class);
 
-$.phoneNumber = function(number){ return new phoneNumber(number); }
+$.phoneNumber = function(number){ return new phoneNumber(number); };
 $.phoneNumber.Class = phoneNumber;
 
 $.phoneNumber.parse = function(str) {
     return new phoneNumber(parseInt(str.replace(/[^0-9]/gi, "")));
-}
+};
 
 function properName(first, middle, last) {
     properName.base.call(this);
@@ -692,14 +693,13 @@ dayPoint.prototype = {
             while(c--) d = d[method]();
             return d;
         }
-        var b = years < 0,
-            abs = Math.abs,
+        var abs = Math.abs,
             y = abs(years),
             d = abs(days),
             m = abs(months),
-            ym = b ? "prevYear" : "nextYear",
-            dm = b ? "prevDay" : "nextDay",
-            mm = b ? "prevMonth" : "nextMonth";
+            ym = years < 0 ? "prevYear" : "nextYear",
+            dm = days < 0 ? "prevDay" : "nextDay",
+            mm = months < 0 ? "prevMonth" : "nextMonth";
         return a(a(a(this, y, ym), m, mm), d, dm);
     },
     firstDayOfMonth: function() { return new dayPoint(this._year, this._month, 1); },
@@ -864,7 +864,7 @@ money.prototype = {
     },
     toString: function(tens, tenths) {
         var format = (this.value < 0) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
-            separator = tenths || "."
+            separator = tenths || ".";
         return $.str.format(format, this._type, money_formatDollars(this, tens), separator, money_formatCents(this));
     }
 };
@@ -898,11 +898,11 @@ $.money.tryParse = function(o){
         : null;
 };
 
-money_checkType = function(money, other) {
+function money_checkType(money, other) {
     if (!money.isOfType(other))
         throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
-};
-money_formatDollars = function(money, separator) {
+}
+function money_formatDollars(money, separator) {
     var dollars = money.dollars(),
         anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
         s = anount.toString(),
@@ -917,15 +917,15 @@ money_formatDollars = function(money, separator) {
         if ((i % 3 == 0) && b) a[a.length] = separator || ",";
     }
     return $.str.build.apply(this, a.reverse());
-};
-money_formatCents = function(money) {
+}
+function money_formatCents(money) {
     var C = $.math.round(money.cents(), -3),
         s = C.toString(),
         c = s.replace(/\-|(0\.)/g, "").concat("0").split(/\B/), l = c.length;
     if ($.isZero(l) || C >= .995) return "00";
     if (l < 2) return "0" + c[0];
     return (parseInt(c[2]) > 4) ? c[0] + (parseInt(c[1]) + 1) : c[0] + c[1];
-};
+}
 
 function coord(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))

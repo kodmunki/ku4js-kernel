@@ -30,7 +30,16 @@ $(function(){
         equal($.dayPoint(21011, 1, 1).shortYear(), 11);
         equal($.dayPoint(2014, 1, 1).shortYear(), 14);
         equal($.dayPoint(1, 1, 1).shortYear(), 1);
-    }),
+    });
+    test('add', function() {
+        expect(6);
+        ok($.dayPoint(2011, 1, 1).add(1, 0, 0).equals($.dayPoint(2012, 1, 1)));
+        ok($.dayPoint(2011, 1, 1).add(0, 1, 0).equals($.dayPoint(2011, 2, 1)));
+        ok($.dayPoint(2011, 1, 1).add(0, 0, 1).equals($.dayPoint(2011, 1, 2)));
+        ok($.dayPoint(2011, 1, 1).add(-1, 0, 0).equals($.dayPoint(2010, 1, 1)));
+        ok($.dayPoint(2011, 1, 1).add(0, -1, 0).equals($.dayPoint(2010, 12, 1)));
+        ok($.dayPoint(2011, 1, 1).add(0, 0, -1).equals($.dayPoint(2010, 12, 31)));
+    });
     test('toString', function () {
         expect(7);
         throws(function(){$.dayPoint(null).toString()});

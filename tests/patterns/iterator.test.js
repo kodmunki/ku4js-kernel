@@ -12,7 +12,7 @@ $(function(){
         expect(32);
         var iterator = $.iterator(),
             array = [1,2,3,4,5],
-            obj = {"one":1, "two":2, "three":3, "four":4, "five":5};
+            obj = {"one":1, "two":2, "three":3, "four":4, "five":5},
             list = $.list(array).toArray(),
             hash = $.hash(obj).toObject();
 

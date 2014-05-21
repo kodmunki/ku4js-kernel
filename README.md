@@ -86,7 +86,7 @@ A 32 character random unique ID.
 ###emailAddress
 | API | Return | Description |
 | --- | --- | --- |
-| user() | String | Returns the user portion of the email address. |
+| local() | String | Returns the local portion of the email address. |
 | domain() | String | Returns the domain portion of the email address. |
 | topLevelDomain() | String | Returns the top level domain portion of the email address. |
 | equals(other:_emailAddress_) | Boolean | Returns true if the email addresses are equal. |

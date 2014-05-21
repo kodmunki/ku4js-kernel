@@ -1,28 +1,28 @@
-function emailAddress(username, domain, topLevelDomain) {
+function emailAddress(local, domain, topLevelDomain) {
     emailAddress.base.call(this);
-    this._username = username;
+    this._local = local;
     this._domain = domain;
     this._topLevelDomain = topLevelDomain;
 }
 emailAddress.prototype = {
-    username: function(){ return this._username; },
+    local: function(){ return this._local; },
     domain: function(){ return this._domain; },
     topLevelDomain: function(){ return this._topLevelDomain; },
     equals: function(other) {
         if(!$.exists(other)) return false;
-        return  other.username() == this._username &&
-                other.domain() == this._domain &&
-                other.topLevelDomain() == this._topLevelDomain;
+        return  other.local() == this._local &&
+                other.domain().toUpperCase() == this._domain.toUpperCase() &&
+                other.topLevelDomain().toUpperCase() == this._topLevelDomain.toUpperCase();
     },
     toString: function() {
-        return $.str.format("{0}@{1}.{2}", this._username, this._domain, this._topLevelDomain);
+        return $.str.format("{0}@{1}.{2}", this._local, this._domain, this._topLevelDomain);
     }
-}
+};
 $.Class.extend(emailAddress, $.Class);
 
-$.emailAddress = function(username, domain, topLevelDomain) {
-    return new emailAddress(username, domain, topLevelDomain);
-}
+$.emailAddress = function(local, domain, topLevelDomain) {
+    return new emailAddress(local, domain, topLevelDomain);
+};
 $.emailAddress.Class = emailAddress;
 
 $.emailAddress.parse = function(str){
@@ -31,9 +31,9 @@ $.emailAddress.parse = function(str){
     var splitOnAt = str.split("@"),
         lastPart = splitOnAt[1],
         split = lastPart.split("."),
-        username = splitOnAt[0]
+        local = splitOnAt[0],
         topLevelDomain = split.splice(split.length-1, 1),
         domain = split.join(".");
 
-    return new emailAddress(username, domain, topLevelDomain);
-}
+    return new emailAddress(local, domain, topLevelDomain);
+};

@@ -56,14 +56,13 @@ dayPoint.prototype = {
             while(c--) d = d[method]();
             return d;
         }
-        var b = years < 0,
-            abs = Math.abs,
+        var abs = Math.abs,
             y = abs(years),
             d = abs(days),
             m = abs(months),
-            ym = b ? "prevYear" : "nextYear",
-            dm = b ? "prevDay" : "nextDay",
-            mm = b ? "prevMonth" : "nextMonth";
+            ym = years < 0 ? "prevYear" : "nextYear",
+            dm = days < 0 ? "prevDay" : "nextDay",
+            mm = months < 0 ? "prevMonth" : "nextMonth";
         return a(a(a(this, y, ym), m, mm), d, dm);
     },
     firstDayOfMonth: function() { return new dayPoint(this._year, this._month, 1); },

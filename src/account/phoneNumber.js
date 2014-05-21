@@ -11,16 +11,16 @@ phoneNumber.prototype = {
     toStringWithFormat: function(format) {
         var formattedValue = format;
         $.list((this._value.toString().split(""))).each(function(number){
-            formattedValue.replace("#", number);
+            formattedValue = formattedValue.replace("#", number);
         });
         return formattedValue.replace(/#/g, "");
     }
-}
+};
 $.Class.extend(phoneNumber, $.Class);
 
-$.phoneNumber = function(number){ return new phoneNumber(number); }
+$.phoneNumber = function(number){ return new phoneNumber(number); };
 $.phoneNumber.Class = phoneNumber;
 
 $.phoneNumber.parse = function(str) {
     return new phoneNumber(parseInt(str.replace(/[^0-9]/gi, "")));
-}
+};
