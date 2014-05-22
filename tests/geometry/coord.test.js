@@ -13,7 +13,6 @@ $(function(){
         ok($.coord(0, 0));
         ok($.coord(1, 1));
         ok($.coord(-1, -1));
-        ok($.coord(-1, -1).isTypeOf($.coord.Class));
     });
     
     var zero = $.coord.zero(),

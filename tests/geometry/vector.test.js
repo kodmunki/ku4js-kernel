@@ -13,7 +13,6 @@ $(function(){
         ok($.vector(0, 0));
         ok($.vector(1, 1));
         ok($.vector(-1, -1));
-        ok($.vector(-1, -1).isTypeOf($.vector.Class));
     });
 
 

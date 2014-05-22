@@ -50,4 +50,13 @@ $(function(){
         equal($.math.roundDown(555.554, 3), 0, "3");
         equal($.math.roundDown(555.554, 4), 0, "4");
     });
+
+    test('methods roundTowardZero', function () {
+        expect(5);
+        equal($.math.roundTowardZero(0), 0);
+        equal($.math.roundTowardZero(-0.01), 0);
+        equal($.math.roundTowardZero(0.01), 0);
+        equal($.math.roundTowardZero(-555.555, -2), -555.55);
+        equal($.math.roundTowardZero(555.555, -2), 555.55);
+    });
 });

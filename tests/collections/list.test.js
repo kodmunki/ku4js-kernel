@@ -6,9 +6,8 @@ $(function(){
     module("list");
 
     test('create', function () {
-        expect(2);
+        expect(1);
         ok($.list());
-        ok($.list().isTypeOf($.list.Class));
     });
     
     test('add', function () {

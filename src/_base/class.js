@@ -6,11 +6,8 @@ $.Class.prototype = {
         return ($.isUndefined(v))
             ? this.get(p)
             : this.set(p, v);
-    },
-    isTypeOf: function(type) {
-        return this instanceof type;
     }
-}
+};
 
 $.Class.extend = function(sub, sup) {
     if(!sub || !sup) return null;
@@ -20,4 +17,4 @@ $.Class.extend = function(sub, sup) {
     sub.prototype = $.obj.merge(sub.prototype, new proto());
     sub.prototype.constructor = sub;
     return sub;
-}
+};

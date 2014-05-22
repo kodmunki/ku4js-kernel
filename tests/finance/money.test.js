@@ -8,19 +8,23 @@ $(function(){
     module("money");
 
     test("create", function() {
-        expect(9);
+        expect(8);
         raises(function(){$.money(null);});
         raises(function(){$.money(undefined);});
         ok($.money(4));
         ok($.money.parse("$5.99"));
-        ok($.money(4).isTypeOf($.money.Class));
         
         equal(two.cents(), .625);
         equal(two.dollars(), 2);
-        equal(two.type(), "$");
+        equal(two.currency(), "$");
         equal(two.value(), 2.625);
     });
-    
+
+    test("exchange", function () {
+        expect(1);
+        ok($.money(4, "$").exchange(.25, "B").equals($.money(1, "B")));
+    });
+
     test("add", function() {
         expect(8);
         raises(function(){six.add(null)});
@@ -90,9 +94,15 @@ $(function(){
         ok(six.roundDown().equals($.money(6.12)));
     });
 
-    test("isOfType", function() {
+    test("nearestDollar", function() {
+        expect(2);
+        ok($.money(6.49).nearestDollar().equals($.money(6.00)));
+        ok($.money(6.50).nearestDollar().equals($.money(7.00)));
+    });
+
+    test("isOfCurrency", function() {
         expect(1);
-        ok(six.isOfType(two));
+        ok(six.isOfCurrency(two));
     });
     
     test("isGreaterThan", function() {
@@ -106,12 +116,14 @@ $(function(){
     });
 
     test("toString", function() {
-        expect(5);
+        expect(7);
         equal(two.toString(), "$2.63");
         equal($.money(298765.54).toString(), "$298,765.54");
         equal($.money(298765.54).toString("-"), "$298-765.54");
         equal($.money(298765.54).toString(",", "."), "$298,765.54");
         equal($.money(298765.54).toString(".", ","), "$298.765,54");
+        equal($.money(-298765.54).toString(",", "."), "($298,765.54)");
+        equal($.money(-298765.54).toString(".", ","), "($298.765,54)");
     });
 
     test("zero", function() {

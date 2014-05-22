@@ -162,6 +162,7 @@ A 32 character random unique ID.
 | year() | Number | Returns the year |
 | isWeekday() | Boolean | Returns true if the day is 1-5 |
 | isWeekend() | Boolean | Returns true if the day is 0 or 6 |
+| isLeapYear() | Boolean | Returns true if the year contains a 29th day in the second month |
 | nextDay() | dayPoint | Returns the next day |
 | prevDay() | dayPoint | Returns the previous day |
 | add(years:_Number_, months:_Number_, days:_Number_) | dayPoint |  |
@@ -187,18 +188,20 @@ A 32 character random unique ID.
 | --- | --- | --- |
 | cents() | Number | Returns the fractional value of the money. |
 | dollars() | Number | Returns the whole value of the money. |
-| type() | String | Returns the denomination. "$" is the default. |
+| currency() | String | Returns the currency. "$" is the default. |
 | value() | Number | Returns the entire value of the money. |
 | add(other:_money_) | money | Returns a money whose value is the sum on this value plus other value. |
 | divide(divisor:_Number_) | money | Returns a money whose value is the quotient of this value divided by divisor.  |
 | equals(other:_money_) |Boolean  | Return true if this value equals other value. |
-| isOfType(other:_money_) | Boolean | Return true if this type is equal to other type. |
+| exchange(rate:_Number_, currency:_String_) | money  | Return a money of currency with value or this times rate. |
+| isOfCurrency(other:_money_) | Boolean | Return true if this currency is equal to other currency. |
 | isGreaterThan(other:_money_) | Boolean | Return true if this value > other value. |
 | isLessThan(other:_money_) | Boolean | Returns true if this value < other value. |
 | multiply(multiplier:_Number_) | money | Returns a money whose value is the product of this value times the multiplier. |
 | round() | money | Returns a money whose value is the value of this money rounded to the nearest hundredth. |
 | roundDown() | money | Returns a money whose value is the value of this money rounded down to the nearest hundredth. |
 | roundUp() | money | Returns a money whose value is the value of this money rounded up to the nearest hundredth. |
+| nearestDollar() | money | Returns a money whose value is the value of this money rounded to the nearest whole value. |
 | subtract(other:_money_) | money | Returns a money whose value is the difference of this value minus other value. |
 | toString(tens:_String_, tenths:_String_) | String | Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "|") == "$12-345-678|90". |
 | zero() | money | Returns a money with value 0. |

@@ -7,9 +7,8 @@ $(function(){
     module("rectangle");
 
     test('create', function () {
-        expect(2);
+        expect(1);
         ok($.rectangle($.coord.zero(), $.coord(6,5)));
-        ok($.rectangle($.coord.zero(), $.coord(6,5)).isTypeOf($.rectangle.Class));
     });
     test('topLeft', function () {
         expect(2);

@@ -9,9 +9,8 @@ $(function(){
         emailAddress4 = $.emailAddress("john.Doe", "kodmunki", "com");
 
     test('create', function () {
-        expect(5);
+        expect(4);
         ok(emailAddress3);
-        ok(emailAddress3.isTypeOf($.emailAddress.Class));
         equal(emailAddress3.local(), "john.doe");
         equal(emailAddress3.domain(), "sales.kodmunki");
         equal(emailAddress3.topLevelDomain(), "com");

@@ -5,9 +5,8 @@ $(function(){
 
     test('create', function () {
         var properName = $.properName("John", "David", "Doe")
-        expect(5);
+        expect(4);
         ok(properName);
-        ok(properName.isTypeOf($.properName.Class));
         equal(properName.first(), "John");
         equal(properName.middle(), "David");
         equal(properName.last(), "Doe");

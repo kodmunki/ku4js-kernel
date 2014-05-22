@@ -160,11 +160,8 @@ $.Class.prototype = {
         return ($.isUndefined(v))
             ? this.get(p)
             : this.set(p, v);
-    },
-    isTypeOf: function(type) {
-        return this instanceof type;
     }
-}
+};
 
 $.Class.extend = function(sub, sup) {
     if(!sub || !sup) return null;
@@ -174,7 +171,7 @@ $.Class.extend = function(sub, sup) {
     sub.prototype = $.obj.merge(sub.prototype, new proto());
     sub.prototype.constructor = sub;
     return sub;
-}
+};
 
 function lock(isLocked) {
     lock.base.call(this);
@@ -204,6 +201,9 @@ $.math.roundDown = function(n, d){
     var p = d || 0,
         r = 5 * (Math.pow(10, p - 1));
     return $.math.round(n - r, d);
+};
+$.math.roundTowardZero = function(n, d) {
+    return (n < 0) ? $.math.roundUp(n, d) : $.math.roundDown(n, d);
 };
 $.math.factorial = function(n){
     var v = n, i = n;
@@ -635,7 +635,7 @@ $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
 };
 
-function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
+function dayPoint(year, month, date) {
     dayPoint.base.call(this);
     if ((month < 1) || (month > 12))
         throw $.ku4exception("$.dayPoint", $.str.format("Invalid month= {0}", month));
@@ -643,29 +643,17 @@ function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
         throw $.ku4exception("$.dayPoint", $.str.format("Invalid date= {0}", date));
     
     this._value = (arguments.length >= 3)
-        ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)
+        ? new Date(year, month - 1, date)
         : new Date();
-        
-    var v = this._value;
-    function formatTime(t){ return t < 10 ? "0" + t : "" + t; }
-    
-    this._day = v.getDay();
+
+    this._day = this._value.getDay();
     this._date = date;
     this._month = month;
     this._year = year;
-    this._hour = formatTime(v.getHours());
-    this._minute = formatTime(v.getMinutes());
-    this._second = formatTime(v.getSeconds());
-    this._millisecond = formatTime(v.getMilliseconds());
-    
-    var d = this._day;
-    this._isWeekday = d > 0 && d < 6;
-    this._isWeekend = !this._isWeekday;
 }
 
 dayPoint.prototype = {
     value: function(){ return this._value; },
-
     day: function(){ return this._day; },
     date: function(){ return this._date; },
     month: function(){ return this._month; },
@@ -674,13 +662,12 @@ dayPoint.prototype = {
         var y = this._year.toString();
         return parseInt(y.substr(y.length-2));
     },
-    hour: function(){ return this._hour; },
-    minute: function(){ return this._minute; },
-    second: function(){ return this._second; },
-    millisecond: function(){ return this._millisecond; },
-    isWeekday: function(){ return this._isWeekday; },
-    isWeekend: function(){ return this._isWeekend; },
-
+    isWeekday: function(){
+        var d = this._day;
+        return d > 0 && d < 6;
+    },
+    isWeekend: function(){ return !this.isWeekday(); },
+    isLeapYear: function() { return dayPoint_isLeapYear(this._year); },
     nextDay: function() { return dayPoint_createDay(this, 1, 0, 0); },
     prevDay: function() { return dayPoint_createDay(this, -1, 0, 0); },
     nextMonth: function() { return dayPoint_createDay(this, 0, 1, 0); },
@@ -754,24 +741,16 @@ $.dayPoint.canParse = function(v) {
         : false;
 };
 $.dayPoint.parse = function(v) {
-        if (v instanceof dayPoint) return v;
-        if (!($.isDate(v) || this.canParse(v))) return null;
+    if (v instanceof dayPoint) return v;
 
-        var D = new Date(v),
-            y = D.getFullYear(),
-            m = D.getMonth() + 1,
-            d = D.getDate(),
-            h = D.getHours(),
-            M = D.getMinutes(),
-            s = D.getSeconds(),
-            ms = D.getMilliseconds();
+    var D = new Date(v);
+    if(!$.exists(v) || isNaN(D).valueOf())
+        throw $.ku4exception("$.dayPoint", $.str.format("Cannot parse value= {0}", v));
 
-        return $.dayPoint(y, m, d, h, M, s, ms);
+    return $.dayPoint(D.getFullYear(), D.getMonth() + 1, D.getDate());
 };
 $.dayPoint.tryParse = function(v){
-    return $.dayPoint.canParse(v)
-        ? $.dayPoint.parse(v)
-        : null;
+    return $.dayPoint.canParse(v) ? $.dayPoint.parse(v) : null;
 };
 
 var dayPoint_assumeNow;
@@ -805,75 +784,86 @@ function dayPoint_createDay(dp, d, m, y) {
     return new dayPoint(year, month, date);
 }
 
-function money(amt, type) {
+function money(amt, currency) {
     if (!$.exists(amt) || isNaN(amt))
         throw $.ku4exception("$.money", $.str.format("Invalid amount= {0}. Amount must be a number.", amt));
     money.base.call(this);
-    var dollars = $.math.roundDown(amt);
+    var dollars = $.math.roundTowardZero(amt);
     this._cents = amt - dollars;
     this._dollars = dollars;
-    this._type = type || "$";
+    this._currency = currency || "$";
     this._value = amt;
 }
 money.prototype = {
     cents: function(){ return this._cents; },
     dollars: function(){ return this._dollars; },
-    type: function(){ return this._type; },
+    currency: function(){ return this._currency; },
     value: function(){ return this._value; },
     
     add: function(other) {
-        money_checkType(this, other);
-        return new money(this._value + other.value(), this._type);
+        money_checkCurrency(this, other);
+        return new money(this._value + other.value(), this._currency);
     },
     divide: function(value) {
         if(!$.isNumber(value))
             throw $.ku4exception("$.money", $.str.format("Invalid divisor value= {0}", value));
-        return new money(this._value / value, this._type);
+        return new money(this._value / value, this._currency);
     },
     equals: function(other) {
-        return (this.isOfType(other)) && (this._value == other.value());
+        return (this.isOfCurrency(other)) && (this._value == other.value());
     },
-    isOfType: function(other) {
-        return this._type == other.type();
+    exchange: function(rate, currency) {
+        return new money(this.multiply(rate).value(), currency);
+    },
+    isOfCurrency: function(other) {
+        return this._currency == other.currency();
     },
     isGreaterThan: function(other) {
-        money_checkType(this, other);
+        money_checkCurrency(this, other);
         return this._value > other.value();
     },
     isLessThan: function(other) {
-        money_checkType(this, other);
+        money_checkCurrency(this, other);
         return this._value < other.value();
     },
     multiply: function(value) {
         if(!$.isNumber(value))
             throw $.ku4exception("$.money", $.str.format("Invalid multiplier value= {0}", value));
-        return new money(this._value * value, this._type);
+        return new money(this._value * value, this._currency);
+    },
+    nearestDollar: function() {
+        return new money($.math.round(this.value(), 0), this._currency);
     },
     round: function() {
-        return new money($.math.round(this.value(), -2), this._type);
+        return new money($.math.round(this.value(), -2), this._currency);
     },
     roundDown: function() {
-        return new money($.math.roundDown(this.value(), -2), this._type);
+        return new money($.math.roundDown(this.value(), -2), this._currency);
     },
     roundUp: function() {
-        return new money($.math.roundUp(this.value(), -2), this._type);
+        return new money($.math.roundUp(this.value(), -2), this._currency);
     },
     subtract: function(other) {
-        money_checkType(this, other);
-        return new money(this._value - other.value(), this._type);
+        money_checkCurrency(this, other);
+        return new money(this._value - other.value(), this._currency);
     },
-    toString: function(tens, tenths) {
-        var format = (this.value < 0) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
-            separator = tenths || ".";
-        return $.str.format(format, this._type, money_formatDollars(this, tens), separator, money_formatCents(this));
+    toString: function(digitSeparator, decimalMark) {
+        var money = this.round(),
+            format = (money.isLessThan($.money.zero())) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
+            separator = digitSeparator || ",",
+            mark = decimalMark || ".";
+        var dollars = money_formatDollars(money.dollars(), separator);
+        var cents = money_formatCents(money.cents());
+
+        return $.str.format(format, this._currency, dollars , mark, cents);
     }
 };
 $.Class.extend(money, $.Class);
 
-$.money = function(number, type){ return new money(number, type); };
+$.money = function(number, currency){ return new money(number, currency); };
 $.money.Class = money;
 
-$.money.zero = function(type) { return $.money(0, type); };
+$.money.zero = function(currency) { return $.money(0, currency); };
 $.money.isMoney = function(o) { return o instanceof money; };
 $.money.canParse = function(v){
     try {
@@ -898,33 +888,35 @@ $.money.tryParse = function(o){
         : null;
 };
 
-function money_checkType(money, other) {
-    if (!money.isOfType(other))
-        throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. type: {0} != type: {1}", money._type, other._type));
+function money_checkCurrency(money, other) {
+    if (!money.isOfCurrency(other))
+        throw $.ku4exception("$.money", $.str.format("Invalid operation on non-conforming currencies. currency: {0} != currency: {1}", money._currency, other._currency));
 }
-function money_formatDollars(money, separator) {
-    var dollars = money.dollars(),
-        anount = (money.cents() >= .995) ? (dollars + 1) : dollars,
-        s = anount.toString(),
-        d = s.replace(/\-/, "").split(/\B/).reverse(),
-        l = d.length,
-        b = l > 3,
-        i = 0,
-        a = [];
-    while (i < l) {
-        a[a.length] = d[i]; i++;
-        if (!$.exists(d[i])) break; 
-        if ((i % 3 == 0) && b) a[a.length] = separator || ",";
-    }
-    return $.str.build.apply(this, a.reverse());
+function money_formatDollars(dollars, separator) {
+    if ($.isZero(dollars)) return "0";
+
+    var _dollars = dollars.toString(),
+        chars = _dollars.replace(/[^\d]/, "").split(/\B/)   .reverse(),
+        isThousandPlus = _dollars.length > 3,
+        mark = separator || ",",
+        marked = $.list(),
+        i = 0;
+
+    $.list(chars).each(function(number){
+        if (i != 0 && (i % 3 == 0)) { marked.add(mark); i = 0; }
+        marked.add(number);
+        i++;
+    });
+
+    return $.str.build.apply(this, marked.toArray().reverse()).replace(/[^\d]$/, "");
 }
-function money_formatCents(money) {
-    var C = $.math.round(money.cents(), -3),
-        s = C.toString(),
-        c = s.replace(/\-|(0\.)/g, "").concat("0").split(/\B/), l = c.length;
-    if ($.isZero(l) || C >= .995) return "00";
-    if (l < 2) return "0" + c[0];
-    return (parseInt(c[2]) > 4) ? c[0] + (parseInt(c[1]) + 1) : c[0] + c[1];
+function money_formatCents(cents) {
+    var rounded = Math.abs($.math.round(cents, -2)),
+        _cents = rounded.toString().replace(/[^\d]|0\./g, "");
+
+    if ($.isZero(rounded)) return "00";
+    if (rounded < .10) return "0" + _cents;
+    return _cents;
 }
 
 function coord(x, y) {

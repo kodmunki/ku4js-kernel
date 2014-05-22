@@ -15,6 +15,9 @@ $.math.roundDown = function(n, d){
         r = 5 * (Math.pow(10, p - 1));
     return $.math.round(n - r, d);
 };
+$.math.roundTowardZero = function(n, d) {
+    return (n < 0) ? $.math.roundUp(n, d) : $.math.roundDown(n, d);
+};
 $.math.factorial = function(n){
     var v = n, i = n;
     while(i--) if(!!i) v *= i;

@@ -1,4 +1,4 @@
-function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
+function dayPoint(year, month, date) {
     dayPoint.base.call(this);
     if ((month < 1) || (month > 12))
         throw $.ku4exception("$.dayPoint", $.str.format("Invalid month= {0}", month));
@@ -6,29 +6,17 @@ function dayPoint(year, month, date, hours, minutes, seconds, milliseconds) {
         throw $.ku4exception("$.dayPoint", $.str.format("Invalid date= {0}", date));
     
     this._value = (arguments.length >= 3)
-        ? new Date(year, month - 1, date, hours || 0, minutes || 0, seconds || 0, milliseconds || 0)
+        ? new Date(year, month - 1, date)
         : new Date();
-        
-    var v = this._value;
-    function formatTime(t){ return t < 10 ? "0" + t : "" + t; }
-    
-    this._day = v.getDay();
+
+    this._day = this._value.getDay();
     this._date = date;
     this._month = month;
     this._year = year;
-    this._hour = formatTime(v.getHours());
-    this._minute = formatTime(v.getMinutes());
-    this._second = formatTime(v.getSeconds());
-    this._millisecond = formatTime(v.getMilliseconds());
-    
-    var d = this._day;
-    this._isWeekday = d > 0 && d < 6;
-    this._isWeekend = !this._isWeekday;
 }
 
 dayPoint.prototype = {
     value: function(){ return this._value; },
-
     day: function(){ return this._day; },
     date: function(){ return this._date; },
     month: function(){ return this._month; },
@@ -37,13 +25,12 @@ dayPoint.prototype = {
         var y = this._year.toString();
         return parseInt(y.substr(y.length-2));
     },
-    hour: function(){ return this._hour; },
-    minute: function(){ return this._minute; },
-    second: function(){ return this._second; },
-    millisecond: function(){ return this._millisecond; },
-    isWeekday: function(){ return this._isWeekday; },
-    isWeekend: function(){ return this._isWeekend; },
-
+    isWeekday: function(){
+        var d = this._day;
+        return d > 0 && d < 6;
+    },
+    isWeekend: function(){ return !this.isWeekday(); },
+    isLeapYear: function() { return dayPoint_isLeapYear(this._year); },
     nextDay: function() { return dayPoint_createDay(this, 1, 0, 0); },
     prevDay: function() { return dayPoint_createDay(this, -1, 0, 0); },
     nextMonth: function() { return dayPoint_createDay(this, 0, 1, 0); },
@@ -117,24 +104,16 @@ $.dayPoint.canParse = function(v) {
         : false;
 };
 $.dayPoint.parse = function(v) {
-        if (v instanceof dayPoint) return v;
-        if (!($.isDate(v) || this.canParse(v))) return null;
+    if (v instanceof dayPoint) return v;
 
-        var D = new Date(v),
-            y = D.getFullYear(),
-            m = D.getMonth() + 1,
-            d = D.getDate(),
-            h = D.getHours(),
-            M = D.getMinutes(),
-            s = D.getSeconds(),
-            ms = D.getMilliseconds();
+    var D = new Date(v);
+    if(!$.exists(v) || isNaN(D).valueOf())
+        throw $.ku4exception("$.dayPoint", $.str.format("Cannot parse value= {0}", v));
 
-        return $.dayPoint(y, m, d, h, M, s, ms);
+    return $.dayPoint(D.getFullYear(), D.getMonth() + 1, D.getDate());
 };
 $.dayPoint.tryParse = function(v){
-    return $.dayPoint.canParse(v)
-        ? $.dayPoint.parse(v)
-        : null;
+    return $.dayPoint.canParse(v) ? $.dayPoint.parse(v) : null;
 };
 
 var dayPoint_assumeNow;
