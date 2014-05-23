@@ -1,4 +1,33 @@
-(function(l){ $=l;
+(function(l){
+function storeAuthorInfo() {
+    $.ku4 = {
+        'author': 'kodmunki\u2122',
+        'license': 'The MIT License (MIT)' +
+                   '\n\nCopyright (c) 2013 kodmunki\u2122.' +
+                   '\nPermission is hereby granted, free of charge, to any person obtaining a copy of' +
+                   '\nthis software and associated documentation files (the "Software"), to deal in' +
+                   '\nthe Software without restriction, including without limitation the rights to' +
+                   '\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of' +
+                   '\nthe Software, and to permit persons to whom the Software is furnished to do so,' +
+                   '\nsubject to the following conditions:' +
+                   '\n\nThe above copyright notice and this permission notice shall be included in all' +
+                   '\ncopies or substantial portions of the Software.' +
+                   '\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR' +
+                   '\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS' +
+                   '\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR' +
+                   '\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER' +
+                   '\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN' +
+                   '\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
+    };
+}
+try {
+    storeAuthorInfo();
+}
+catch(e) {
+    $ = {};
+    storeAuthorInfo();
+}
+
 $.isArray = function(x) { return x instanceof Array; };
 $.isBool = function(x) { return (/boolean/i.test(typeof (x))); };
 $.isDate = function(x) { return x instanceof Date; };
@@ -477,7 +506,7 @@ hash.prototype = {
             || this.containsKey(k))
             throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be unique number or string.", k));
 
-        if($.isUndefined(v)) return;
+        if($.isUndefined(v)) return this;
         this.$h[k] = v;
         this._count++;
         return this;
@@ -552,12 +581,16 @@ hash.prototype = {
     },
     toObject: function() { return this.$h; },
     update: function(k, v) {
-        if(!$.exists(k)) return this;
+        if ((!($.isString(k) || $.isNumber(k))) ||
+            /(^null$)|(^undefined$)/.test(k))
+            throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be number or string.", k));
+
+        if($.isUndefined(v)) return this;
         if(!this.containsKey(k)) this._count++;
         this.$h[k] = v;
         return this;
     }
-}
+};
 $.Class.extend(hash, $.Class);
 
 function hash_combine(hash, obj, m) {
@@ -795,11 +828,10 @@ function money(amt, currency) {
     this._value = amt;
 }
 money.prototype = {
-    cents: function(){ return this._cents; },
-    dollars: function(){ return this._dollars; },
-    currency: function(){ return this._currency; },
     value: function(){ return this._value; },
-    
+    dollars: function(){ return this._dollars; },
+    cents: function(){ return this._cents; },
+    currency: function(){ return this._currency; },
     add: function(other) {
         money_checkCurrency(this, other);
         return new money(this._value + other.value(), this._currency);
@@ -1463,4 +1495,4 @@ stack.prototype = {
 $.lifo = function(){ return new stack(); }
 $.lifo.Class = stack;
 
-})(jQuery);
+})();

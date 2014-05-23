@@ -12,15 +12,13 @@
 # expected to be changed by the developer running
 # this process:
 #
-# LIBRARY (The library to build for or {} for none)
 # PROJNAME (The name of your project)
 # STARTMSG (A message to echo at start of build)
 # ENDMSG (A message to echo at end of build)
 #====================================================
 
 setup () {
-    LIBRARY=jQuery
-    PROJNAME="ku4jQuery-kernel"
+    PROJNAME="ku4js-kernel"
     STARTMSG="Building $PROJNAME"
     ENDMSG="$PROJNAME Complete :{)}"
 
@@ -37,7 +35,7 @@ setup () {
 
 openlink () {
     touch $LNKGFILE
-    echo "(function(l){ $=l;" >> $LNKGFILE
+    echo "(function(l){" >> $LNKGFILE
 }
 
 linkfiles () {
@@ -50,7 +48,7 @@ linkfiles () {
 }
 
 closelink () {
-    echo "})($LIBRARY);" >> $LNKGFILE
+    echo "})();" >> $LNKGFILE
 }
 
 compile () {

@@ -11,7 +11,6 @@
 ::  expected to be changed by the developer running
 ::  this process:
 ::
-::  LIBRARY (The library to build for or {} for none)
 ::  PROJNAME (The name of your project)
 ::  STARTMSG (A message to echo at start of build)
 ::  ENDMSG (A message to echo at end of build)
@@ -27,8 +26,7 @@ CALL :teardown
 GOTO :eof
 
 :setup
-SET LIBRARY=jQuery
-SET PROJNAME=ku4jQuery-kernel
+SET PROJNAME=ku4js-kernel
 SET STARTMSG=Building %PROJNAME%
 SET ENDMSG=%PROJNAME% Complete :{)}
 
@@ -44,7 +42,7 @@ SET MINFILE=%BIN%\%PROJNAME%.js
 GOTO :eof
 
 :openlink
-echo (function(l){ $=l;>> %LNKGFILE%
+echo (function(){ >> %LNKGFILE%
 GOTO :eof
 
 :link
@@ -53,7 +51,7 @@ FOR /R %SRC% %%D IN (*.js) DO CALL :linkfile %%D
 GOTO :eof
 
 :closelink
-echo })(%LIBRARY%);>> %LNKGFILE%
+echo })();>> %LNKGFILE%
 GOTO :eof
 
 :linkfile

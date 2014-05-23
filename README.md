@@ -1,12 +1,9 @@
-#ku4jQuery-kernel
+#ku4js-kernel
 
-kodmunki™ utilities for jQuery kernel is a jQuery plugin for OO JavaScript development.
+kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript development.
 
-ku4jQuery-kernel contains numerous useful classes including collections, math, geometry, and numerous common
+ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
 design patterns.
-
-#Dependencies
-* jQuery - http://jquery.com/ -- _This is not a dependency if kernel is compiled as such. See the:_kodmunki™ build process_(#kodmunki-build-process)_.
 
 #kodmunki™ build process
 
@@ -21,7 +18,6 @@ The following variables found in setup () are
 expected to be changed by the developer running
 this process:
 
-* LIBRARY (The library to build for or {} for none)
 * PROJNAME (The name of your project)
 * STARTMSG (A message to echo at start of build)
 * ENDMSG (A message to echo at end of build)
@@ -29,7 +25,7 @@ this process:
 ---
 
 #Documentation
-The following is documentation for each class in the ku4jQuery-kernel library organized by common domain to follow the
+The following is documentation for each class in the ku4js-kernel library organized by common domain to follow the
 directory structure found in /src. All constructors are empty unless otherwise noted.
 
 ##Class

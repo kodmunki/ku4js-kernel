@@ -18,7 +18,7 @@ hash.prototype = {
             || this.containsKey(k))
             throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be unique number or string.", k));
 
-        if($.isUndefined(v)) return;
+        if($.isUndefined(v)) return this;
         this.$h[k] = v;
         this._count++;
         return this;
@@ -93,12 +93,16 @@ hash.prototype = {
     },
     toObject: function() { return this.$h; },
     update: function(k, v) {
-        if(!$.exists(k)) return this;
+        if ((!($.isString(k) || $.isNumber(k))) ||
+            /(^null$)|(^undefined$)/.test(k))
+            throw $.ku4exception("$.hash", $.str.format("Invalid key: {0}. Must be number or string.", k));
+
+        if($.isUndefined(v)) return this;
         if(!this.containsKey(k)) this._count++;
         this.$h[k] = v;
         return this;
     }
-}
+};
 $.Class.extend(hash, $.Class);
 
 function hash_combine(hash, obj, m) {
