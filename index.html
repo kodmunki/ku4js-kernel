@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>ku4jquery-kernel by kodmunki</title>
+    <title>ku4js-kernel by kodmunki</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,33 +15,28 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>ku4jquery-kernel</h1>
-        <p>kodmunki™ utilities for jQuery kernel</p>
+        <h1>ku4js-kernel</h1>
+        <p>kodmunki™ utilities for JavaScript kernel</p>
 
-        <p class="view"><a href="https://github.com/kodmunki/ku4jQuery-kernel">View the Project on GitHub <small>kodmunki/ku4jQuery-kernel</small></a></p>
+        <p class="view"><a href="https://github.com/kodmunki/ku4js-kernel">View the Project on GitHub <small>kodmunki/ku4js-kernel</small></a></p>
 
 
         <ul>
-          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/kodmunki/ku4jQuery-kernel">View On <strong>GitHub</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4js-kernel/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4js-kernel/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kodmunki/ku4js-kernel">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
         <h1>
-<a name="ku4jquery-kernel" class="anchor" href="#ku4jquery-kernel"><span class="octicon octicon-link"></span></a>ku4jQuery-kernel</h1>
+<a name="ku4js-kernel" class="anchor" href="#ku4js-kernel"><span class="octicon octicon-link"></span></a>ku4js-kernel</h1>
 
-<p>kodmunki™ utilities for jQuery kernel is a jQuery plugin for OO JavaScript development.</p>
+<p>kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript development.</p>
 
-<p>ku4jQuery-kernel contains numerous useful classes including collections, math, geometry, and numerous common
+<p>ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
 design patterns.</p>
 
 <h1>
-<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
-
-<ul>
-<li>jQuery - <a href="http://jquery.com/">http://jquery.com/</a> -- <em>This is not a dependency if kernel is compiled as such. See the:_kodmunki™ build process</em>(#kodmunki-build-process)_.</li>
-</ul><h1>
 <a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
 
 <p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
@@ -60,14 +55,13 @@ expected to be changed by the developer running
 this process:</p>
 
 <ul>
-<li>LIBRARY (The library to build for or {} for none)</li>
 <li>PROJNAME (The name of your project)</li>
 <li>STARTMSG (A message to echo at start of build)</li>
 <li>ENDMSG (A message to echo at end of build)</li>
 </ul><hr><h1>
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
-<p>The following is documentation for each class in the ku4jQuery-kernel library organized by common domain to follow the
+<p>The following is documentation for each class in the ku4js-kernel library organized by common domain to follow the
 directory structure found in /src. All constructors are empty unless otherwise noted.</p>
 
 <h2>
@@ -517,6 +511,11 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Returns true if the day is 0 or 6</td>
 </tr>
 <tr>
+<td>isLeapYear()</td>
+<td>Boolean</td>
+<td>Returns true if the year contains a 29th day in the second month</td>
+</tr>
+<tr>
 <td>nextDay()</td>
 <td>dayPoint</td>
 <td>Returns the next day</td>
@@ -626,9 +625,9 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Returns the whole value of the money.</td>
 </tr>
 <tr>
-<td>type()</td>
+<td>currency()</td>
 <td>String</td>
-<td>Returns the denomination. "$" is the default.</td>
+<td>Returns the currency. "$" is the default.</td>
 </tr>
 <tr>
 <td>value()</td>
@@ -651,9 +650,14 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Return true if this value equals other value.</td>
 </tr>
 <tr>
-<td>isOfType(other:<em>money</em>)</td>
+<td>exchange(rate:<em>Number</em>, currency:<em>String</em>)</td>
+<td>money</td>
+<td>Return a money of currency with value or this times rate.</td>
+</tr>
+<tr>
+<td>isOfCurrency(other:<em>money</em>)</td>
 <td>Boolean</td>
-<td>Return true if this type is equal to other type.</td>
+<td>Return true if this currency is equal to other currency.</td>
 </tr>
 <tr>
 <td>isGreaterThan(other:<em>money</em>)</td>
@@ -684,6 +688,11 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>roundUp()</td>
 <td>money</td>
 <td>Returns a money whose value is the value of this money rounded up to the nearest hundredth.</td>
+</tr>
+<tr>
+<td>nearestDollar()</td>
+<td>money</td>
+<td>Returns a money whose value is the value of this money rounded to the nearest whole value.</td>
 </tr>
 <tr>
 <td>subtract(other:<em>money</em>)</td>
