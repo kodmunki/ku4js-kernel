@@ -54,7 +54,13 @@ mediator.prototype = {
                 observer.notify.apply(observer, data);
             }
             catch(e) {
-                var exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key= {1}", e.message, name));
+                var message = "This exception may be thrown for various reasons. BE SURE TO CHECK FOR:" +
+                              "\n\n1) INFINITE LOOPS: Occur due to inadvertent unfiltered calls to notify." +
+                              " Check calls to notify for inadvertent missing or misspelled filters." +
+                              "\n\n2) SUBSCRIBER EXCEPTIONS: Occur due to exceptions thrown in a subscriber." +
+                              " Check subscriber methods for uncaught exceptions." +
+                              "\n\n*NOTE: For more information see the documentation at https://github.com/kodmunki/ku4node-kernel#mediator",
+                    exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key = {1} \n\n {2}", e.message, name, message));
                 if(t == 2) throw exception;
                 if(t == 1) $.ku4Log(exception.message);
             }
