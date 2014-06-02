@@ -116,8 +116,12 @@ $(function(){
     });
 
     test("toString", function() {
-        expect(7);
+        expect(11);
         equal(two.toString(), "$2.63");
+        equal($.money(2.00).toString(), "$2.00");
+        equal($.money(2.10).toString(), "$2.10");
+        equal($.money(2.00).toString(".", ","), "$2,00");
+        equal($.money(2.10).toString(".", ","), "$2,10");
         equal($.money(298765.54).toString(), "$298,765.54");
         equal($.money(298765.54).toString("-"), "$298-765.54");
         equal($.money(298765.54).toString(",", "."), "$298,765.54");

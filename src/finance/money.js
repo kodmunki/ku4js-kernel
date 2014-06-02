@@ -129,5 +129,6 @@ function money_formatCents(cents) {
 
     if ($.isZero(rounded)) return "00";
     if (rounded < .10) return "0" + _cents;
+    if (rounded % .10 == 0) return _cents + "0";
     return _cents;
 }
