@@ -116,12 +116,31 @@ $(function(){
     });
 
     test("toString", function() {
-        expect(11);
+        expect(30);
         equal(two.toString(), "$2.63");
+        equal($.money(0.00).toString(), "$0.00");
+        equal($.money(0.10).toString(), "$0.10");
+        equal($.money(0.20).toString(), "$0.20");
+        equal($.money(0.30).toString(), "$0.30");
+        equal($.money(0.40).toString(), "$0.40");
+        equal($.money(0.50).toString(), "$0.50");
+        equal($.money(0.60).toString(), "$0.60");
+        equal($.money(0.70).toString(), "$0.70");
+        equal($.money(0.80).toString(), "$0.80");
+        equal($.money(0.90).toString(), "$0.90");
         equal($.money(2.00).toString(), "$2.00");
         equal($.money(2.10).toString(), "$2.10");
+        equal($.money(2.20).toString(), "$2.20");
+        equal($.money(2.30).toString(), "$2.30");
+        equal($.money(2.40).toString(), "$2.40");
+        equal($.money(2.50).toString(), "$2.50");
+        equal($.money(2.60).toString(), "$2.60");
+        equal($.money(2.70).toString(), "$2.70");
+        equal($.money(2.80).toString(), "$2.80");
+        equal($.money(2.90).toString(), "$2.90");
         equal($.money(2.00).toString(".", ","), "$2,00");
         equal($.money(2.10).toString(".", ","), "$2,10");
+        equal($.money(2.90).toString(".", ","), "$2,90");
         equal($.money(298765.54).toString(), "$298,765.54");
         equal($.money(298765.54).toString("-"), "$298-765.54");
         equal($.money(298765.54).toString(",", "."), "$298,765.54");
