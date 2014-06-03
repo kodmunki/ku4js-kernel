@@ -26,7 +26,7 @@ observer.prototype = {
         return this;
     },
     isEmpty: function(){ return this._methods.isEmpty(); }
-}
+};
 $.Class.extend(observer, $.Class);
-$.observer = function() { return new observer(); }
-$.observer.Class = observer
+$.observer = function() { return new observer(); };
+$.observer.Class = observer;
