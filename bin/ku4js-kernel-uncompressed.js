@@ -881,7 +881,7 @@ money.prototype = {
     },
     toString: function(digitSeparator, decimalMark) {
         var money = this.round(),
-            format = (money.isLessThan($.money.zero())) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
+            format = (money.isLessThan($.money.zero(this.currency()))) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
             separator = digitSeparator || ",",
             mark = decimalMark || ".";
         var dollars = money_formatDollars(money.dollars(), separator);
