@@ -33,7 +33,28 @@ $(function(){
         equal($.str.render(template, person3), "Yo, my name is Jane. I am 20 years old. Born on February, 7th {{year}}.");
         equal($.str.render(template, person4, ""), "Yo, my name is Jane. I am 20 years old. Born on February, 7th .");
     });
-    
+
+    test('replaceCharsAtIndex', function () {
+        var str = "This is my string.";
+
+        expect(12);
+        raises(function() { $.str.replaceCharsAtIndex("", 0, 1, 'a'); });
+        raises(function() { $.str.replaceCharsAtIndex("", -1, 1, 'a'); });
+        raises(function() { $.str.replaceCharsAtIndex("", 1, 1, 'a'); });
+
+        equal($.str.replaceCharsAtIndex(str, 0, 1, "Z"), "Zhis is my string.");
+        equal($.str.replaceCharsAtIndex(str, 17, 1, "Z"), "This is my stringZ");
+        equal($.str.replaceCharsAtIndex(str, 5, 1, "Z"), "This Zs my string.");
+
+        equal($.str.replaceCharsAtIndex(str, 0, 1, "AAA"), "AAAhis is my string.");
+        equal($.str.replaceCharsAtIndex(str, 17, 1, "AAA"), "This is my stringAAA");
+        equal($.str.replaceCharsAtIndex(str, 5, 1, "AAA"), "This AAAs my string.");
+
+        equal($.str.replaceCharsAtIndex(str, 0, 4, "AAA"), "AAA is my string.");
+        equal($.str.replaceCharsAtIndex(str, 16, 2, "AAA"), "This is my strinAAA");
+        equal($.str.replaceCharsAtIndex(str, 8, 2, "AAA"), "This is AAA string.");
+    });
+
     test('trimStart', function () {
         expect(4);
         throws(function() { $.str.trimStart(null); });

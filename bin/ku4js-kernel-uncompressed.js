@@ -35,6 +35,7 @@ $.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x 
 $.isNumber = function(x) { return ((/number/i.test(typeof (x))) || x instanceof Number) && !isNaN(x); };
 $.isObject = function(x) { return $.exists(x) && (/object/i.test(typeof (x))) &&
                                   !($.isBool(x) || $.isNumber(x) || $.isDate(x) || $.isArray(x) || $.isString(x) ||  $.isFunction(x)); };
+$.isObjectLiteral = function(x) { return $.isObject(x) && x.constructor == ({}).constructor },
 $.isFunction = function(x) { return (x instanceof Function); };
 $.isString = function(x) { return (/string/i.test(typeof (x))) || x instanceof String; };
 $.isZero = function(n) { return n === 0; };
@@ -181,6 +182,15 @@ $.obj.filter = function(/*obj, keys...*/) {
     return value;
 };
 
+if(!$.exists($.arr)) $.arr = { };
+$.arr.indexOfRegExp = function(array, regexp) {
+    for (n in array) {
+        var value = array[n];
+        if(regexp.test(array[n])) return n;
+    }
+    return -1;
+};
+
 $.Class = function(){ }
 $.Class.prototype = {
     get: function(p){ return this["_"+p]; },
@@ -265,6 +275,11 @@ $.str.render = function(template, obj, alt) {
         s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
     }
     return $.exists(alt) ? s.replace(/\{\{.*\}\}/g, alt) : s;
+};
+$.str.replaceCharsAtIndex = function(s, index, length, value) {
+    if($.isNullOrEmpty(s) || index < 0 || index > s.length || $.isNullOrEmpty(value))
+        throw $.ku4exception("Argument Exception", "Invalid arguments at $.str.replaceStringAtIndex");
+    return s.substring(0, index) + value + s.substring(index + length);
 };
 $.str.parse = function(){
     return String.fromCharCode.apply(String, arguments);

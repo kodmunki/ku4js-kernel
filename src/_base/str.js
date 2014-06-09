@@ -19,6 +19,11 @@ $.str.render = function(template, obj, alt) {
     }
     return $.exists(alt) ? s.replace(/\{\{.*\}\}/g, alt) : s;
 };
+$.str.replaceCharsAtIndex = function(s, index, length, value) {
+    if($.isNullOrEmpty(s) || index < 0 || index > s.length || $.isNullOrEmpty(value))
+        throw $.ku4exception("Argument Exception", "Invalid arguments at $.str.replaceStringAtIndex");
+    return s.substring(0, index) + value + s.substring(index + length);
+};
 $.str.parse = function(){
     return String.fromCharCode.apply(String, arguments);
 };

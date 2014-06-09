@@ -94,9 +94,10 @@ $(function(){
     });
 
     test('isObject',  function () {
-        expect(2);
+        expect(3);
         ok($.isObject({}));
         ok($.isObject(new Object()));
+        ok($.isObject(new function() { }));
     });
 
     test('isNotObject',  function () {
@@ -113,7 +114,29 @@ $(function(){
         ok(!$.isObject(new Array()));
         ok(!$.isObject(function() { } ));
         ok(!$.isObject(new Function()));
+    });
 
+    test('isObjectLiteral',  function () {
+        expect(2);
+        ok($.isObject({}));
+        ok($.isObject(new Object()));
+    });
+
+    test('isNotObjectLiteral',  function () {
+        expect(13);
+        ok($.isObject(new function() { }));
+        ok(!$.isObject(null));
+        ok(!$.isObject(undefined));
+        ok(!$.isObject(true));
+        ok(!$.isObject(false));
+        ok(!$.isObject(""));
+        ok(!$.isObject(new String()));
+        ok(!$.isObject(0));
+        ok(!$.isObject(new Number()));
+        ok(!$.isObject([]));
+        ok(!$.isObject(new Array()));
+        ok(!$.isObject(function() { } ));
+        ok(!$.isObject(new Function()));
     });
 
     test('isFunction',  function () {
