@@ -609,7 +609,7 @@ hash.prototype = {
 $.Class.extend(hash, $.Class);
 
 function hash_combine(hash, obj, m) {
-    var o = (!obj.toObject) ? obj : obj.toObject();
+    var o = ($.exists(obj) && $.exists(obj.toObject)) ? obj.toObject() : obj;
     hash.$h = $.obj[m](o, hash.$h);
     hash._count = $.obj.count(hash.$h);
     return hash;
