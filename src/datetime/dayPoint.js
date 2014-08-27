@@ -103,10 +103,11 @@ $.dayPoint.canParse = function(v) {
         ? !isNaN(new Date(v).valueOf())
         : false;
 };
-$.dayPoint.parse = function(v) {
-    if (v instanceof dayPoint) return v;
+$.dayPoint.parse = function(value) {
+    if (value instanceof dayPoint) return value;
 
-    var D = new Date(v);
+    var v = ($.isString(value)) ? value.replace(/(?:\D)(0)/g,"-").replace(/^0/,"") : value,
+        D = new Date(v);
     if(!$.exists(v) || isNaN(D).valueOf())
         throw $.ku4exception("$.dayPoint", $.str.format("Cannot parse value= {0}", v));
 
