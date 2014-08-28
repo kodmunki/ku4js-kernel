@@ -18,7 +18,7 @@ $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); };
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); };
 $.areEqual = function(value1, value2) {
     if(this.exists(value1) && this.exists(value2)) {
-        if(this.exists(value1.equals) && value.equals(value2)) return true;
+        if(this.exists(value1.equals) && value1.equals(value2)) return true;
         if(this.exists(value1.getTime) && this.exists(value2.getTime) && value1.getTime() == value2.getTime()) return true;
         if(value1 === value2) return true;
         else return value1 === value2;
