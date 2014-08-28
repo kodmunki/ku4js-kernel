@@ -570,7 +570,7 @@ hash.prototype = {
     },
     containsValue: function(v) {
         var values = $.obj.values(this.$h), i=values.length;
-        while(i--) if($.areEqual(values[i], v)) return true;
+        while(i--) if($.areEqual(v, values[i])) return true;
         return false;
     },
     merge: function(obj){
