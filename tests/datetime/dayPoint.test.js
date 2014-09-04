@@ -155,9 +155,10 @@ $(function(){
         equal($.dayPoint(2011, 1, 1).toJson(), new Date("01/01/2011").toJSON());
     });
     test('canParse', function () {
-        expect(10);
+        expect(11);
         ok($.dayPoint.canParse("1/1/2011"));
         ok($.dayPoint.canParse(new Date("1/1/2011")));
+        ok($.dayPoint.canParse("1906-08-04T05:00:00.000Z"));
         ok($.dayPoint.canParse(1));
         ok(!$.dayPoint.canParse(null));
         ok(!$.dayPoint.canParse(undefined));
@@ -168,11 +169,13 @@ $(function(){
         ok(!$.dayPoint.canParse(function() { }));
     });
     test('parse', function () {
-        expect(11);
+        expect(13);
         ok($.dayPoint.parse("1/1/2011"));
         ok($.dayPoint.parse(new Date("1/1/2011")));
         ok($.dayPoint.parse(1));
+        ok($.dayPoint.parse("1906-08-04T05:00:00.000Z"));
         deepEqual($.dayPoint.parse("2011-08-01").toDate(), new Date("08-01-2011"));
+        deepEqual($.dayPoint.parse("1906-08-04T05:00:00.000Z").toDate(), new Date("08-04-1906"));
         raises(function() { $.dayPoint.parse(null); });
         raises(function() { $.dayPoint.parse(undefined); });
         raises(function() { $.dayPoint.parse(""); });
