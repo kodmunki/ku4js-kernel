@@ -791,10 +791,19 @@ $.dayPoint.canParse = function(v) {
 $.dayPoint.parse = function(value) {
     if (value instanceof dayPoint) return value;
 
-    var v = ($.isString(value) && /^\d{4}\-\d{2}\-\d{2}$/.test($.str.trim(value)))
+    var v = ($.isString(value) && /^\d{4}\-\d{,12}\-\d{1,2}$/.test($.str.trim(value)))
                 ? value.replace(/(?:\D)(0)/g,"-").replace(/^0/,"")
-                : value,
-        D = new Date(v);
+                : value;
+
+    if(/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(v)) {
+        var components = v.split("-"),
+            component0 = components[0];
+        components.push(component0);
+        components.shift();
+        v = components.join("/");
+    }
+
+    var D = new Date(v);
 
     if(!$.exists(v) || isNaN(D).valueOf())
         throw $.ku4exception("$.dayPoint", $.str.format("Cannot parse value= {0}", v));
