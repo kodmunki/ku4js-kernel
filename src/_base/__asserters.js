@@ -12,7 +12,7 @@ $.isZero = function(n) { return n === 0; };
 $.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : n % 2 === 0)); };
 $.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); };
 $.isNull = function(x) { return x === null; };
-$.isUndefined = function(x) { return (/undefined/i.test(typeof (x))); };
+$.isUndefined = function(x) { return typeof (x) == "undefined"; };
 $.isEmpty = function(s) { return $.isString(s) && $.isZero(s.split(/\B/).length); };
 $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); };
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); };
