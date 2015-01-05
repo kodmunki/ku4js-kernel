@@ -41,6 +41,8 @@ $.str.trimEnd = function(s) {
         ? s.replace(/\b\s*$/, "") : s;
 };
 $.str.encodeBase64 = function(strng) {
+    if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
+    if($.exists(btoa)) return btoa(strng);
     var value = "", i = 0, s = $.str.encodeUtf8(strng),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
         code = function(n) { return s.charCodeAt(n); },
@@ -63,6 +65,8 @@ $.str.encodeBase64 = function(strng) {
     return value;
 };
 $.str.decodeBase64 = function(strng) {
+    if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
+    if($.exists(atob)) return atob(strng);
     var value = "", i = 0, s = strng.replace(/[^A-Za-z0-9\+\/\=]/g, ""),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
         enc = function(n) { return chars.indexOf(s.charAt(n)); },

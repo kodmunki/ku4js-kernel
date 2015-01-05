@@ -2,7 +2,7 @@ function rectangle (topLeft, dims){
     rectangle.base.call(this);
     this._topLeft = $.point.parse(topLeft);
     this._dims = $.point.parse(dims);
-    this._bottomRight = $.point.parse(topLeft.add(dims));
+    this._bottomRight = $.point.parse(this._topLeft.add(this._dims));
 }
 rectangle.prototype = {
     dims: function() { return this.get("dims"); },
@@ -17,8 +17,31 @@ rectangle.prototype = {
             t.isLeftOf(coord) &&
             b.isRightOf(coord) &&
             b.isBelow(coord);
+    },
+    aspectToFit: function(other) {
+        var thisDims = this.dims(),
+            otherDims = other.dims(),
+            width = thisDims.x(),
+            height = thisDims.y(),
+            maxWidth = otherDims.x(),
+            maxHeight = otherDims.y();
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        }
+        else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+
+        return new rectangle(this._topLeft, {width:width, height:height});
     }
-}
+};
 $.Class.extend(rectangle, $.Class);
-$.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); }
-$.rectangle.Class = rectangle
+$.rectangle = function(topLeft, dims){ return new rectangle(topLeft, dims); };
+$.rectangle.Class = rectangle;

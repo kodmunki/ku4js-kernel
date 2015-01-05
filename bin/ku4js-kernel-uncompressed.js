@@ -298,6 +298,8 @@ $.str.trimEnd = function(s) {
         ? s.replace(/\b\s*$/, "") : s;
 };
 $.str.encodeBase64 = function(strng) {
+    if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
+    if($.exists(btoa)) return btoa(strng);
     var value = "", i = 0, s = $.str.encodeUtf8(strng),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
         code = function(n) { return s.charCodeAt(n); },
@@ -320,6 +322,8 @@ $.str.encodeBase64 = function(strng) {
     return value;
 };
 $.str.decodeBase64 = function(strng) {
+    if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
+    if($.exists(atob)) return atob(strng);
     var value = "", i = 0, s = strng.replace(/[^A-Za-z0-9\+\/\=]/g, ""),
         chr1, chr2, chr3, enc1, enc2, enc3, enc4,
         enc = function(n) { return chars.indexOf(s.charAt(n)); },
@@ -1026,10 +1030,11 @@ coord.prototype = {
     toEm: function() { return coord_toUnit(this, "em"); },
     toPixel: function() { return coord_toUnit(this, "px"); },
     toString: function() { return $.str.format("({0},{1})", this._x, this._y); }
-}
+};
 $.Class.extend(coord, $.Class);
-$.coord = function(x, y) { return new coord(x, y); }
+$.coord = function(x, y) { return new coord(x, y); };
 $.coord.Class = coord;
+$.coord.isInstance = function(other) { return other instanceof coord; };
 
 function coord_toUnit(coord, unit) {
     return {
@@ -1039,29 +1044,37 @@ function coord_toUnit(coord, unit) {
 }
 function coord_canParse(candidate){
     try{
-        if (("left" in candidate) && ("top" in candidate))
-            return !isNaN(candidate.left) && !isNaN(candidate.top);
-        if (("width" in candidate) && ("height" in candidate))
-            return !isNaN(candidate.width) && !isNaN(candidate.height);
-        return false;
+        if ($.isObjectLiteral(candidate)) {
+            if (("x" in candidate) && ("y" in candidate))
+                return !(isNaN(candidate.x) || isNaN(candidate.y));
+            if (("left" in candidate) && ("top" in candidate))
+                return !(isNaN(candidate.left) || isNaN(candidate.top));
+            if (("width" in candidate) && ("height" in candidate))
+                return !(isNaN(candidate.width) || isNaN(candidate.height));
+        }
+        return $.coord.isInstance(candidate);
     }
     catch(e) { return false; }
 }
 function coord_parse(obj) {
-    if(!$.exists(obj)) return null;
-    if ($.exists(obj.left) && $.exists(obj.top)) return new coord(obj.left, obj.top);
-    if ($.exists(obj.width) && $.exists(obj.height)) return new coord(obj.width, obj.height);
+    if (!$.exists(obj)) return null;
+    if ($.coord.isInstance(obj)) return obj;
+    if ($.isObjectLiteral(obj)) {
+        if ($.exists(obj.left) && $.exists(obj.top)) return new coord(obj.left, obj.top);
+        if ($.exists(obj.width) && $.exists(obj.height)) return new coord(obj.width, obj.height);
+        if ($.exists(obj.x) && $.exists(obj.y)) return new coord(obj.x, obj.y);
+    }
     return null;
 }
 
-$.coord.zero = function(){ return new coord(0,0); }
+$.coord.zero = function(){ return new coord(0,  0); };
 $.coord.random = function(seedx, seedy){
     var x = seedx * Math.random(), y = seedy * Math.random(seedy);
     return new coord(x, y);
 }
-$.coord.canParse = coord_parse;
+$.coord.canParse = coord_canParse;
 $.coord.parse = coord_parse;
-$.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; }
+$.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; };
 
 function point(x, y) {
     point.base.call(this, x, y);
@@ -1074,28 +1087,33 @@ point.prototype = {
     isRightOf: function(other) { return this.x() > other.x(); },
     distanceFrom: function(other) { return $.vector(this.x() - other.x(), this.y() - other.y()); },
     distanceTo: function(other) { return this.distanceFrom(other).invert(); }
-}
+};
 $.Class.extend(point, $.coord.Class);
 
-$.point = function(x, y) { return new point(x, y); }
+$.point = function(x, y) { return new point(x, y); };
 $.point.Class = point;
+$.point.isInstance = function(other) { return other instanceof point; };
 
-$.point.zero = function(){ return new point(0,0); }
+$.point.zero = function(){ return new point(0,0); };
 $.point.canParse = point_canParse;
 $.point.parse = point_parse;
-$.point.tryParse = function(candidate){ return point_canParse(candidate) ? point_parse(candidate) : null; }
+$.point.tryParse = function(candidate){ return point_canParse(candidate) ? point_parse(candidate) : null; };
 
 function point_canParse(candidate){
-    try { return !isNaN(candidate.x()) && !isNaN(candidate.y()); }
+    try { return  $.point.isInstance(point) || $.coord.canParse(candidate) }
     catch(e) { return false; }
 }
-function point_parse(obj) { return new point(obj.x(), obj.y()); }
+function point_parse(obj) {
+    if($.point.isInstance(obj)) return obj;
+    var coord = $.coord.parse(obj);
+    return new point(coord.x(), coord.y());
+};
 
 function rectangle (topLeft, dims){
     rectangle.base.call(this);
     this._topLeft = $.point.parse(topLeft);
     this._dims = $.point.parse(dims);
-    this._bottomRight = $.point.parse(topLeft.add(dims));
+    this._bottomRight = $.point.parse(this._topLeft.add(this._dims));
 }
 rectangle.prototype = {
     dims: function() { return this.get("dims"); },
@@ -1110,11 +1128,34 @@ rectangle.prototype = {
             t.isLeftOf(coord) &&
             b.isRightOf(coord) &&
             b.isBelow(coord);
+    },
+    aspectToFit: function(other) {
+        var thisDims = this.dims(),
+            otherDims = other.dims(),
+            width = thisDims.x(),
+            height = thisDims.y(),
+            maxWidth = otherDims.x(),
+            maxHeight = otherDims.y();
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        }
+        else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+
+        return new rectangle(this._topLeft, {width:width, height:height});
     }
-}
+};
 $.Class.extend(rectangle, $.Class);
-$.rectangle = function(topLeft, bottomRight){ return new rectangle(topLeft, bottomRight); }
-$.rectangle.Class = rectangle
+$.rectangle = function(topLeft, dims){ return new rectangle(topLeft, dims); };
+$.rectangle.Class = rectangle;
 
 function vector(x, y) {
     if (!$.isNumber(x) || !$.isNumber(y))
@@ -1158,23 +1199,23 @@ vector.prototype = {
     },
     reflect: function(incident){
         if(incident.isZero()) return this;
-        var inorm = incident.normal()
+        var inorm = incident.normal();
         return this.add(inorm.scale(2*(inorm.dot(this))).invert());
     },
     round: function(decimal){
         var d = decimal || 0;
         return $.vector($.math.round(this.x(), d), $.math.round(this.y(), d));
     }
-}
+};
 $.Class.extend(vector, $.coord.Class);
 
-$.vector = function(x, y) { return new vector(x, y); }
+$.vector = function(x, y) { return new vector(x, y); };
 $.vector.Class = vector;
-$.vector.zero = function() { return $.vector(0,0); }
+$.vector.zero = function() { return $.vector(0,0); };
 $.vector.random = function(seedx, seedy){
     var x = seedx * Math.random(), y = seedy * Math.random();
     return $.vector(x, y);
-}
+};
 
 function vector_calculateLength (v, lengthSquared) {
     if (v.isZero()) return 0;

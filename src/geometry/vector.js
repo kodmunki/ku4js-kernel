@@ -40,23 +40,23 @@ vector.prototype = {
     },
     reflect: function(incident){
         if(incident.isZero()) return this;
-        var inorm = incident.normal()
+        var inorm = incident.normal();
         return this.add(inorm.scale(2*(inorm.dot(this))).invert());
     },
     round: function(decimal){
         var d = decimal || 0;
         return $.vector($.math.round(this.x(), d), $.math.round(this.y(), d));
     }
-}
+};
 $.Class.extend(vector, $.coord.Class);
 
-$.vector = function(x, y) { return new vector(x, y); }
+$.vector = function(x, y) { return new vector(x, y); };
 $.vector.Class = vector;
-$.vector.zero = function() { return $.vector(0,0); }
+$.vector.zero = function() { return $.vector(0,0); };
 $.vector.random = function(seedx, seedy){
     var x = seedx * Math.random(), y = seedy * Math.random();
     return $.vector(x, y);
-}
+};
 
 function vector_calculateLength (v, lengthSquared) {
     if (v.isZero()) return 0;

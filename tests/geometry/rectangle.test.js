@@ -43,5 +43,23 @@ $(function(){
         ok(!rectangle2.contains($.coord(15,16)));
         ok(!rectangle2.contains($.coord(-1,-1)));
     });
+    test('aspectToFit', function() {
+        var rectangle1 = $.rectangle({x:0,y:0},{width:100,height:100}),
+            rectangle2 = $.rectangle({x:0,y:0},{width:100,height:200}),
+            rectangle3 = $.rectangle({x:0,y:0},{width:200,height:100}),
+            aspect2 = rectangle2.aspectToFit(rectangle1),
+            aspect3 = rectangle3.aspectToFit(rectangle1);
+
+         expect(8);
+         equal(aspect2.topLeft().x(), 0);
+         equal(aspect2.topLeft().y(), 0);
+         equal(aspect2.dims().x(), 50);
+         equal(aspect2.dims().y(), 100);
+
+         equal(aspect3.topLeft().x(), 0);
+         equal(aspect3.topLeft().y(), 0);
+         equal(aspect3.dims().x(), 100);
+         equal(aspect3.dims().y(), 50);
+    });
 });
 
