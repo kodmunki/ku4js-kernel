@@ -1320,8 +1320,9 @@ $.Class.extend(iterator, $.Class);
 $.iterator = function(subject){ return new iterator(subject); }
 $.iterator.Class = iterator;
 
-function mediator() {
+function mediator(name) {
     mediator.base.call(this);
+    this._name = name || $.uid();
     this._observers = $.hash();
     this._throwErrors = 0;
 }
@@ -1334,8 +1335,13 @@ mediator.prototype = {
     activeSubscriptionKeys: function() { return this._observers.keys(); },
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
+
+        if($.isNullOrEmpty(name)) throw $.ku4exception("$.mediator", "subsrcibe name must be a valid, non-empty string value.");
+        if(!$.isFunction(method)) throw $.ku4exception("$.mediator", "subscribe method must be a valid function.");
+
+        method.__ku4mediator_name__ = this._name;
         if(observers.containsKey(name)) observers.find(name).add(method, scope, id);
-        else observers.add(name, $.observer().add(method, scope, id));
+        else observers.add(name, $.observer(name).add(method, scope, id));
         return this;
     },
     unsubscribe: function(name, id) {
@@ -1369,7 +1375,8 @@ mediator.prototype = {
     },
     _notify: function(data, list) {
         var o = this._observers,
-            t = this._throwErrors;
+            t = this._throwErrors,
+            mediatorName = this._name;
         list.each(function(name){
             try {
                 var observer = o.find(name);
@@ -1381,8 +1388,11 @@ mediator.prototype = {
                               " Check calls to notify for inadvertent missing or misspelled filters." +
                               "\n\n2) SUBSCRIBER EXCEPTIONS: Occur due to exceptions thrown in a subscriber." +
                               " Check subscriber methods for uncaught exceptions." +
-                              "\n\n*NOTE: For more information see the documentation at https://github.com/kodmunki/ku4node-kernel#mediator",
-                    exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key = {1} \n\n {2}", e.message, name, message));
+                              "\n\n*NOTE: For more information see the documentation at https://github.com/kodmunki/ku4js-kernel#mediator",
+
+                    exception = $.ku4exception("$.mediator",
+                        $.str.format("{0}. \n\Mediator name = {1}\nSubscriber name = {2}\n\n {3}\n", e.message, mediatorName, name, message));
+
                 if(t == 2) throw exception;
                 if(t == 1) $.ku4Log(exception.message);
             }
@@ -1391,16 +1401,21 @@ mediator.prototype = {
     }
 };
 $.Class.extend(mediator, $.Class);
-$.mediator = function() { return new mediator(); }
+$.mediator = function(name) { return new mediator(name); }
 $.mediator.Class = mediator;
 
-function observer() {
+function observer(name) {
     observer.base.call(this);
+    this._name = name || $.uid();
     this._methods = new $.hash();
 }
 observer.prototype = { 
     add: function(method, scope, id) {
-        var mid = id || $.uid("observerMethod"), scp = scope || this;
+        var mid = id || $.uid(),
+            scp = scope || this;
+
+        method.__ku4observer_name__ = this._name;
+        method.__ku4observer_medthod_id__ = mid;
         this._methods.add(mid, { m: method, s: scp });
         return this;
     },
@@ -1413,18 +1428,26 @@ observer.prototype = {
         return this;
     },
     notify: function() {
-        var it = new $.iterator(this._methods.values()), args = arguments;
+        var it = new $.iterator(this._methods.values()), args = arguments,
+            name = this._name;
         it.each(function(subscriber) {
-            if(!$.exists(subscriber.m))
-                throw $.ku4exception("$.observer", $.str.format("Invalid or null method"));
-            subscriber.m.apply(subscriber.s, args);
+            var method = subscriber.m;
+            if(!$.exists(method)) {
+                throw $.ku4exception("$.observer", $.str.format("Attempt to call invalid or undefined method @ observer: {0}.\n", name));
+            }
+            else {
+                try { method.apply(subscriber.s, args); }
+                catch(e) {
+                    throw $.ku4exception("$.observer", $.str.format("Error in subscribed method @ observer: {0} methodId: {1}.\nmessage:{2}\n\n", name, method.__ku4observer_medthod_id__, e.message));
+                }
+            }
         });
         return this;
     },
     isEmpty: function(){ return this._methods.isEmpty(); }
 };
 $.Class.extend(observer, $.Class);
-$.observer = function() { return new observer(); };
+$.observer = function(name) { return new observer(name); };
 $.observer.Class = observer;
 
 function queue() {

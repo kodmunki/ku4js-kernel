@@ -1,5 +1,6 @@
-function mediator() {
+function mediator(name) {
     mediator.base.call(this);
+    this._name = name || $.uid();
     this._observers = $.hash();
     this._throwErrors = 0;
 }
@@ -12,8 +13,13 @@ mediator.prototype = {
     activeSubscriptionKeys: function() { return this._observers.keys(); },
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
+
+        if($.isNullOrEmpty(name)) throw $.ku4exception("$.mediator", "subsrcibe name must be a valid, non-empty string value.");
+        if(!$.isFunction(method)) throw $.ku4exception("$.mediator", "subscribe method must be a valid function.");
+
+        method.__ku4mediator_name__ = this._name;
         if(observers.containsKey(name)) observers.find(name).add(method, scope, id);
-        else observers.add(name, $.observer().add(method, scope, id));
+        else observers.add(name, $.observer(name).add(method, scope, id));
         return this;
     },
     unsubscribe: function(name, id) {
@@ -47,7 +53,8 @@ mediator.prototype = {
     },
     _notify: function(data, list) {
         var o = this._observers,
-            t = this._throwErrors;
+            t = this._throwErrors,
+            mediatorName = this._name;
         list.each(function(name){
             try {
                 var observer = o.find(name);
@@ -59,8 +66,11 @@ mediator.prototype = {
                               " Check calls to notify for inadvertent missing or misspelled filters." +
                               "\n\n2) SUBSCRIBER EXCEPTIONS: Occur due to exceptions thrown in a subscriber." +
                               " Check subscriber methods for uncaught exceptions." +
-                              "\n\n*NOTE: For more information see the documentation at https://github.com/kodmunki/ku4node-kernel#mediator",
-                    exception = $.ku4exception("$.mediator", $.str.format("{0}. Subscriber key = {1} \n\n {2}", e.message, name, message));
+                              "\n\n*NOTE: For more information see the documentation at https://github.com/kodmunki/ku4js-kernel#mediator",
+
+                    exception = $.ku4exception("$.mediator",
+                        $.str.format("{0}. \n\Mediator name = {1}\nSubscriber name = {2}\n\n {3}\n", e.message, mediatorName, name, message));
+
                 if(t == 2) throw exception;
                 if(t == 1) $.ku4Log(exception.message);
             }
@@ -69,5 +79,5 @@ mediator.prototype = {
     }
 };
 $.Class.extend(mediator, $.Class);
-$.mediator = function() { return new mediator(); }
+$.mediator = function(name) { return new mediator(name); }
 $.mediator.Class = mediator;
