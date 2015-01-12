@@ -9,7 +9,8 @@ observer.prototype = {
             scp = scope || this;
 
         method.__ku4observer_name__ = this._name;
-        method.__ku4observer_medthod_id__ = mid;
+        method.__ku4observer_method_id__ = mid;
+
         this._methods.add(mid, { m: method, s: scp });
         return this;
     },
@@ -32,7 +33,7 @@ observer.prototype = {
             else {
                 try { method.apply(subscriber.s, args); }
                 catch(e) {
-                    throw $.ku4exception("$.observer", $.str.format("Error in subscribed method @ observer: {0} methodId: {1}.\nmessage:{2}\n\n", name, method.__ku4observer_medthod_id__, e.message));
+                    throw $.ku4exception("$.observer", $.str.format("Error in subscribed method @ observer: {0} methodId: {1}.\nmessage:{2}\n\n", name, method.__ku4observer_method_id__, e.message));
                 }
             }
         });
