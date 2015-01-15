@@ -59,4 +59,13 @@ $(function(){
         equal($.math.roundTowardZero(-555.555, -2), -555.55);
         equal($.math.roundTowardZero(555.555, -2), 555.55);
     });
+
+    test('gcd', function() {
+        expect(5);
+        equal($.math.gcd(0, 1), 1);
+        equal($.math.gcd(1, 0), 1);
+        equal($.math.gcd(-3, -2), 1);
+        equal($.math.gcd(20, 12), 4);
+        equal($.math.gcd(18, 48), 6);
+    });
 });

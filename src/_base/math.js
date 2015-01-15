@@ -28,3 +28,6 @@ $.math.divide = function(a, b){
     if(!isValid) throw $.ku4exception("$.math", $.str.format("Invalid division. value: {0}/{1} | type: {2}/{3}", a, b, typeof a, typeof b));
     return a / b;
 };
+$.math.gcd = function(a, b) {
+    return (b == 0) ? Math.abs(a) : $.math.gcd(b, a % b);
+};
