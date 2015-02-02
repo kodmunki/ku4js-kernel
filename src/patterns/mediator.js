@@ -14,7 +14,7 @@ mediator.prototype = {
     subscribe: function(name, method, scope, id) {
         var observers = this._observers;
 
-        if($.isNullOrEmpty(name)) throw $.ku4exception("$.mediator", "subsrcibe name must be a valid, non-empty string value.");
+        if($.isNullOrEmpty(name)) throw $.ku4exception("$.mediator", "subscribe name must be a valid, non-empty string value.");
         if(!$.isFunction(method)) throw $.ku4exception("$.mediator", "subscribe method must be a valid function.");
 
         method.__ku4mediator_name__ = this._name;
