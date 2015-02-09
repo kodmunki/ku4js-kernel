@@ -79,11 +79,13 @@ $(function(){
         equal(pTwo.toString(), "(2,2)");
     });
     test("canParse", function() {
+        ok($.coord.canParse([3,3]));
         ok($.coord.canParse({x:3,y:3}));
         ok($.coord.canParse({left:3,top:3}));
         ok($.coord.canParse({width:3,height:3}));
     });
     test("parse", function() {
+        ok($.coord.parse([3,3]).equals($.coord(3, 3)));
         ok($.coord.parse({x:3,y:3}).equals($.coord(3, 3)));
         ok($.coord.parse({left:3,top:3}).equals($.coord(3, 3)));
         ok($.coord.parse({width:3,height:3}).equals($.coord(3, 3)));

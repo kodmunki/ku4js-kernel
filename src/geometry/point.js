@@ -29,4 +29,4 @@ function point_parse(obj) {
     if($.point.isInstance(obj)) return obj;
     var coord = $.coord.parse(obj);
     return new point(coord.x(), coord.y());
-};
+}

@@ -58,6 +58,7 @@ function coord_toUnit(coord, unit) {
 }
 function coord_canParse(candidate){
     try{
+        if ($.isArray(candidate)) return !(isNaN(candidate[0]) || isNaN(candidate[1]));
         if ($.isObjectLiteral(candidate)) {
             if (("x" in candidate) && ("y" in candidate))
                 return !(isNaN(candidate.x) || isNaN(candidate.y));
@@ -73,6 +74,7 @@ function coord_canParse(candidate){
 function coord_parse(obj) {
     if (!$.exists(obj)) return null;
     if ($.coord.isInstance(obj)) return obj;
+    if ($.isArray(obj)) return new coord(obj[0], obj[1]);
     if ($.isObjectLiteral(obj)) {
         if ($.exists(obj.left) && $.exists(obj.top)) return new coord(obj.left, obj.top);
         if ($.exists(obj.width) && $.exists(obj.height)) return new coord(obj.width, obj.height);

@@ -42,56 +42,71 @@ $.str.trimEnd = function(s) {
 };
 $.str.encodeBase64 = function(strng) {
     if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
-    if($.exists(btoa)) return btoa(strng);
-    var value = "", i = 0, s = $.str.encodeUtf8(strng),
-        chr1, chr2, chr3, enc1, enc2, enc3, enc4,
-        code = function(n) { return s.charCodeAt(n); },
-        chr = function(enc) { return chars.charAt(enc) };
 
-    while (i < s.length) {
-        chr1 = code(i++);
-        chr2 = code(i++);
-        chr3 = code(i++);
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
+    try { return btoa(strng); }
+    catch(e) {
+        var value = "", i = 0, s = $.str.encodeUtf8(strng),
+            chr1, chr2, chr3, enc1, enc2, enc3, enc4,
+            code = function (n) {
+                return s.charCodeAt(n);
+            },
+            chr = function (enc) {
+                return chars.charAt(enc)
+            };
 
-        if (isNaN(chr2)) enc3 = enc4 = 64;
-        else if (isNaN(chr3)) enc4 = 64;
+        while (i < s.length) {
+            chr1 = code(i++);
+            chr2 = code(i++);
+            chr3 = code(i++);
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
 
-        value += (chr(enc1) + chr(enc2) + chr(enc3) + chr(enc4));
+            if (isNaN(chr2)) enc3 = enc4 = 64;
+            else if (isNaN(chr3)) enc4 = 64;
+
+            value += (chr(enc1) + chr(enc2) + chr(enc3) + chr(enc4));
+        }
+        return value;
     }
-    return value;
 };
 $.str.decodeBase64 = function(strng) {
     if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");
-    if($.exists(atob)) return atob(strng);
-    var value = "", i = 0, s = strng.replace(/[^A-Za-z0-9\+\/\=]/g, ""),
-        chr1, chr2, chr3, enc1, enc2, enc3, enc4,
-        enc = function(n) { return chars.indexOf(s.charAt(n)); },
-        chr = function (code) { return String.fromCharCode(code); };
 
-    while (i < s.length) {
-        enc1 = enc(i++);
-        enc2 = enc(i++);
-        enc3 = enc(i++);
-        enc4 = enc(i++);
-        chr1 = (enc1 << 2) | (enc2 >> 4);
-        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-        chr3 = ((enc3 & 3) << 6) | enc4;
+    try { return atob(strng); }
+    catch(e) {
+        var value = "", i = 0, s = strng.replace(/[^A-Za-z0-9\+\/\=]/g, ""),
+            chr1, chr2, chr3, enc1, enc2, enc3, enc4,
+            enc = function (n) {
+                return chars.indexOf(s.charAt(n));
+            },
+            chr = function (code) {
+                return String.fromCharCode(code);
+            };
 
-        value += chr(chr1);
-        if (enc3 != 64) value += chr(chr2);
-        if (enc4 != 64) value += chr(chr3);
+        while (i < s.length) {
+            enc1 = enc(i++);
+            enc2 = enc(i++);
+            enc3 = enc(i++);
+            enc4 = enc(i++);
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
 
+            value += chr(chr1);
+            if (enc3 != 64) value += chr(chr2);
+            if (enc4 != 64) value += chr(chr3);
+
+        }
+        return $.str.decodeUtf8(value);
     }
-    return $.str.decodeUtf8(value);
 };
 $.str.encodeUtf8 = function(strng) {
-    var value = "", s = strng.replace(/\r\n/g,"\n"),
-        code = function(n) { return s.charCodeAt(n); },
-        chr = function (code) { return String.fromCharCode(code); };
+    var value = "", s = strng.replace(/\r\n/g,"\n");
+
+    function code(n) { return s.charCodeAt(n); }
+    function chr(code) { return String.fromCharCode(code); }
 
     for (var i = 0; i < s.length; i++) {
 
@@ -108,9 +123,10 @@ $.str.encodeUtf8 = function(strng) {
     return value;
 };
 $.str.decodeUtf8 = function(strng) {
-    var value = "", i = 0, c = 0, c1 = 0, c2 = 0, s = strng,
-        code = function(n) { return s.charCodeAt(n); },
-        chr = function (code) { return String.fromCharCode(code); };
+    var value = "", i = 0, c = 0, c1 = 0, c2 = 0, s = strng;
+
+    function code(n) { return s.charCodeAt(n); }
+    function chr(code) { return String.fromCharCode(code); }
 
     while ( i < s.length ) {
         c = code(i);
