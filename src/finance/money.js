@@ -87,6 +87,12 @@ $.money.canParse = function(v){
 };
 $.money.parse = function(str) {
     if($.isNumber(str)) return $.money(str);
+    if(/\,\d{2}$/.test(str)) {
+        var split = str.split(","),
+            cents = split.pop(),
+            dollars = split.join().replace(/\./g, ",");
+        str = dollars + "." + cents;
+    }
     var b = /(\(.*\))|(\-)/.test(str),
         i = (b) ? 1 : 0,
         u = str.match(/[^\d\.\,\-]/g) || [],
@@ -109,8 +115,7 @@ function money_formatDollars(dollars, separator) {
     if ($.isZero(dollars)) return "0";
 
     var _dollars = dollars.toString(),
-        chars = _dollars.replace(/[^\d]/, "").split(/\B/)   .reverse(),
-        isThousandPlus = _dollars.length > 3,
+        chars = _dollars.replace(/[^\d]/, "").split(/\B/).reverse(),
         mark = separator || ",",
         marked = $.list(),
         i = 0;

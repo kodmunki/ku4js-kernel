@@ -157,4 +157,10 @@ $(function(){
         equal(zero.value(), 0);
         equal(zero.toString(), "$0.00");
     });
+
+    test("parse", function() {
+        expect(2);
+        equal($.money.parse("$2,123,456.98").value(), 2123456.98);
+        equal($.money.parse("$2.123.456,98").value(), 2123456.98);
+    });
 });
