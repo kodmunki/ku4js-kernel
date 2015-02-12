@@ -293,12 +293,12 @@ $.str.trim = function(s) {
 $.str.trimStart = function(s) {
     if(!$.isString(s)) throw new Error("Cannot trim non-string values");
     return ($.exists(s.replace))
-        ? s.replace(/^\s*\b/, "") : s;
+        ? s.replace(/^[\s\n]*/, "") : s;
 };
 $.str.trimEnd = function(s) {
     if(!$.isString(s)) throw new Error("Cannot trim non-string values");
     return ($.exists(s.replace))
-        ? s.replace(/\b\s*$/, "") : s;
+        ? s.replace(/[\s\n]*$/, "") : s;
 };
 $.str.encodeBase64 = function(strng) {
     if(!$.isString(strng)) throw $.ku4exception("str", "Cannot base64 encode non-string value.");

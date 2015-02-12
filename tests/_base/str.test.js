@@ -72,11 +72,12 @@ $(function(){
     });
     
     test('trim', function () {
-        expect(4);
+        expect(5);
         throws(function() { $.str.trim(null); });
         throws(function() { $.str.trim(undefined); });
         equal($.str.trim(""), "");
         equal($.str.trim(" string "), "string");
+        equal($.str.trim("\n\n string \n\n"), "string");
     });
     
     test('encodeBase64', function () {
