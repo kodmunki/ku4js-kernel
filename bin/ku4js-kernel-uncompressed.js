@@ -1443,18 +1443,14 @@ mediator.prototype = {
         return this;
     },
     notify: function() {
-        var args = $.list.parseArguments(arguments),
-            data = $.list(),
-            nameList = $.list();
-
-        args.each(function(arg) {
-            if(this._observers.containsKey(arg)) nameList.add(arg);
-            else data.add(arg);
-        }, this);
+        var args = Array.prototype.slice.call(arguments),
+            listenersString = args.shift(),
+            listeners = ($.isNullOrEmpty(listenersString)) ? null : listenersString.replace(/\s/g, "").split(","),
+            nameList = $.list(listeners);
 
         return (nameList.isEmpty())
-            ? this._notifyAll(data.toArray())
-            : this._notify(data.toArray(), nameList);
+            ? this._notifyAll(args)
+            : this._notify(args, nameList);
     },
     clear: function(){
         this._observers

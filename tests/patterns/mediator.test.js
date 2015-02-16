@@ -23,7 +23,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3);
+        mediator.notify("", 3);
 
         equal(test1, 3);
         equal(test2, 3);
@@ -48,7 +48,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3);
+        mediator.notify("", 3);
 
         equal(test1, 3);
         equal(test2, undefined);
@@ -70,7 +70,7 @@ $(function(){
         equal(mediator.count(), 0);
         deepEqual(keys, []);
 
-        mediator.notify(3);
+        mediator.notify("", 3);
 
         equal(test1, undefined);
         equal(test2, undefined);
@@ -88,7 +88,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3);
+        mediator.notify("", 3);
 
         equal(test1, 3);
         equal(test2, 3);
@@ -110,7 +110,7 @@ $(function(){
         equal(keys[0], "method.a");
         equal(keys[1], "method.b");
 
-        mediator.notify(3, "method.a");
+        mediator.notify("method.a", 3);
 
         equal(test1, 3);
         equal(test2, 3);
