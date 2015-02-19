@@ -256,20 +256,14 @@ _Documentation Coming Soon_
 | activeSubscriptionKeys() | Array | Returns an array of active subscription keys. |
 | subscribe(name_String_, method:_function_, scope:_Object?_, id:_String?_) | this | Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe |
 | unsubscribe(name_String_, id:_String?_) | this | Removes subscriber of id from all name notifications |
-| notify(data:_Object_, ..., name:_String_, ...) | this | Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.  |
+| notify(filtersCSV:_String_, data:_Object_ ...) | this | Notifies subscribers by name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. The names string can be a single name or a CSV of names. If no data is passed, no data is sent to the subscribers in the notification.  |
 | clear() | this | Clears all subscribers. |
 
-####mediator gotchas!
+####mediator notes!
 This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
 may arise when used irresponsibly, ignorantly, or unknowingly.
 
-* When filtering a notification, that is, when calling notify and passing one or more name arguments to filter the call, be
-mindful that a mediator will recognize your name as _data_ and _**not**_ a filter if there are no subscribers under that
-name. This can lead to "Maximum call stack exceeded" exceptions if a developer has not been properly mindful of SoC and
-has pushed further notifications on the call stack that in turn cause a notification loop. It is important to manage
-your mediators and subscribe and unsubscribe responsibly. This is easily avoidable with proper unit tests!
-
-* Do not be afraid of setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
+* You can setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
 through notification can be difficult to debug. Setting how the mediator handles these exceptions can be of great help
 in development.
 
