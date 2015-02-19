@@ -5,6 +5,10 @@ kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript devel
 ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
 design patterns.
 
+<img src="http://www.kodmunki.com/media/logo-small.png" alt="kodmunki" />
+
+---
+
 #kodmunki™ build process
 
 This build process is dependent upon yuicompressor and a specific directory structure:
