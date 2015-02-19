@@ -29,15 +29,19 @@
       </header>
       <section>
         <h1>
-<a name="ku4js-kernel" class="anchor" href="#ku4js-kernel"><span class="octicon octicon-link"></span></a>ku4js-kernel</h1>
+<a id="ku4js-kernel" class="anchor" href="#ku4js-kernel" aria-hidden="true"><span class="octicon octicon-link"></span></a>ku4js-kernel</h1>
 
 <p>kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript development.</p>
 
 <p>ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
 design patterns.</p>
 
+<p><img src="http://www.kodmunki.com/media/logo-small.png" alt="kodmunki"></p>
+
+<hr>
+
 <h1>
-<a name="kodmunki-build-process" class="anchor" href="#kodmunki-build-process"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
+<a id="kodmunki-build-process" class="anchor" href="#kodmunki-build-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
 
 <p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
 
@@ -65,28 +69,27 @@ this process:</p>
 <hr>
 
 <h1>
-<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h1>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
 <p>The following is documentation for each class in the ku4js-kernel library organized by common domain to follow the
 directory structure found in /src. All constructors are empty unless otherwise noted.</p>
 
 <h2>
-<a name="class" class="anchor" href="#class"><span class="octicon octicon-link"></span></a>Class</h2>
+<a id="class" class="anchor" href="#class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class</h2>
 
 <p>Class is a foundational class that numerous other classes inherit from offering the subclasses a common property API
 that includes get(), set(), and property() which is a getter/setter. It also exposes the inheritance API. To subclass
 JavaScript classes using the kernel Class one would first create their class and then subclass as follows:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">myClass</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">myClass</span><span class="p">.</span><span class="nx">base</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">//This line scopes the class hierarchy.</span>
-<span class="p">}</span>
-<span class="nx">myClass</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="cm">/*All prototype methods go here*/</span>
-<span class="p">};</span>
-<span class="nx">$</span><span class="p">.</span><span class="nx">Class</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">myClass</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Class</span><span class="p">);</span> <span class="c1">//We are creating our subclass here.</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-st">function</span> <span class="pl-en">myClass</span>() {
+    myClass.base.<span class="pl-s3">call</span>(<span class="pl-v">this</span>); <span class="pl-c">//This line scopes the class hierarchy.</span>
+}
+<span class="pl-s3">myClass</span>.<span class="pl-sc">prototype</span> <span class="pl-k">=</span> {
+    <span class="pl-c">/*All prototype methods go here*/</span>
+};
+$.Class.extend(myClass, $.Class); <span class="pl-c">//We are creating our subclass here.</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">myApp</span><span class="p">.</span><span class="nx">myClass</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">myClass</span><span class="p">();</span> <span class="p">}</span> <span class="c1">//We are exposing myClass for use here</span>
-</pre></div>
+<span class="pl-s3">$.myApp</span>.<span class="pl-en">myClass</span> <span class="pl-k">=</span> <span class="pl-st">function</span>() { <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">myClass</span>(); } <span class="pl-c">//We are exposing myClass for use here</span></pre></div>
 
 <p>With the above implementation. A developer can now call $.myApp.myClass() from within their application to instantiate
 a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
@@ -94,10 +97,10 @@ inherited using the same convention as class. For example, to inherit from $.med
 $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)</p>
 
 <h2>
-<a name="base" class="anchor" href="#base"><span class="octicon octicon-link"></span></a>Base</h2>
+<a id="base" class="anchor" href="#base" aria-hidden="true"><span class="octicon octicon-link"></span></a>Base</h2>
 
 <h3>
-<a name="math" class="anchor" href="#math"><span class="octicon octicon-link"></span></a>math</h3>
+<a id="math" class="anchor" href="#math" aria-hidden="true"><span class="octicon octicon-link"></span></a>math</h3>
 
 <p>Convenient math operations, and some that fix some odd bugs.</p>
 
@@ -129,7 +132,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="str" class="anchor" href="#str"><span class="octicon octicon-link"></span></a>str</h3>
+<a id="str" class="anchor" href="#str" aria-hidden="true"><span class="octicon octicon-link"></span></a>str</h3>
 
 <p>Convenient string operations.</p>
 
@@ -186,15 +189,15 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="uid" class="anchor" href="#uid"><span class="octicon octicon-link"></span></a>uid</h3>
+<a id="uid" class="anchor" href="#uid" aria-hidden="true"><span class="octicon octicon-link"></span></a>uid</h3>
 
 <p>A 32 character random unique ID.</p>
 
 <h2>
-<a name="account" class="anchor" href="#account"><span class="octicon octicon-link"></span></a>Account</h2>
+<a id="account" class="anchor" href="#account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Account</h2>
 
 <h3>
-<a name="emailaddress" class="anchor" href="#emailaddress"><span class="octicon octicon-link"></span></a>emailAddress</h3>
+<a id="emailaddress" class="anchor" href="#emailaddress" aria-hidden="true"><span class="octicon octicon-link"></span></a>emailAddress</h3>
 
 <table>
 <thead>
@@ -239,7 +242,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="phonenumber" class="anchor" href="#phonenumber"><span class="octicon octicon-link"></span></a>phoneNumber</h3>
+<a id="phonenumber" class="anchor" href="#phonenumber" aria-hidden="true"><span class="octicon octicon-link"></span></a>phoneNumber</h3>
 
 <table>
 <thead>
@@ -274,7 +277,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="propername" class="anchor" href="#propername"><span class="octicon octicon-link"></span></a>properName</h3>
+<a id="propername" class="anchor" href="#propername" aria-hidden="true"><span class="octicon octicon-link"></span></a>properName</h3>
 
 <table>
 <thead>
@@ -324,10 +327,10 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h2>
-<a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h2>
+<a id="collections" class="anchor" href="#collections" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collections</h2>
 
 <h3>
-<a name="hash" class="anchor" href="#hash"><span class="octicon octicon-link"></span></a>hash</h3>
+<a id="hash" class="anchor" href="#hash" aria-hidden="true"><span class="octicon octicon-link"></span></a>hash</h3>
 
 <table>
 <thead>
@@ -437,7 +440,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="list" class="anchor" href="#list"><span class="octicon octicon-link"></span></a>list</h3>
+<a id="list" class="anchor" href="#list" aria-hidden="true"><span class="octicon octicon-link"></span></a>list</h3>
 
 <table>
 <thead>
@@ -497,10 +500,10 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h2>
-<a name="datetime" class="anchor" href="#datetime"><span class="octicon octicon-link"></span></a>Datetime</h2>
+<a id="datetime" class="anchor" href="#datetime" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datetime</h2>
 
 <h3>
-<a name="daypoint" class="anchor" href="#daypoint"><span class="octicon octicon-link"></span></a>dayPoint</h3>
+<a id="daypoint" class="anchor" href="#daypoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>dayPoint</h3>
 
 <table>
 <thead>
@@ -640,10 +643,10 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h2>
-<a name="finance" class="anchor" href="#finance"><span class="octicon octicon-link"></span></a>Finance</h2>
+<a id="finance" class="anchor" href="#finance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finance</h2>
 
 <h3>
-<a name="money" class="anchor" href="#money"><span class="octicon octicon-link"></span></a>money</h3>
+<a id="money" class="anchor" href="#money" aria-hidden="true"><span class="octicon octicon-link"></span></a>money</h3>
 
 <table>
 <thead>
@@ -773,10 +776,10 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h2>
-<a name="geometry" class="anchor" href="#geometry"><span class="octicon octicon-link"></span></a>Geometry</h2>
+<a id="geometry" class="anchor" href="#geometry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Geometry</h2>
 
 <h3>
-<a name="coord" class="anchor" href="#coord"><span class="octicon octicon-link"></span></a>coord</h3>
+<a id="coord" class="anchor" href="#coord" aria-hidden="true"><span class="octicon octicon-link"></span></a>coord</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -798,7 +801,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="point" class="anchor" href="#point"><span class="octicon octicon-link"></span></a>point</h3>
+<a id="point" class="anchor" href="#point" aria-hidden="true"><span class="octicon octicon-link"></span></a>point</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -820,7 +823,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="rectangle" class="anchor" href="#rectangle"><span class="octicon octicon-link"></span></a>rectangle</h3>
+<a id="rectangle" class="anchor" href="#rectangle" aria-hidden="true"><span class="octicon octicon-link"></span></a>rectangle</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -842,7 +845,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="vector" class="anchor" href="#vector"><span class="octicon octicon-link"></span></a>vector</h3>
+<a id="vector" class="anchor" href="#vector" aria-hidden="true"><span class="octicon octicon-link"></span></a>vector</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -864,10 +867,10 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h2>
-<a name="patterns" class="anchor" href="#patterns"><span class="octicon octicon-link"></span></a>Patterns</h2>
+<a id="patterns" class="anchor" href="#patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Patterns</h2>
 
 <h3>
-<a name="iterator" class="anchor" href="#iterator"><span class="octicon octicon-link"></span></a>iterator</h3>
+<a id="iterator" class="anchor" href="#iterator" aria-hidden="true"><span class="octicon octicon-link"></span></a>iterator</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -889,7 +892,7 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h3>
-<a name="mediator" class="anchor" href="#mediator"><span class="octicon octicon-link"></span></a>mediator</h3>
+<a id="mediator" class="anchor" href="#mediator" aria-hidden="true"><span class="octicon octicon-link"></span></a>mediator</h3>
 
 <table>
 <thead>
@@ -941,9 +944,9 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <td>Removes subscriber of id from all name notifications</td>
 </tr>
 <tr>
-<td>notify(data:<em>Object</em>, ..., name:<em>String</em>, ...)</td>
+<td>notify(filtersCSV:<em>String</em>, data:<em>Object</em> ...)</td>
 <td>this</td>
-<td>Notifies subscribers of name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. If no data is passed, no data is sent to the subscribers in the notification.</td>
+<td>Notifies subscribers by name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. The names string can be a single name or a CSV of names. If no data is passed, no data is sent to the subscribers in the notification.</td>
 </tr>
 <tr>
 <td>clear()</td>
@@ -954,24 +957,19 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </table>
 
 <h4>
-<a name="mediator-gotchas" class="anchor" href="#mediator-gotchas"><span class="octicon octicon-link"></span></a>mediator gotchas!</h4>
+<a id="mediator-notes" class="anchor" href="#mediator-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>mediator notes!</h4>
 
 <p>This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
 may arise when used irresponsibly, ignorantly, or unknowingly.</p>
 
 <ul>
-<li><p>When filtering a notification, that is, when calling notify and passing one or more name arguments to filter the call, be
-mindful that a mediator will recognize your name as <em>data</em> and <em><strong>not</strong></em> a filter if there are no subscribers under that
-name. This can lead to "Maximum call stack exceeded" exceptions if a developer has not been properly mindful of SoC and
-has pushed further notifications on the call stack that in turn cause a notification loop. It is important to manage
-your mediators and subscribe and unsubscribe responsibly. This is easily avoidable with proper unit tests!</p></li>
-<li><p>Do not be afraid of setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
+<li>You can setting the mediator to throwErrors or logErrors. Exceptions that arise in a methods that execute
 through notification can be difficult to debug. Setting how the mediator handles these exceptions can be of great help
-in development.</p></li>
+in development.</li>
 </ul>
 
 <h3>
-<a name="observer" class="anchor" href="#observer"><span class="octicon octicon-link"></span></a>observer</h3>
+<a id="observer" class="anchor" href="#observer" aria-hidden="true"><span class="octicon octicon-link"></span></a>observer</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -993,7 +991,7 @@ in development.</p></li>
 </table>
 
 <h3>
-<a name="queue" class="anchor" href="#queue"><span class="octicon octicon-link"></span></a>queue</h3>
+<a id="queue" class="anchor" href="#queue" aria-hidden="true"><span class="octicon octicon-link"></span></a>queue</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
@@ -1015,7 +1013,7 @@ in development.</p></li>
 </table>
 
 <h3>
-<a name="specification" class="anchor" href="#specification"><span class="octicon octicon-link"></span></a>specification</h3>
+<a id="specification" class="anchor" href="#specification" aria-hidden="true"><span class="octicon octicon-link"></span></a>specification</h3>
 
 <p>Constructor: $.spec(func:<em>function</em>). The function passed must take a value parameter and return a boolean value.</p>
 
@@ -1057,20 +1055,19 @@ in development.</p></li>
 </table>
 
 <h4>
-<a name="spec-example" class="anchor" href="#spec-example"><span class="octicon octicon-link"></span></a>Spec Example:</h4>
+<a id="spec-example" class="anchor" href="#spec-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spec Example:</h4>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">oneSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}),</span>
-    <span class="nx">twoSpec</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">spec</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span> <span class="o">===</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}),</span>
-    <span class="nx">oneOrTwoSpec</span> <span class="o">=</span> <span class="nx">oneSpec</span><span class="p">.</span><span class="nx">or</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">);</span>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> oneSpec <span class="pl-k">=</span> $.spec(<span class="pl-st">function</span>(<span class="pl-vpf">value</span>) { <span class="pl-k">return</span> value <span class="pl-k">===</span> <span class="pl-c1">1</span>; }),
+    twoSpec <span class="pl-k">=</span> $.spec(<span class="pl-st">function</span>(<span class="pl-vpf">value</span>) { <span class="pl-k">return</span> value <span class="pl-k">===</span> <span class="pl-c1">2</span>; }),
+    oneOrTwoSpec <span class="pl-k">=</span> oneSpec.or(twoSpec);
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">twoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">//Evaluates as true</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oneOrTwoSpec</span><span class="p">.</span><span class="nx">isSatisfiedBy</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1">//Evaluates as false</span>
-</pre></div>
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(oneSpec.isSatisfiedBy(<span class="pl-c1">1</span>)) <span class="pl-c">//Evaluates as true</span>
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(twoSpec.isSatisfiedBy(<span class="pl-c1">1</span>)) <span class="pl-c">//Evaluates as false</span>
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(oneOrTwoSpec.isSatisfiedBy(<span class="pl-c1">2</span>)) <span class="pl-c">//Evaluates as true</span>
+<span class="pl-en">console</span><span class="pl-s3">.log</span>(oneOrTwoSpec.isSatisfiedBy(<span class="pl-c1">3</span>)) <span class="pl-c">//Evaluates as false</span></pre></div>
 
 <h3>
-<a name="stack" class="anchor" href="#stack"><span class="octicon octicon-link"></span></a>stack</h3>
+<a id="stack" class="anchor" href="#stack" aria-hidden="true"><span class="octicon octicon-link"></span></a>stack</h3>
 
 <p><em>Documentation Coming Soon</em></p>
 
