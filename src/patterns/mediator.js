@@ -29,8 +29,10 @@ mediator.prototype = {
     },
     notify: function() {
         var args = Array.prototype.slice.call(arguments),
-            listenersString = args.shift(),
-            listeners = ($.isNullOrEmpty(listenersString)) ? null : listenersString.replace(/\s/g, "").split(","),
+            listenersString = args.shift();
+
+        if($.exists(listenersString) && !$.isString(listenersString)) throw new Error("Invalid first argument at mediator.notify: " + listenersString);
+        var listeners = ($.isNullOrEmpty(listenersString)) ? null : listenersString.replace(/\s/g, "").split(","),
             nameList = $.list(listeners);
 
         return (nameList.isEmpty())

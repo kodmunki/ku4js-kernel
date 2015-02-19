@@ -277,7 +277,7 @@ $.str.render = function(template, obj, alt) {
     for (var n in obj) {
         s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
     }
-    return $.exists(alt) ? s.replace(/\{\{.*\}\}/g, alt) : s;
+    return $.exists(alt) ? s.replace(/\{\{[A-z0-9_]+\}\}/g, alt) : s;
 };
 $.str.replaceCharsAtIndex = function(s, index, length, value) {
     if($.isNullOrEmpty(s) || index < 0 || index > s.length || $.isNullOrEmpty(value))
@@ -1444,8 +1444,10 @@ mediator.prototype = {
     },
     notify: function() {
         var args = Array.prototype.slice.call(arguments),
-            listenersString = args.shift(),
-            listeners = ($.isNullOrEmpty(listenersString)) ? null : listenersString.replace(/\s/g, "").split(","),
+            listenersString = args.shift();
+
+        if($.exists(listenersString) && !$.isString(listenersString)) throw new Error("Invalid first argument at mediator.notify: " + listenersString);
+        var listeners = ($.isNullOrEmpty(listenersString)) ? null : listenersString.replace(/\s/g, "").split(","),
             nameList = $.list(listeners);
 
         return (nameList.isEmpty())
