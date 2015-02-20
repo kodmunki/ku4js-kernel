@@ -1,7 +1,4 @@
 $(function() {
-    function notOk(s, m) {
-        equal(s, false, m);
-    }
 
     module("fraction");
 
@@ -109,18 +106,23 @@ $(function() {
         var fractionA = $.fraction(2,3),
             fractionB = $.fraction(4,6);
 
-        expect(0);
-        fractionA.withDenominator(6).equals(fractionB);
+        expect(2);
+        ok(fractionA.withDenominator(6).equals(fractionB));
+
+        performanceOk(function(){ fractionA.withDenominator(6).equals(fractionB) }, 1);
+
     });
 
     test("simplify", function () {
         var fraction = $.fraction(118,410),
             simple = fraction.simplify();
 
-        expect(3);
+        expect(4);
         equal(simple.numerator(), 59);
         equal(simple.denominator(), 205);
         ok(fraction.equals(simple));
+
+        performanceOk(function(){ simple.denominator(); }, 1);
     });
 
     test("toString", function () {
