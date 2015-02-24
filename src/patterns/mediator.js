@@ -56,6 +56,7 @@ mediator.prototype = {
         list.each(function(name){
             try {
                 var observer = o.find(name);
+                if(!$.exists(observer)) return; //There is not subscribers for this notification
                 observer.notify.apply(observer, data);
             }
             catch(e) {
