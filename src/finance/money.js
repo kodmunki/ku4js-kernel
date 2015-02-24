@@ -102,9 +102,7 @@ $.money.parse = function(str) {
     return $.money(v, U);
 };
 $.money.tryParse = function(o){
-    return $.money.canParse(o)
-        ? $.money.parse(o)
-        : null;
+    return $.money.canParse(o) ? $.money.parse(o) : null;
 };
 
 function money_checkCurrency(money, other) {
