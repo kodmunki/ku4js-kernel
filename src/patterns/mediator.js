@@ -24,7 +24,19 @@ mediator.prototype = {
     },
     unsubscribe: function(name, id) {
         var observers = this._observers;
-        if(observers.containsKey(name)) observers.find(name).remove(id);
+
+        if($.isNullOrEmpty(name) && $.exists(id)) {
+            observers.each(function(obj) {
+                obj.value.remove(id);
+            });
+        }
+        else {
+            if (observers.containsKey(name)) {
+                var observer = observers.find(name);
+                if ($.exists(id)) observer.remove(id);
+                else observer.clear();
+            }
+        }
         return this;
     },
     notify: function() {

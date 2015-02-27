@@ -12,6 +12,6 @@ stack.prototype = {
         return this._q.pop();
     },
     clear: function() { this._q = []; }
-}
-$.lifo = function(){ return new stack(); }
+};
+$.lifo = function(){ return new stack(); };
 $.lifo.Class = stack;

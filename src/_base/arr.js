@@ -6,3 +6,6 @@ $.arr.indexOfRegExp = function(array, regexp) {
     }
     return -1;
 };
+$.arr.parseArguments = function(args) {
+    return Array.prototype.slice.call(args);
+};

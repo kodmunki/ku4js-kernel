@@ -190,6 +190,9 @@ $.arr.indexOfRegExp = function(array, regexp) {
     }
     return -1;
 };
+$.arr.parseArguments = function(args) {
+    return Array.prototype.slice.call(args);
+};
 
 $.Class = function(){ }
 $.Class.prototype = {
@@ -972,9 +975,7 @@ $.money.parse = function(str) {
     return $.money(v, U);
 };
 $.money.tryParse = function(o){
-    return $.money.canParse(o)
-        ? $.money.parse(o)
-        : null;
+    return $.money.canParse(o) ? $.money.parse(o) : null;
 };
 
 function money_checkCurrency(money, other) {
@@ -1439,7 +1440,19 @@ mediator.prototype = {
     },
     unsubscribe: function(name, id) {
         var observers = this._observers;
-        if(observers.containsKey(name)) observers.find(name).remove(id);
+
+        if($.isNullOrEmpty(name) && $.exists(id)) {
+            observers.each(function(obj) {
+                obj.value.remove(id);
+            });
+        }
+        else {
+            if (observers.containsKey(name)) {
+                var observer = observers.find(name);
+                if ($.exists(id)) observer.remove(id);
+                else observer.clear();
+            }
+        }
         return this;
     },
     notify: function() {
@@ -1560,8 +1573,8 @@ queue.prototype = {
         return item;
     },
     clear: function() { this._q = []; }
-}
-$.fifo = function(){ return new queue(); }
+};
+$.fifo = function(){ return new queue(); };
 $.fifo.Class = queue;
 
 function rolodex(subj) {
@@ -1683,8 +1696,8 @@ stack.prototype = {
         return this._q.pop();
     },
     clear: function() { this._q = []; }
-}
-$.lifo = function(){ return new stack(); }
+};
+$.lifo = function(){ return new stack(); };
 $.lifo.Class = stack;
 
 function ku4_performance(func) {
