@@ -395,7 +395,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns a string representation of the email address.</td>
 </tr>
 <tr>
-<td>.parse(string:<em>String</em>)</td>
+<td>$.emailAddress.parse(string:<em>String</em>)</td>
 <td>emailAddress</td>
 <td>Returns an email address containing the corresponding components.</td>
 </tr>
@@ -432,7 +432,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234"</td>
 </tr>
 <tr>
-<td>parse(string:<em>String</em>)</td>
+<td>$.phoneNumber.parse(string:<em>String</em>)</td>
 <td>phoneNumber</td>
 <td>Returns a phoneNumber with corresponding value.</td>
 </tr>
@@ -474,7 +474,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns the first middle and last name concatenated with space character separators.</td>
 </tr>
 <tr>
-<td>initials()</td>
+<td>.initials()</td>
 <td>String</td>
 <td>Returns the first letter of each name part capitalized and followed by a . character and a space character separator.</td>
 </tr>
@@ -484,7 +484,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns true if each part of this is equal to the corresponding part of other.</td>
 </tr>
 <tr>
-<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>.toStringWithFormat(format:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J."</td>
 </tr>
