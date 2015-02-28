@@ -132,7 +132,7 @@ $.replicate = function(value) {
                         ? $.replicate(v) : v;
     }
     return result;
-}
+};
 
 if(!$.exists($.obj)) $.obj = { };
 $.obj.keys = function(o) {
@@ -232,9 +232,9 @@ lock.prototype = {
     isLocked: function(){ return this.get("isLocked"); },
     lock: function() { this._isLocked = true; return this; },
     unlock: function() { this._isLocked = false; return this; }
-}
+};
 $.Class.extend(lock, $.Class);
-$.lock = function(isLocked){return new lock(isLocked);}
+$.lock = function(isLocked){return new lock(isLocked);};
 
 if(!$.exists($.math)) $.math = { };
 $.math.round = function(n, d){

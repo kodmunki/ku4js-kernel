@@ -10,4 +10,7 @@ cp -f ../bin/ku4js-kernel.js ../../ku4js-webApp/_example/javascript/lib/
 cp -f ../bin/ku4js-kernel.js ../../ku4js-webApp/_TEMPLATE/lib/
 cp -f ../bin/ku4js-kernel.js ../../ku4js-widget/tests/_dependencies/
 
+echo "Copying resources to _LATEST/"
+cp -f ../bin/ku4js-kernel.js ../../_LATEST/
+
 echo "Update complete :{)}"
