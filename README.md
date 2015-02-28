@@ -187,7 +187,7 @@ A indexed collection
 | API | Return | Description |
 | --- | --- | --- |
 | .count() | Number | Returns the number of items in the list. |
-| add(item:_Object_, value:_Object_) | this | Adds value to list with key. |
+| .add(item:_Object_, value:_Object_) | this | Adds value to list with key. |
 | .remove(item:_Object_) | this | Removes the item. |
 | .clear() | this | Removes all items. |
 | .find(index:_Number_) | String | Returns the key for value. |
@@ -245,7 +245,7 @@ A value object that represents money.
 | .add(other:_money_) | money | Returns a money whose value is the sum on this value plus other value. |
 | .divide(divisor:_Number_) | money | Returns a money whose value is the quotient of this value divided by divisor.  |
 | .equals(other:_money_) |Boolean  | Return true if this value equals other value. |
-| exchange(rate:_Number_, currency:_String_) | money  | Return a money of currency with value or this times rate. |
+| .exchange(rate:_Number_, currency:_String_) | money  | Return a money of currency with value or this times rate. |
 | .isOfCurrency(other:_money_) | Boolean | Return true if this currency is equal to other currency. |
 | .isGreaterThan(other:_money_) | Boolean | Return true if this value > other value. |
 | .isLessThan(other:_money_) | Boolean | Returns true if this value < other value. |
@@ -258,7 +258,7 @@ A value object that represents money.
 | .toString(tens:_String_, tenths:_String_) | String | Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "|") == "$12-345-678|90". |
 | $.money.zero() | money | Returns a money with value 0. |
 | $.money.isMoney(other:_money_) | Boolean | Returns true if other is and instance of money |
-| canParse(string:_String_) | money | Returns true if the string can be parsed to money. |
+| $.money.canParse(string:_String_) | money | Returns true if the string can be parsed to money. |
 | $.money.parse(string:_String_) | money | Returns a money with corresponding value. |
 | $.money.tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null. |
 
