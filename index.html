@@ -31,78 +31,20 @@
         <h1>
 <a id="ku4js-kernel" class="anchor" href="#ku4js-kernel" aria-hidden="true"><span class="octicon octicon-link"></span></a>ku4js-kernel</h1>
 
-<p>kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript development.</p>
+<p>kodmunki™ utilities for JavaScript kernel is both a stand alone library and also acts as the kernel for the ku4js-* suite of libraries that make up the ku4js Framework an Object Oriented JavaScript Framework.</p>
 
-<p>ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
-design patterns.</p>
+<p>ku4js-kernel contains a vast number of powerful classes and patterns including: value objects, asserters, collections, math, geometry, finance, mediators, specifications, state machine abstractions and many more!</p>
 
 <p><img src="http://www.kodmunki.com/media/logo-small.png" alt="kodmunki"></p>
 
 <hr>
 
 <h1>
-<a id="kodmunki-build-process" class="anchor" href="#kodmunki-build-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>kodmunki™ build process</h1>
-
-<p>This build process is dependent upon yuicompressor and a specific directory structure:</p>
-
-<ul>
-<li>root
-*:_build (This build script and the yuicompressor)
-
-<ul>
-<li>bin (The compiled scripts will appear here)</li>
-<li>src (All script files go here)</li>
-</ul>
-</li>
-</ul>
-
-<p>The following variables found in setup () are
-expected to be changed by the developer running
-this process:</p>
-
-<ul>
-<li>PROJNAME (The name of your project)</li>
-<li>STARTMSG (A message to echo at start of build)</li>
-<li>ENDMSG (A message to echo at end of build)</li>
-</ul>
-
-<hr>
-
-<h1>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
-<p>The following is documentation for each class in the ku4js-kernel library organized by common domain to follow the
-directory structure found in /src. All constructors are empty unless otherwise noted.</p>
+<p>The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All constructors are empty unless otherwise noted.</p>
 
-<h2>
-<a id="class" class="anchor" href="#class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class</h2>
-
-<p>Class is a foundational class that numerous other classes inherit from offering the subclasses a common property API
-that includes get(), set(), and property() which is a getter/setter. It also exposes the inheritance API. To subclass
-JavaScript classes using the kernel Class one would first create their class and then subclass as follows:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="pl-st">function</span> <span class="pl-en">myClass</span>() {
-    myClass.base.<span class="pl-s3">call</span>(<span class="pl-v">this</span>); <span class="pl-c">//This line scopes the class hierarchy.</span>
-}
-<span class="pl-s3">myClass</span>.<span class="pl-sc">prototype</span> <span class="pl-k">=</span> {
-    <span class="pl-c">/*All prototype methods go here*/</span>
-};
-$.Class.extend(myClass, $.Class); <span class="pl-c">//We are creating our subclass here.</span>
-
-<span class="pl-s3">$.myApp</span>.<span class="pl-en">myClass</span> <span class="pl-k">=</span> <span class="pl-st">function</span>() { <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">myClass</span>(); } <span class="pl-c">//We are exposing myClass for use here</span></pre></div>
-
-<p>With the above implementation. A developer can now call $.myApp.myClass() from within their application to instantiate
-a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
-inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
-$.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)</p>
-
-<h2>
-<a id="base" class="anchor" href="#base" aria-hidden="true"><span class="octicon octicon-link"></span></a>Base</h2>
-
-<h3>
-<a id="math" class="anchor" href="#math" aria-hidden="true"><span class="octicon octicon-link"></span></a>math</h3>
-
-<p>Convenient math operations, and some that fix some odd bugs.</p>
+<p>The API tables in each section of the documentation contain three columns. </p>
 
 <table>
 <thead>
@@ -114,19 +56,208 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </thead>
 <tbody>
 <tr>
-<td>round(value:<em>Number</em>, nearest:<em>Number</em>)</td>
-<td>Number</td>
-<td>Rounds value to the nearest, where nearest is the base 10 exponent to which to round</td>
+<td>This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. An example: $.MethodName(argument:_Type)</td>
+<td>The return values type, if any. A value of "this" in this column indicates the return of a reference to self</td>
+<td>This column contains descriptions and any <strong>Gotchas!</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="base" class="anchor" href="#base" aria-hidden="true"><span class="octicon octicon-link"></span></a>Base</h2>
+
+<h3>
+<a id="asserters" class="anchor" href="#asserters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Asserters</h3>
+
+<p>ku4js-kernel contains an assortment of tested assertion functions that are useful in performing common logic tasks. By using ku4js-kernel asserters, not only are you able to leverage succinct powerful assertions, but your assertions will also clearly reveal the intention of the code.</p>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$.isArray(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an instance of an Array.</td>
 </tr>
 <tr>
-<td>roundUp(value:<em>Number</em>, nearest:<em>Number</em>)</td>
-<td>Number</td>
-<td>Rounds value up to the nearest, where nearest is the base 10 exponent to which to round</td>
+<td>$.isBool(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is of type Boolean.</td>
 </tr>
 <tr>
-<td>roundDown(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>$.isDate(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an instance of a Date.</td>
+</tr>
+<tr>
+<td>$.isEvent(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>A cross browser compatible assertion returning true if value is an instance of an Event or is a window.event.</td>
+</tr>
+<tr>
+<td>$.isNumber(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is a Number and not NaN.</td>
+</tr>
+<tr>
+<td>$.isObject(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an Object that is not a Boolean, Number, Date, Array, String, or Function.</td>
+</tr>
+<tr>
+<td>$.isObjectLiteral(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an object litteral.</td>
+</tr>
+<tr>
+<td>$.isFunction(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an instance of a Function.</td>
+</tr>
+<tr>
+<td>$.isString(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is a String.</td>
+</tr>
+<tr>
+<td>$.isZero(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is 0.</td>
+</tr>
+<tr>
+<td>$.isOdd(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an odd number.</td>
+</tr>
+<tr>
+<td>$.isEven(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an even number.</td>
+</tr>
+<tr>
+<td>$.isNull(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is null.</td>
+</tr>
+<tr>
+<td>$.isUndefined(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is undefined.</td>
+</tr>
+<tr>
+<td>$.isEmpty(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is an empty string.</td>
+</tr>
+<tr>
+<td>$.isNullOrEmpty(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is undefined, null or an empty string.</td>
+</tr>
+<tr>
+<td>$.exists(value:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value is not undefined or null.</td>
+</tr>
+<tr>
+<td>$.areEqual(value1:<em>Object</em>, value1:<em>Object</em>)</td>
+<td>Boolean</td>
+<td>Returns true if value1 and value2 are equal. This is useful for testing value objects.</td>
+</tr>
+<tr>
+<td>$.xor(value1:<em>Boolean</em>, value2:<em>Boolean</em>)</td>
+<td>Boolean</td>
+<td>Returns true if the exclusive or opertionation of value1 and value2 evaluates to true.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="class" class="anchor" href="#class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class</h3>
+
+<p>Class is a foundational construct from which numerous other classes inherit. This construct is leveraged 
+heavily throughout the ku4js Framwork suite. It offers subclasses a common property API that includes </p>
+
+<ul>
+<li>get()</li>
+<li>set()</li>
+<li>property() //a getter/setter. </li>
+</ul>
+
+<p>It also exposes the inheritance API $.Class.extend(). To subclass JavaScript classes with ku4js-kernel 
+using the kernel simply do the following:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-st">function</span> <span class="pl-en">myClass</span>() {
+    myClass.base.<span class="pl-s3">call</span>(<span class="pl-v">this</span>); <span class="pl-c">//This line is required and set the correct scope.</span>
+
+    <span class="pl-c">/*Add further constructor items, initializers and any other relevant code here*/</span>
+
+}
+<span class="pl-s3">myClass</span>.<span class="pl-sc">prototype</span> <span class="pl-k">=</span> {
+
+    <span class="pl-c">/*All prototype methods go here*/</span>
+
+};
+$.Class.extend(myClass, $.Class); <span class="pl-c">//We are creating our subclass here. myClass is a subclass of $.Class</span>
+
+<span class="pl-s3">$</span>.<span class="pl-en">myClass</span> <span class="pl-k">=</span> <span class="pl-st">function</span>() { <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">myClass</span>(); } <span class="pl-c">//This line is optional. It will make this class pulic. Without this line this class will be internal.</span></pre></div>
+
+<p>With the above implementation. A developer can now call $.myClass() to instantiate a new myClass that 
+contains get(), set(), and property(). It is important to note that many ku4js-* classes expose an inheritence
+interface and can be inherited using the same convention as class. For example, to inherit from $.mediator, 
+a developer would simply replace $.Class.extend(myClass, $.Class) in the example above with 
+$.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from $.mediator.</p>
+
+<h3>
+<a id="math" class="anchor" href="#math" aria-hidden="true"><span class="octicon octicon-link"></span></a>math</h3>
+
+<p>Convenient math operations, and some that fix odd bugs.</p>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$.math.round(value:<em>Number</em>, nearest:<em>Number</em>)</td>
 <td>Number</td>
-<td>Rounds value down to the nearest, where nearest is the base 10 exponent to which to round</td>
+<td>Rounds value to the nearest, where nearest is the base 10 exponent to which to round.</td>
+</tr>
+<tr>
+<td>$.math.roundUp(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value up to the nearest, where nearest is the base 10 exponent to which to round.</td>
+</tr>
+<tr>
+<td>$.math.roundDown(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value down to the nearest, where nearest is the base 10 exponent to which to round.</td>
+</tr>
+<tr>
+<td>$.math.roundTowardZero(value:<em>Number</em>, nearest:<em>Number</em>)</td>
+<td>Number</td>
+<td>Rounds value toward zeor to the nearest, where nearest is the base 10 exponent to which to round.</td>
+</tr>
+<tr>
+<td>$.math.roundFactorial(value:<em>Number</em>)</td>
+<td>Number</td>
+<td>Returns the factorial of value. !value.</td>
+</tr>
+<tr>
+<td>$.math.gcd(value1:<em>Number</em>, value2:<em>Number</em>)</td>
+<td>Number</td>
+<td>Returns the greatest common divisor given value1 and value2.</td>
 </tr>
 </tbody>
 </table>
@@ -146,42 +277,52 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 </thead>
 <tbody>
 <tr>
-<td>trimStart(value:<em>String</em>)</td>
+<td>$.str.trimStart(value:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string with leading whitespace trimmed.</td>
 </tr>
 <tr>
-<td>trimEnd(value:<em>String</em>)</td>
+<td>$.str.trimEnd(value:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string with trailing whitespace trimmed.</td>
 </tr>
 <tr>
-<td>trim(value:<em>String</em>)</td>
+<td>$.str.trim(value:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string with leading and trailing whitespace trimmed.</td>
 </tr>
 <tr>
-<td>format(value:<em>String</em>, ...:<em>String</em>)</td>
+<td>$.str.format(value:<em>String</em>, ...:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string replacing the format placeholders with the following arguments.</td>
 </tr>
 <tr>
-<td>render(value:<em>String</em>, obj:<em>object</em>)</td>
+<td>$.str.render(value:<em>String</em>, obj:<em>object</em>)</td>
 <td>String</td>
 <td>Returns a string replacing the format placeholders with the values of the key, value pairs in the following object argument.</td>
 </tr>
 <tr>
-<td>encodeBase64(value:<em>String</em>)</td>
+<td>$.str.encodeBase64(value:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a base 64 encoded string from value.</td>
 </tr>
 <tr>
-<td>decodeBase64(value:<em>String</em>)</td>
+<td>$.str.decodeBase64(value:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string from a base 64 encoded value.</td>
 </tr>
 <tr>
-<td>parse(value:<em>Number</em>, ...:<em>Number</em>)</td>
+<td>$.str.encodeUtf8(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a UTF-8 encoded value from value.</td>
+</tr>
+<tr>
+<td>$.str.decodeUtf8(value:<em>String</em>)</td>
+<td>String</td>
+<td>Returns a string from a UTF-8 encoded value.</td>
+</tr>
+<tr>
+<td>$.str.parse(value:<em>Number</em>, ...:<em>Number</em>)</td>
 <td>String</td>
 <td>Returns a string from the character code arguments.</td>
 </tr>
@@ -191,7 +332,24 @@ $.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClas
 <h3>
 <a id="uid" class="anchor" href="#uid" aria-hidden="true"><span class="octicon octicon-link"></span></a>uid</h3>
 
-<p>A 32 character random unique ID.</p>
+<p>A 32 character random unique ID. </p>
+
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Return</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$.uid()</td>
+<td>String</td>
+<td>Returns a 32 character random character string</td>
+</tr>
+</tbody>
+</table>
 
 <h2>
 <a id="account" class="anchor" href="#account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Account</h2>
@@ -1080,13 +1238,10 @@ in development.</li>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+
+<hr>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/kodmunki">kodmunki</a></p>
