@@ -42,7 +42,7 @@
 <h1>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
-<p>The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All constructors are empty unless otherwise noted.</p>
+<p>The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All instantiable classes can be instantiated using the $.className() syntax. All constructors are empty unless otherwise noted.</p>
 
 <p>The API tables in each section of the documentation contain three columns. </p>
 
@@ -56,7 +56,8 @@
 </thead>
 <tbody>
 <tr>
-<td>This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. An example: $.MethodName(argument:_Type)</td>
+<td>This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. Class/static methods are denoted with the class name, whereas instance level methods will begin with a dot. Example class/static method: <strong>$.math.round(value:<em>Number</em>, nearest:<em>Number</em>)</strong>. Example of an instance method: <strong>.toString()</strong>
+</td>
 <td>The return values type, if any. A value of "this" in this column indicates the return of a reference to self</td>
 <td>This column contains descriptions and any <strong>Gotchas!</strong>
 </td>
@@ -357,6 +358,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="emailaddress" class="anchor" href="#emailaddress" aria-hidden="true"><span class="octicon octicon-link"></span></a>emailAddress</h3>
 
+<p>An email address value object.</p>
+
 <table>
 <thead>
 <tr>
@@ -367,32 +370,32 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>local()</td>
+<td>.local()</td>
 <td>String</td>
 <td>Returns the local portion of the email address.</td>
 </tr>
 <tr>
-<td>domain()</td>
+<td>.domain()</td>
 <td>String</td>
 <td>Returns the domain portion of the email address.</td>
 </tr>
 <tr>
-<td>topLevelDomain()</td>
+<td>.topLevelDomain()</td>
 <td>String</td>
 <td>Returns the top level domain portion of the email address.</td>
 </tr>
 <tr>
-<td>equals(other:<em>emailAddress</em>)</td>
+<td>.equals(other:<em>emailAddress</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the email addresses are equal.</td>
 </tr>
 <tr>
-<td>toString()</td>
+<td>.toString()</td>
 <td>String</td>
 <td>Returns a string representation of the email address.</td>
 </tr>
 <tr>
-<td>parse(string:<em>String</em>)</td>
+<td>.parse(string:<em>String</em>)</td>
 <td>emailAddress</td>
 <td>Returns an email address containing the corresponding components.</td>
 </tr>
@@ -402,6 +405,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="phonenumber" class="anchor" href="#phonenumber" aria-hidden="true"><span class="octicon octicon-link"></span></a>phoneNumber</h3>
 
+<p>A phone number value object.</p>
+
 <table>
 <thead>
 <tr>
@@ -412,17 +417,17 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>value()</td>
+<td>.value()</td>
 <td>Number</td>
 <td>Returns a number value of the phone number.</td>
 </tr>
 <tr>
-<td>equals(other:<em>phoneNumber</em>)</td>
+<td>.equals(other:<em>phoneNumber</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the this is equal to other.</td>
 </tr>
 <tr>
-<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>.toStringWithFormat(format:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234"</td>
 </tr>
@@ -437,6 +442,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="propername" class="anchor" href="#propername" aria-hidden="true"><span class="octicon octicon-link"></span></a>properName</h3>
 
+<p>A proper name value object.</p>
+
 <table>
 <thead>
 <tr>
@@ -447,22 +454,22 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>first()</td>
+<td>.first()</td>
 <td>String</td>
 <td>Returns the first name.</td>
 </tr>
 <tr>
-<td>middle()</td>
+<td>.middle()</td>
 <td>String</td>
 <td>Returns the middle name.</td>
 </tr>
 <tr>
-<td>last()</td>
+<td>.last()</td>
 <td>String</td>
 <td>Returns the last name.</td>
 </tr>
 <tr>
-<td>full()</td>
+<td>.full()</td>
 <td>String</td>
 <td>Returns the first middle and last name concatenated with space character separators.</td>
 </tr>
@@ -472,7 +479,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns the first letter of each name part capitalized and followed by a . character and a space character separator.</td>
 </tr>
 <tr>
-<td>equals(other_properName_)</td>
+<td>.equals(other_properName_)</td>
 <td>String</td>
 <td>Returns true if each part of this is equal to the corresponding part of other.</td>
 </tr>
@@ -490,6 +497,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="hash" class="anchor" href="#hash" aria-hidden="true"><span class="octicon octicon-link"></span></a>hash</h3>
 
+<p>A key value pair collection.</p>
+
 <table>
 <thead>
 <tr>
@@ -500,82 +509,82 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>count()</td>
+<td>.count()</td>
 <td>Number</td>
 <td>Returns the number of items in the hash.</td>
 </tr>
 <tr>
-<td>keys()</td>
+<td>.keys()</td>
 <td>Array</td>
 <td>Returns an array of all keys.</td>
 </tr>
 <tr>
-<td>values()</td>
+<td>.values()</td>
 <td>Array</td>
 <td>Returns an array of all values.</td>
 </tr>
 <tr>
-<td>add(key:<em>String</em>, value:<em>Object</em>)</td>
+<td>.add(key:<em>String</em>, value:<em>Object</em>)</td>
 <td>this</td>
 <td>Adds value to hash with key.</td>
 </tr>
 <tr>
-<td>update(key:<em>String</em>, value:<em>Object</em>)</td>
+<td>.update(key:<em>String</em>, value:<em>Object</em>)</td>
 <td>this</td>
 <td>Updates the value at key.</td>
 </tr>
 <tr>
-<td>remove(key:<em>String</em>)</td>
+<td>.remove(key:<em>String</em>)</td>
 <td>this</td>
 <td>Removes the key, value pair that has key.</td>
 </tr>
 <tr>
-<td>clear()</td>
+<td>.clear()</td>
 <td>this</td>
 <td>Removes all key, value pairs.</td>
 </tr>
 <tr>
-<td>findKey(value:<em>Object</em>)</td>
+<td>.findKey(value:<em>Object</em>)</td>
 <td>String</td>
 <td>Returns the key for value.</td>
 </tr>
 <tr>
-<td>findValue(key:<em>String</em>)</td>
+<td>.findValue(key:<em>String</em>)</td>
 <td>Object</td>
 <td>Returns the value at key.</td>
 </tr>
 <tr>
-<td>each(func:<em>function</em>, scope:<em>Object?</em>)</td>
+<td>.each(func:<em>function</em>, scope:<em>Object?</em>)</td>
 <td>this</td>
 <td>Calls func for each item in the hash passing the object {"key": key, "value": value} on each pass. If scope is passed function will be called in the passed scope.</td>
 </tr>
 <tr>
-<td>quit()</td>
+<td>.quit()</td>
 <td>this</td>
-<td>Breaks the call.</td>
+<td>Breaks the iterator.</td>
 </tr>
 <tr>
-<td>contains(value:<em>hash/object</em>)</td>
+<td>.contains(value:<em>hash/object</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the hash contains the passed value.</td>
 </tr>
 <tr>
-<td>containsKey(key:<em>String</em>)</td>
+<td>.containsKey(key:<em>String</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the hash contains the key.</td>
 </tr>
 <tr>
-<td>containsValue(value:<em>Object</em>)</td>
+<td>.containsValue(value:<em>Object</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the hash contains the value.</td>
 </tr>
 <tr>
-<td>isEmpty()</td>
+<td>.isEmpty()</td>
 <td>Boolean</td>
 <td>Returns true if the hash is empty.</td>
 </tr>
 <tr>
-<td>merge(other:<em>hash/object</em>)</td>
+<td>.merge(other:<em>hash/object</em>)</td>
 <td>hash</td>
 <td>Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys.</td>
 </tr>
@@ -585,12 +594,12 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <td>Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the other hash for common keys.</td>
 </tr>
 <tr>
-<td>replicate()</td>
+<td>.replicate()</td>
 <td>hash</td>
 <td>Returns a copy of the current hash.</td>
 </tr>
 <tr>
-<td>toObject()</td>
+<td>.toObject()</td>
 <td>object</td>
 <td>Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash.</td>
 </tr>
@@ -599,6 +608,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 
 <h3>
 <a id="list" class="anchor" href="#list" aria-hidden="true"><span class="octicon octicon-link"></span></a>list</h3>
+
+<p>A indexed collection</p>
 
 <table>
 <thead>
@@ -610,47 +621,47 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>count()</td>
+<td>.count()</td>
 <td>Number</td>
 <td>Returns the number of items in the list.</td>
 </tr>
 <tr>
-<td>add(item:<em>Object</em>, value:<em>Object</em>)</td>
+<td>.add(item:<em>Object</em>, value:<em>Object</em>)</td>
 <td>this</td>
 <td>Adds value to list with key.</td>
 </tr>
 <tr>
-<td>remove(item:<em>Object</em>)</td>
+<td>.remove(item:<em>Object</em>)</td>
 <td>this</td>
 <td>Removes the item.</td>
 </tr>
 <tr>
-<td>clear()</td>
+<td>.clear()</td>
 <td>this</td>
 <td>Removes all items.</td>
 </tr>
 <tr>
-<td>find(index:<em>Number</em>)</td>
+<td>.find(index:<em>Number</em>)</td>
 <td>String</td>
 <td>Returns the key for value.</td>
 </tr>
 <tr>
-<td>each(func:<em>function</em>, scope:<em>Object?</em>)</td>
+<td>.each(func:<em>function</em>, scope:<em>Object</em>)</td>
 <td>this</td>
 <td>Calls func for each item in the list passing the item on each pass. If scope is passed function will be called in the passed scope.</td>
 </tr>
 <tr>
-<td>quit()</td>
+<td>.quit()</td>
 <td>this</td>
-<td>Breaks the call.</td>
+<td>Breaks the iterator.</td>
 </tr>
 <tr>
-<td>contains(item:<em>Object</em>)</td>
+<td>.contains(item:<em>Object</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the list contains the value.</td>
 </tr>
 <tr>
-<td>toArray()</td>
+<td>.toArray()</td>
 <td>object</td>
 <td>Returns an array that contains items equivalent to the items of the current list.</td>
 </tr>
@@ -663,6 +674,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="daypoint" class="anchor" href="#daypoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>dayPoint</h3>
 
+<p>A value object that represents a day.</p>
+
 <table>
 <thead>
 <tr>
@@ -673,127 +686,127 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>value()</td>
+<td>.value()</td>
 <td>Date</td>
 <td>Returns the Date value</td>
 </tr>
 <tr>
-<td>day()</td>
+<td>.day()</td>
 <td>Number</td>
 <td>Returns the zero indexed day of the week</td>
 </tr>
 <tr>
-<td>date()</td>
+<td>.date()</td>
 <td>Number</td>
 <td>Returns the date</td>
 </tr>
 <tr>
-<td>month()</td>
+<td>.month()</td>
 <td>Number</td>
 <td>Returns the month</td>
 </tr>
 <tr>
-<td>year()</td>
+<td>.year()</td>
 <td>Number</td>
 <td>Returns the year</td>
 </tr>
 <tr>
-<td>isWeekday()</td>
+<td>.isWeekday()</td>
 <td>Boolean</td>
 <td>Returns true if the day is 1-5</td>
 </tr>
 <tr>
-<td>isWeekend()</td>
+<td>.isWeekend()</td>
 <td>Boolean</td>
 <td>Returns true if the day is 0 or 6</td>
 </tr>
 <tr>
-<td>isLeapYear()</td>
+<td>.isLeapYear()</td>
 <td>Boolean</td>
 <td>Returns true if the year contains a 29th day in the second month</td>
 </tr>
 <tr>
-<td>nextDay()</td>
+<td>.nextDay()</td>
 <td>dayPoint</td>
 <td>Returns the next day</td>
 </tr>
 <tr>
-<td>prevDay()</td>
+<td>.prevDay()</td>
 <td>dayPoint</td>
 <td>Returns the previous day</td>
 </tr>
 <tr>
-<td>add(years:<em>Number</em>, months:<em>Number</em>, days:<em>Number</em>)</td>
+<td>.add(years:<em>Number</em>, months:<em>Number</em>, days:<em>Number</em>)</td>
 <td>dayPoint</td>
 <td></td>
 </tr>
 <tr>
-<td>firstDayOfMonth()</td>
+<td>.firstDayOfMonth()</td>
 <td>dayPoint</td>
 <td>Returns the first day of the current month</td>
 </tr>
 <tr>
-<td>LastDayOfMonth()</td>
+<td>.lastDayOfMonth()</td>
 <td>dayPoint</td>
 <td>Returns the last day of the current month</td>
 </tr>
 <tr>
-<td>isBefore(other:<em>dayPoint</em>)</td>
+<td>.isBefore(other:<em>dayPoint</em>)</td>
 <td>Boolean</td>
 <td>Returns true if other is earlier than this dayPoint</td>
 </tr>
 <tr>
-<td>isAfter(other:<em>dayPoint</em>)</td>
+<td>.isAfter(other:<em>dayPoint</em>)</td>
 <td>Boolean</td>
 <td>Returns true if other is later than this dayPoint</td>
 </tr>
 <tr>
-<td>equals(other:<em>dayPoint</em>)</td>
+<td>.equals(other:<em>dayPoint</em>)</td>
 <td>Boolean</td>
 <td>Returns true if other is equal to than this dayPoint</td>
 </tr>
 <tr>
-<td>toString()</td>
+<td>.toString()</td>
 <td>String</td>
 <td>Returns the string value of the dayPoint</td>
 </tr>
 <tr>
-<td>toStringWithFormat(format:<em>String</em>)</td>
+<td>.toStringWithFormat(format:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string formatted per the passed format. Example: $.dayPoint(2013, 5, 24).toStringWithFormat("mm/dd/yy") == "05/24/13"</td>
 </tr>
 <tr>
-<td>toDate()</td>
+<td>.toDate()</td>
 <td>Date</td>
 <td>Returns a Date value</td>
 </tr>
 <tr>
-<td>toJson()</td>
+<td>.toJson()</td>
 <td>String</td>
 <td>Returns the JSON string value</td>
 </tr>
 <tr>
-<td>canParse(string:<em>String</em>)</td>
+<td>$.dayPoint.canParse(string:<em>String</em>)</td>
 <td>Boolean</td>
 <td>Returns true if the string can be parsed into a dayPoint</td>
 </tr>
 <tr>
-<td>parse(string:<em>String</em>)</td>
+<td>$.dayPoint.parse(string:<em>String</em>)</td>
 <td>dayPoint</td>
 <td>Returns a dayPoint with the appropriate value</td>
 </tr>
 <tr>
-<td>tryParse(string:<em>String</em>)</td>
+<td>$.dayPoint.tryParse(string:<em>String</em>)</td>
 <td>dayPoint</td>
 <td>Returns a dayPoint with the appropriate value or null if the string value cannot be parsed</td>
 </tr>
 <tr>
-<td>today()</td>
+<td>$.dayPoint.today()</td>
 <td>dayPoint</td>
 <td>Returns a dayPoint with the value, today</td>
 </tr>
 <tr>
-<td>assumeNow(dayPoint:<em>dayPoint</em>)</td>
+<td>$.dayPoint.assumeNow(dayPoint:<em>dayPoint</em>)</td>
 <td>void</td>
 <td>Sets today as dayPoint. Can be very useful in testing application features that are date dependent. This feature allows the development of date dependent features without the need to manipulate system time.</td>
 </tr>
@@ -806,6 +819,8 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="money" class="anchor" href="#money" aria-hidden="true"><span class="octicon octicon-link"></span></a>money</h3>
 
+<p>A value object that represents money.</p>
+
 <table>
 <thead>
 <tr>
@@ -816,117 +831,117 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>cents()</td>
+<td>.cents()</td>
 <td>Number</td>
 <td>Returns the fractional value of the money.</td>
 </tr>
 <tr>
-<td>dollars()</td>
+<td>.dollars()</td>
 <td>Number</td>
 <td>Returns the whole value of the money.</td>
 </tr>
 <tr>
-<td>currency()</td>
+<td>.currency()</td>
 <td>String</td>
 <td>Returns the currency. "$" is the default.</td>
 </tr>
 <tr>
-<td>value()</td>
+<td>.value()</td>
 <td>Number</td>
 <td>Returns the entire value of the money.</td>
 </tr>
 <tr>
-<td>add(other:<em>money</em>)</td>
+<td>.add(other:<em>money</em>)</td>
 <td>money</td>
 <td>Returns a money whose value is the sum on this value plus other value.</td>
 </tr>
 <tr>
-<td>divide(divisor:<em>Number</em>)</td>
+<td>.divide(divisor:<em>Number</em>)</td>
 <td>money</td>
 <td>Returns a money whose value is the quotient of this value divided by divisor.</td>
 </tr>
 <tr>
-<td>equals(other:<em>money</em>)</td>
+<td>.equals(other:<em>money</em>)</td>
 <td>Boolean</td>
 <td>Return true if this value equals other value.</td>
 </tr>
 <tr>
-<td>exchange(rate:<em>Number</em>, currency:<em>String</em>)</td>
+<td>.exchange(rate:<em>Number</em>, currency:<em>String</em>)</td>
 <td>money</td>
 <td>Return a money of currency with value or this times rate.</td>
 </tr>
 <tr>
-<td>isOfCurrency(other:<em>money</em>)</td>
+<td>.isOfCurrency(other:<em>money</em>)</td>
 <td>Boolean</td>
 <td>Return true if this currency is equal to other currency.</td>
 </tr>
 <tr>
-<td>isGreaterThan(other:<em>money</em>)</td>
+<td>.isGreaterThan(other:<em>money</em>)</td>
 <td>Boolean</td>
 <td>Return true if this value &gt; other value.</td>
 </tr>
 <tr>
-<td>isLessThan(other:<em>money</em>)</td>
+<td>.isLessThan(other:<em>money</em>)</td>
 <td>Boolean</td>
 <td>Returns true if this value &lt; other value.</td>
 </tr>
 <tr>
-<td>multiply(multiplier:<em>Number</em>)</td>
+<td>.multiply(multiplier:<em>Number</em>)</td>
 <td>money</td>
 <td>Returns a money whose value is the product of this value times the multiplier.</td>
 </tr>
 <tr>
-<td>round()</td>
+<td>.round()</td>
 <td>money</td>
 <td>Returns a money whose value is the value of this money rounded to the nearest hundredth.</td>
 </tr>
 <tr>
-<td>roundDown()</td>
+<td>.roundDown()</td>
 <td>money</td>
 <td>Returns a money whose value is the value of this money rounded down to the nearest hundredth.</td>
 </tr>
 <tr>
-<td>roundUp()</td>
+<td>.roundUp()</td>
 <td>money</td>
 <td>Returns a money whose value is the value of this money rounded up to the nearest hundredth.</td>
 </tr>
 <tr>
-<td>nearestDollar()</td>
+<td>.nearestDollar()</td>
 <td>money</td>
 <td>Returns a money whose value is the value of this money rounded to the nearest whole value.</td>
 </tr>
 <tr>
-<td>subtract(other:<em>money</em>)</td>
+<td>.subtract(other:<em>money</em>)</td>
 <td>money</td>
 <td>Returns a money whose value is the difference of this value minus other value.</td>
 </tr>
 <tr>
-<td>toString(tens:<em>String</em>, tenths:<em>String</em>)</td>
+<td>.toString(tens:<em>String</em>, tenths:<em>String</em>)</td>
 <td>String</td>
 <td>Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "</td>
 </tr>
 <tr>
-<td>zero()</td>
+<td>$.money.zero()</td>
 <td>money</td>
 <td>Returns a money with value 0.</td>
 </tr>
 <tr>
-<td>isMoney(other:<em>money</em>)</td>
+<td>$.money.isMoney(other:<em>money</em>)</td>
 <td>Boolean</td>
 <td>Returns true if other is and instance of money</td>
 </tr>
 <tr>
-<td>canParse(string:<em>String</em>)</td>
+<td>$.money.canParse(string:<em>String</em>)</td>
 <td>money</td>
 <td>Returns true if the string can be parsed to money.</td>
 </tr>
 <tr>
-<td>parse(string:<em>String</em>)</td>
+<td>$.money.parse(string:<em>String</em>)</td>
 <td>money</td>
 <td>Returns a money with corresponding value.</td>
 </tr>
 <tr>
-<td>tryParse(string:<em>String</em>)</td>
+<td>$.money.tryParse(string:<em>String</em>)</td>
 <td>money</td>
 <td>Returns a money with corresponding value if string can be parsed. Otherwise, null.</td>
 </tr>
@@ -939,7 +954,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="coord" class="anchor" href="#coord" aria-hidden="true"><span class="octicon octicon-link"></span></a>coord</h3>
 
-<p><em>Documentation Coming Soon</em></p>
+<p>A value object object representing a coordinate.</p>
 
 <table>
 <thead>
@@ -951,7 +966,72 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
+<td>.x</td>
 <td></td>
+<td></td>
+</tr>
+<tr>
+<td>.y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.abs</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.add</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.subtract</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.multiply</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.divide</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.equals</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.round</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.half</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.value</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.toEm</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.toPixel</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.toString</td>
 <td></td>
 <td></td>
 </tr>
@@ -961,7 +1041,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="point" class="anchor" href="#point" aria-hidden="true"><span class="octicon octicon-link"></span></a>point</h3>
 
-<p><em>Documentation Coming Soon</em></p>
+<p>A value object object representing a coordinate.</p>
 
 <table>
 <thead>
@@ -983,7 +1063,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="rectangle" class="anchor" href="#rectangle" aria-hidden="true"><span class="octicon octicon-link"></span></a>rectangle</h3>
 
-<p><em>Documentation Coming Soon</em></p>
+<p>A value object object representing a coordinate.</p>
 
 <table>
 <thead>
@@ -1005,7 +1085,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="vector" class="anchor" href="#vector" aria-hidden="true"><span class="octicon octicon-link"></span></a>vector</h3>
 
-<p><em>Documentation Coming Soon</em></p>
+<p>A value object object representing a coordinate.</p>
 
 <table>
 <thead>
@@ -1030,7 +1110,7 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 <h3>
 <a id="iterator" class="anchor" href="#iterator" aria-hidden="true"><span class="octicon octicon-link"></span></a>iterator</h3>
 
-<p><em>Documentation Coming Soon</em></p>
+<p>A value object object representing a coordinate.</p>
 
 <table>
 <thead>
@@ -1062,52 +1142,52 @@ $.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from 
 </thead>
 <tbody>
 <tr>
-<td>throwErrors()</td>
+<td>.throwErrors()</td>
 <td>this</td>
 <td>Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled.</td>
 </tr>
 <tr>
-<td>logErrors()</td>
+<td>.logErrors()</td>
 <td>this</td>
 <td>Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue.</td>
 </tr>
 <tr>
-<td>catchErrors()</td>
+<td>.catchErrors()</td>
 <td>this</td>
 <td>Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue.</td>
 </tr>
 <tr>
-<td>isEmpty()</td>
+<td>.isEmpty()</td>
 <td>Boolean</td>
 <td>Returns true if there are no subscribers.</td>
 </tr>
 <tr>
-<td>count()</td>
+<td>.count()</td>
 <td>Number</td>
 <td>Returns that number of subscription managers.</td>
 </tr>
 <tr>
-<td>activeSubscriptionKeys()</td>
+<td>.activeSubscriptionKeys()</td>
 <td>Array</td>
 <td>Returns an array of active subscription keys.</td>
 </tr>
 <tr>
-<td>subscribe(name_String_, method:<em>function</em>, scope:<em>Object?</em>, id:<em>String?</em>)</td>
+<td>.subscribe(name_String_, method:<em>function</em>, scope:<em>Object?</em>, id:<em>String?</em>)</td>
 <td>this</td>
 <td>Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe</td>
 </tr>
 <tr>
-<td>unsubscribe(name_String_, id:<em>String?</em>)</td>
+<td>.unsubscribe(name_String_, id:<em>String?</em>)</td>
 <td>this</td>
 <td>Removes subscriber of id from all name notifications</td>
 </tr>
 <tr>
-<td>notify(filtersCSV:<em>String</em>, data:<em>Object</em> ...)</td>
+<td>.notify(filtersCSV:<em>String</em>, data:<em>Object</em> ...)</td>
 <td>this</td>
 <td>Notifies subscribers by name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. The names string can be a single name or a CSV of names. If no data is passed, no data is sent to the subscribers in the notification.</td>
 </tr>
 <tr>
-<td>clear()</td>
+<td>.clear()</td>
 <td>this</td>
 <td>Clears all subscribers.</td>
 </tr>
@@ -1185,27 +1265,27 @@ in development.</li>
 </thead>
 <tbody>
 <tr>
-<td>and(other:<em>spec</em>)</td>
+<td>.and(other:<em>spec</em>)</td>
 <td>spec</td>
 <td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec</td>
 </tr>
 <tr>
-<td>or(other:<em>spec</em>)</td>
+<td>.or(other:<em>spec</em>)</td>
 <td>spec</td>
 <td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec</td>
 </tr>
 <tr>
-<td>xor(other:<em>spec</em>)</td>
+<td>.xor(other:<em>spec</em>)</td>
 <td>spec</td>
 <td>Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec</td>
 </tr>
 <tr>
-<td>not()</td>
+<td>.not()</td>
 <td>spec</td>
 <td>Inverts the return value of isSatisfiedBy</td>
 </tr>
 <tr>
-<td>isSatisfiedBy(value)</td>
+<td>.isSatisfiedBy(value)</td>
 <td>Boolean</td>
 <td>Returns a boolean value of true if the value passed satisfies the specification</td>
 </tr>
