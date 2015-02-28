@@ -126,7 +126,7 @@ An email address value object.
 | .topLevelDomain() | String | Returns the top level domain portion of the email address. |
 | .equals(other:_emailAddress_) | Boolean | Returns true if the email addresses are equal. |
 | .toString() | String | Returns a string representation of the email address. |
-| .parse(string:_String_) | emailAddress | Returns an email address containing the corresponding components. |
+| $.emailAddress.parse(string:_String_) | emailAddress | Returns an email address containing the corresponding components. |
 
 ###phoneNumber
 A phone number value object.
@@ -136,7 +136,7 @@ A phone number value object.
 | .value() | Number | Returns a number value of the phone number. |
 | .equals(other:_phoneNumber_) | Boolean | Returns true if the this is equal to other. |
 | .toStringWithFormat(format:_String_) | String | Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234" |
-| parse(string:_String_) | phoneNumber | Returns a phoneNumber with corresponding value. |
+| $.phoneNumber.parse(string:_String_) | phoneNumber | Returns a phoneNumber with corresponding value. |
 
 ###properName
 A proper name value object.
@@ -148,9 +148,9 @@ A proper name value object.
 | .middle() | String | Returns the middle name. |
 | .last() | String | Returns the last name. |
 | .full() | String | Returns the first middle and last name concatenated with space character separators. |
-| initials() | String | Returns the first letter of each name part capitalized and followed by a . character and a space character separator. |
+| .initials() | String | Returns the first letter of each name part capitalized and followed by a . character and a space character separator. |
 | .equals(other_properName_) | String | Returns true if each part of this is equal to the corresponding part of other. |
-| toStringWithFormat(format:_String_) | String | Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J." |
+| .toStringWithFormat(format:_String_) | String | Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J." |
 
 ##Collections
 
