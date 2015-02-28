@@ -9,13 +9,13 @@ ku4js-kernel contains a vast number of powerful classes and patterns including: 
 ---
 
 #Documentation
-The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All constructors are empty unless otherwise noted.
+The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All instantiable classes can be instantiated using the $.className() syntax. All constructors are empty unless otherwise noted.
 
 The API tables in each section of the documentation contain three columns. 
 
 | API | Return | Description |
 | --- | --- | --- |
-|This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. An example: $.MethodName(argument:_Type)| The return values type, if any. A value of "this" in this column indicates the return of a reference to self | This column contains descriptions and any **Gotchas!**  |
+|This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. Class/static methods are denoted with the class name, whereas instance level methods will begin with a dot. Example class/static method: **$.math.round(value:_Number_, nearest:_Number_)**. Example of an instance method: **.toString()** | The return values type, if any. A value of "this" in this column indicates the return of a reference to self | This column contains descriptions and any **Gotchas!** |
 
 ##Base
 
@@ -117,157 +117,193 @@ A 32 character random unique ID.
 ##Account
 
 ###emailAddress
+An email address value object.
+
 | API | Return | Description |
 | --- | --- | --- |
-| local() | String | Returns the local portion of the email address. |
-| domain() | String | Returns the domain portion of the email address. |
-| topLevelDomain() | String | Returns the top level domain portion of the email address. |
-| equals(other:_emailAddress_) | Boolean | Returns true if the email addresses are equal. |
-| toString() | String | Returns a string representation of the email address. |
-| parse(string:_String_) | emailAddress | Returns an email address containing the corresponding components. |
+| .local() | String | Returns the local portion of the email address. |
+| .domain() | String | Returns the domain portion of the email address. |
+| .topLevelDomain() | String | Returns the top level domain portion of the email address. |
+| .equals(other:_emailAddress_) | Boolean | Returns true if the email addresses are equal. |
+| .toString() | String | Returns a string representation of the email address. |
+| .parse(string:_String_) | emailAddress | Returns an email address containing the corresponding components. |
 
 ###phoneNumber
+A phone number value object.
+
 | API | Return | Description |
 | --- | --- | --- |
-| value() | Number | Returns a number value of the phone number. |
-| equals(other:_phoneNumber_) | Boolean | Returns true if the this is equal to other. |
-| toStringWithFormat(format:_String_) | String | Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234" |
+| .value() | Number | Returns a number value of the phone number. |
+| .equals(other:_phoneNumber_) | Boolean | Returns true if the this is equal to other. |
+| .toStringWithFormat(format:_String_) | String | Returns a string value replacing each instance of "#" with the subsequent number in the value. Example: $.phoneNumber(2224441234).toStringWithFormat("(###) ###-####") == "(222) 444-1234" |
 | parse(string:_String_) | phoneNumber | Returns a phoneNumber with corresponding value. |
 
 ###properName
+A proper name value object.
+
+
 | API | Return | Description |
 | --- | --- | --- |
-| first() | String | Returns the first name. |
-| middle() | String | Returns the middle name. |
-| last() | String | Returns the last name. |
-| full() | String | Returns the first middle and last name concatenated with space character separators. |
+| .first() | String | Returns the first name. |
+| .middle() | String | Returns the middle name. |
+| .last() | String | Returns the last name. |
+| .full() | String | Returns the first middle and last name concatenated with space character separators. |
 | initials() | String | Returns the first letter of each name part capitalized and followed by a . character and a space character separator. |
-| equals(other_properName_) | String | Returns true if each part of this is equal to the corresponding part of other. |
+| .equals(other_properName_) | String | Returns true if each part of this is equal to the corresponding part of other. |
 | toStringWithFormat(format:_String_) | String | Returns a string formatted with the passed format. The rules are: {F} = first name, {f} = first initial, {M} = middle name, {m} = middle initial, {L} = last name, {l} = last initial. Example $.properName("John", "Jacob", "Doe").toStringWithFormat("{L} {F}, {m}.") == "Doe John, J." |
 
 ##Collections
 
 ###hash
+
+A key value pair collection.
+
 | API | Return | Description |
 | --- | --- | --- |
-| count() | Number | Returns the number of items in the hash. |
-| keys() | Array | Returns an array of all keys. |
-| values() | Array | Returns an array of all values. |
-| add(key:_String_, value:_Object_) | this | Adds value to hash with key. |
-| update(key:_String_, value:_Object_) | this | Updates the value at key. |
-| remove(key:_String_) | this | Removes the key, value pair that has key. |
-| clear() | this | Removes all key, value pairs. |
-| findKey(value:_Object_) | String | Returns the key for value. |
-| findValue(key:_String_) | Object | Returns the value at key.  |
-| each(func:_function_, scope:_Object?_) | this | Calls func for each item in the hash passing the object {"key": key, "value": value} on each pass. If scope is passed function will be called in the passed scope. |
-| quit() | this | Breaks the call. |
-| contains(value:_hash/object_) | Boolean | Returns true if the hash contains the passed value.  |
-| containsKey(key:_String_) | Boolean | Returns true if the hash contains the key. |
-| containsValue(value:_Object_) | Boolean | Returns true if the hash contains the value. |
-| isEmpty() | Boolean | Returns true if the hash is empty. |
-| merge(other:_hash/object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys. |
+| .count() | Number | Returns the number of items in the hash. |
+| .keys() | Array | Returns an array of all keys. |
+| .values() | Array | Returns an array of all values. |
+| .add(key:_String_, value:_Object_) | this | Adds value to hash with key. |
+| .update(key:_String_, value:_Object_) | this | Updates the value at key. |
+| .remove(key:_String_) | this | Removes the key, value pair that has key. |
+| .clear() | this | Removes all key, value pairs. |
+| .findKey(value:_Object_) | String | Returns the key for value. |
+| .findValue(key:_String_) | Object | Returns the value at key.  |
+| .each(func:_function_, scope:_Object?_) | this | Calls func for each item in the hash passing the object {"key": key, "value": value} on each pass. If scope is passed function will be called in the passed scope. |
+| .quit() | this | Breaks the iterator. |
+| .contains(value:_hash/object_) | Boolean | Returns true if the hash contains the passed value.  |
+| .containsKey(key:_String_) | Boolean | Returns true if the hash contains the key. |
+| .containsValue(value:_Object_) | Boolean | Returns true if the hash contains the value. |
+| .isEmpty() | Boolean | Returns true if the hash is empty. |
+| .merge(other:_hash/object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the current hash for common keys. |
 | meld(other:_hash/object_) | hash | Returns a new hash contains key, value pairs are a combination of the current hash and other giving precedence to the other hash for common keys. |
-| replicate() | hash | Returns a copy of the current hash. |
-| toObject() | object | Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash. |
+| .replicate() | hash | Returns a copy of the current hash. |
+| .toObject() | object | Returns an object that contains key, value pairs equivalent to the key, value pairs of the current hash. |
 
 ###list
+
+A indexed collection
+
 | API | Return | Description |
 | --- | --- | --- |
-| count() | Number | Returns the number of items in the list. |
+| .count() | Number | Returns the number of items in the list. |
 | add(item:_Object_, value:_Object_) | this | Adds value to list with key. |
-| remove(item:_Object_) | this | Removes the item. |
-| clear() | this | Removes all items. |
-| find(index:_Number_) | String | Returns the key for value. |
-| each(func:_function_, scope:_Object?_) | this | Calls func for each item in the list passing the item on each pass. If scope is passed function will be called in the passed scope. |
-| quit() | this | Breaks the call. |
-| contains(item:_Object_) | Boolean | Returns true if the list contains the value. |
-| toArray() | object | Returns an array that contains items equivalent to the items of the current list. |
+| .remove(item:_Object_) | this | Removes the item. |
+| .clear() | this | Removes all items. |
+| .find(index:_Number_) | String | Returns the key for value. |
+| .each(func:_function_, scope:_Object_) | this | Calls func for each item in the list passing the item on each pass. If scope is passed function will be called in the passed scope. |
+| .quit() | this | Breaks the iterator. |
+| .contains(item:_Object_) | Boolean | Returns true if the list contains the value. |
+| .toArray() | object | Returns an array that contains items equivalent to the items of the current list. |
 
 ##Datetime
 
 ###dayPoint
+
+A value object that represents a day.
+
 | API | Return | Description |
 | --- | --- | --- |
-| value() | Date | Returns the Date value |
-| day() | Number | Returns the zero indexed day of the week |
-| date() | Number | Returns the date |
-| month() | Number | Returns the month |
-| year() | Number | Returns the year |
-| isWeekday() | Boolean | Returns true if the day is 1-5 |
-| isWeekend() | Boolean | Returns true if the day is 0 or 6 |
-| isLeapYear() | Boolean | Returns true if the year contains a 29th day in the second month |
-| nextDay() | dayPoint | Returns the next day |
-| prevDay() | dayPoint | Returns the previous day |
-| add(years:_Number_, months:_Number_, days:_Number_) | dayPoint |  |
-| firstDayOfMonth() | dayPoint | Returns the first day of the current month |
-| LastDayOfMonth() | dayPoint | Returns the last day of the current month |
-| isBefore(other:_dayPoint_) | Boolean | Returns true if other is earlier than this dayPoint |
-| isAfter(other:_dayPoint_) | Boolean | Returns true if other is later than this dayPoint |
-| equals(other:_dayPoint_) | Boolean | Returns true if other is equal to than this dayPoint |
-| toString() | String | Returns the string value of the dayPoint |
-| toStringWithFormat(format:_String_) | String | Returns a string formatted per the passed format. Example: $.dayPoint(2013, 5, 24).toStringWithFormat("mm/dd/yy") == "05/24/13" |
-| toDate() | Date | Returns a Date value |
-| toJson() | String | Returns the JSON string value |
-| canParse(string:_String_) | Boolean | Returns true if the string can be parsed into a dayPoint |
-| parse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value |
-| tryParse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value or null if the string value cannot be parsed |
-| today() | dayPoint | Returns a dayPoint with the value, today |
-| assumeNow(dayPoint:_dayPoint_) | void | Sets today as dayPoint. Can be very useful in testing application features that are date dependent. This feature allows the development of date dependent features without the need to manipulate system time. |
+| .value() | Date | Returns the Date value |
+| .day() | Number | Returns the zero indexed day of the week |
+| .date() | Number | Returns the date |
+| .month() | Number | Returns the month |
+| .year() | Number | Returns the year |
+| .isWeekday() | Boolean | Returns true if the day is 1-5 |
+| .isWeekend() | Boolean | Returns true if the day is 0 or 6 |
+| .isLeapYear() | Boolean | Returns true if the year contains a 29th day in the second month |
+| .nextDay() | dayPoint | Returns the next day |
+| .prevDay() | dayPoint | Returns the previous day |
+| .add(years:_Number_, months:_Number_, days:_Number_) | dayPoint |  |
+| .firstDayOfMonth() | dayPoint | Returns the first day of the current month |
+| .lastDayOfMonth() | dayPoint | Returns the last day of the current month |
+| .isBefore(other:_dayPoint_) | Boolean | Returns true if other is earlier than this dayPoint |
+| .isAfter(other:_dayPoint_) | Boolean | Returns true if other is later than this dayPoint |
+| .equals(other:_dayPoint_) | Boolean | Returns true if other is equal to than this dayPoint |
+| .toString() | String | Returns the string value of the dayPoint |
+| .toStringWithFormat(format:_String_) | String | Returns a string formatted per the passed format. Example: $.dayPoint(2013, 5, 24).toStringWithFormat("mm/dd/yy") == "05/24/13" |
+| .toDate() | Date | Returns a Date value |
+| .toJson() | String | Returns the JSON string value |
+| $.dayPoint.canParse(string:_String_) | Boolean | Returns true if the string can be parsed into a dayPoint |
+| $.dayPoint.parse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value |
+| $.dayPoint.tryParse(string:_String_) | dayPoint | Returns a dayPoint with the appropriate value or null if the string value cannot be parsed |
+| $.dayPoint.today() | dayPoint | Returns a dayPoint with the value, today |
+| $.dayPoint.assumeNow(dayPoint:_dayPoint_) | void | Sets today as dayPoint. Can be very useful in testing application features that are date dependent. This feature allows the development of date dependent features without the need to manipulate system time. |
 
 ##Finance
 
 ###money
+
+A value object that represents money.
+
 | API | Return | Description |
 | --- | --- | --- |
-| cents() | Number | Returns the fractional value of the money. |
-| dollars() | Number | Returns the whole value of the money. |
-| currency() | String | Returns the currency. "$" is the default. |
-| value() | Number | Returns the entire value of the money. |
-| add(other:_money_) | money | Returns a money whose value is the sum on this value plus other value. |
-| divide(divisor:_Number_) | money | Returns a money whose value is the quotient of this value divided by divisor.  |
-| equals(other:_money_) |Boolean  | Return true if this value equals other value. |
+| .cents() | Number | Returns the fractional value of the money. |
+| .dollars() | Number | Returns the whole value of the money. |
+| .currency() | String | Returns the currency. "$" is the default. |
+| .value() | Number | Returns the entire value of the money. |
+| .add(other:_money_) | money | Returns a money whose value is the sum on this value plus other value. |
+| .divide(divisor:_Number_) | money | Returns a money whose value is the quotient of this value divided by divisor.  |
+| .equals(other:_money_) |Boolean  | Return true if this value equals other value. |
 | exchange(rate:_Number_, currency:_String_) | money  | Return a money of currency with value or this times rate. |
-| isOfCurrency(other:_money_) | Boolean | Return true if this currency is equal to other currency. |
-| isGreaterThan(other:_money_) | Boolean | Return true if this value > other value. |
-| isLessThan(other:_money_) | Boolean | Returns true if this value < other value. |
-| multiply(multiplier:_Number_) | money | Returns a money whose value is the product of this value times the multiplier. |
-| round() | money | Returns a money whose value is the value of this money rounded to the nearest hundredth. |
-| roundDown() | money | Returns a money whose value is the value of this money rounded down to the nearest hundredth. |
-| roundUp() | money | Returns a money whose value is the value of this money rounded up to the nearest hundredth. |
-| nearestDollar() | money | Returns a money whose value is the value of this money rounded to the nearest whole value. |
-| subtract(other:_money_) | money | Returns a money whose value is the difference of this value minus other value. |
-| toString(tens:_String_, tenths:_String_) | String | Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "|") == "$12-345-678|90". |
-| zero() | money | Returns a money with value 0. |
-| isMoney(other:_money_) | Boolean | Returns true if other is and instance of money |
+| .isOfCurrency(other:_money_) | Boolean | Return true if this currency is equal to other currency. |
+| .isGreaterThan(other:_money_) | Boolean | Return true if this value > other value. |
+| .isLessThan(other:_money_) | Boolean | Returns true if this value < other value. |
+| .multiply(multiplier:_Number_) | money | Returns a money whose value is the product of this value times the multiplier. |
+| .round() | money | Returns a money whose value is the value of this money rounded to the nearest hundredth. |
+| .roundDown() | money | Returns a money whose value is the value of this money rounded down to the nearest hundredth. |
+| .roundUp() | money | Returns a money whose value is the value of this money rounded up to the nearest hundredth. |
+| .nearestDollar() | money | Returns a money whose value is the value of this money rounded to the nearest whole value. |
+| .subtract(other:_money_) | money | Returns a money whose value is the difference of this value minus other value. |
+| .toString(tens:_String_, tenths:_String_) | String | Returns a string representation of the money. There are two optional parameters tens and tenths. These values act as the separators for the tens and the tenths respectively. That is as an example $.money(12345678.90).toString("-", "|") == "$12-345-678|90". |
+| $.money.zero() | money | Returns a money with value 0. |
+| $.money.isMoney(other:_money_) | Boolean | Returns true if other is and instance of money |
 | canParse(string:_String_) | money | Returns true if the string can be parsed to money. |
-| parse(string:_String_) | money | Returns a money with corresponding value. |
-| tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null. |
+| $.money.parse(string:_String_) | money | Returns a money with corresponding value. |
+| $.money.tryParse(string:_String_) | money | Returns a money with corresponding value if string can be parsed. Otherwise, null. |
 
 ##Geometry
 
 ###coord
-_Documentation Coming Soon_
+
+A value object object representing a coordinate.
 
 | API | Return | Description |
 | --- | --- | --- |
-|  |  |  |
+| .x |  |  |
+| .y |  |  |
+| .abs |  |  |
+| .add |  |  |
+| .subtract |  |  |
+| .multiply |  |  |
+| .divide |  |  |
+| .equals |  |  |
+| .round |  |  |
+| .half |  |  |
+| .value |  |  |
+| .toEm |  |  |
+| .toPixel |  |  |
+| .toString |  |  |
 
 ###point
-_Documentation Coming Soon_
+
+A value object object representing a coordinate.
 
 | API | Return | Description |
 | --- | --- | --- |
 |  |  |  |
 
 ###rectangle
-_Documentation Coming Soon_
+
+A value object object representing a coordinate.
 
 | API | Return | Description |
 | --- | --- | --- |
 |  |  |  |
 
 ###vector
-_Documentation Coming Soon_
+
+A value object object representing a coordinate.
 
 | API | Return | Description |
 | --- | --- | --- |
@@ -276,7 +312,8 @@ _Documentation Coming Soon_
 ##Patterns
 
 ###iterator
-_Documentation Coming Soon_
+
+A value object object representing a coordinate.
 
 | API | Return | Description |
 | --- | --- | --- |
@@ -285,16 +322,16 @@ _Documentation Coming Soon_
 ###mediator
 | API | Return | Description |
 | --- | --- | --- |
-| throwErrors() | this | Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled. |
-| logErrors() | this | Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue. |
-| catchErrors() | this | Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue. |
-| isEmpty() | Boolean | Returns true if there are no subscribers. |
-| count() | Number | Returns that number of subscription managers. |
-| activeSubscriptionKeys() | Array | Returns an array of active subscription keys. |
-| subscribe(name_String_, method:_function_, scope:_Object?_, id:_String?_) | this | Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe |
-| unsubscribe(name_String_, id:_String?_) | this | Removes subscriber of id from all name notifications |
-| notify(filtersCSV:_String_, data:_Object_ ...) | this | Notifies subscribers by name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. The names string can be a single name or a CSV of names. If no data is passed, no data is sent to the subscribers in the notification.  |
-| clear() | this | Clears all subscribers. |
+| .throwErrors() | this | Causes errors that occur in the notification process to be thrown, which will kill the JavaScript process if left unhandled. |
+| .logErrors() | this | Causes errors that occur in the notification process to be logged to the console, allowing the JavaScript process to continue. |
+| .catchErrors() | this | Causes errors that occur in the notification process to be silenced, allowing the JavaScript process to continue. |
+| .isEmpty() | Boolean | Returns true if there are no subscribers. |
+| .count() | Number | Returns that number of subscription managers. |
+| .activeSubscriptionKeys() | Array | Returns an array of active subscription keys. |
+| .subscribe(name_String_, method:_function_, scope:_Object?_, id:_String?_) | this | Subscribes method to be called in scope when name is notified. id is optional and used to unsubscribe |
+| .unsubscribe(name_String_, id:_String?_) | this | Removes subscriber of id from all name notifications |
+| .notify(filtersCSV:_String_, data:_Object_ ...) | this | Notifies subscribers by name with data. data and name are optional parameters and multiple data and multiple names may be passed. If no names are supplied all subscribers are notified. The names string can be a single name or a CSV of names. If no data is passed, no data is sent to the subscribers in the notification.  |
+| .clear() | this | Clears all subscribers. |
 
 ####mediator notes!
 This is a very powerful and useful pattern, but it comes with developer responsibilities. Below are some gotchas that
@@ -323,11 +360,11 @@ Constructor: $.spec(func:_function_). The function passed must take a value para
 
 | API | Return | Description |
 | --- | --- | --- |
-| and(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec |
-| or(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec |
-| xor(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec |
-| not() | spec | Inverts the return value of isSatisfiedBy |
-| isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
+| .and(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec AND the other spec |
+| .or(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec OR the other spec |
+| .xor(other:_spec_) | spec | Returns a new spec whose isSatisfiedBy method is an evaluation of the current spec XOR the other spec |
+| .not() | spec | Inverts the return value of isSatisfiedBy |
+| .isSatisfiedBy(value) | Boolean | Returns a boolean value of true if the value passed satisfies the specification |
 
 ####Spec Example:
 ```javascript
