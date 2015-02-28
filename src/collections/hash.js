@@ -31,7 +31,8 @@ hash.prototype = {
     },
     find: function(k) {
         if (!$.exists(k)) return null;
-        return this.$h[k];
+        var value = this.$h[k];
+        return ($.isUndefined(value)) ? null : value;
     },
     findKey: function(v){
         var h = this.$h;
