@@ -13,4 +13,4 @@ $.replicate = function(value) {
                         ? $.replicate(v) : v;
     }
     return result;
-}
+};

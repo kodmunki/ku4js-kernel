@@ -1,85 +1,118 @@
 #ku4js-kernel
 
-kodmunki™ utilities for JavaScript kernel is a library for OO JavaScript development.
+kodmunki™ utilities for JavaScript kernel is both a stand alone library and also acts as the kernel for the ku4js-* suite of libraries that make up the ku4js Framework an Object Oriented JavaScript Framework.
 
-ku4js-kernel contains numerous useful classes including collections, math, geometry, and numerous common
-design patterns.
+ku4js-kernel contains a vast number of powerful classes and patterns including: value objects, asserters, collections, math, geometry, finance, mediators, specifications, state machine abstractions and many more!
 
 <img src="http://www.kodmunki.com/media/logo-small.png" alt="kodmunki" />
 
 ---
 
-#kodmunki™ build process
-
-This build process is dependent upon yuicompressor and a specific directory structure:
-
-* root
- *:_build (This build script and the yuicompressor)
- * bin (The compiled scripts will appear here)
- * src (All script files go here)
-
-The following variables found in setup () are
-expected to be changed by the developer running
-this process:
-
-* PROJNAME (The name of your project)
-* STARTMSG (A message to echo at start of build)
-* ENDMSG (A message to echo at end of build)
-
----
-
 #Documentation
-The following is documentation for each class in the ku4js-kernel library organized by common domain to follow the
-directory structure found in /src. All constructors are empty unless otherwise noted.
+The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All constructors are empty unless otherwise noted.
 
-##Class
-Class is a foundational class that numerous other classes inherit from offering the subclasses a common property API
-that includes get(), set(), and property() which is a getter/setter. It also exposes the inheritance API. To subclass
-JavaScript classes using the kernel Class one would first create their class and then subclass as follows:
-
-```javascript
-function myClass() {
-    myClass.base.call(this); //This line scopes the class hierarchy.
-}
-myClass.prototype = {
-    /*All prototype methods go here*/
-};
-$.Class.extend(myClass, $.Class); //We are creating our subclass here.
-
-$.myApp.myClass = function() { return new myClass(); } //We are exposing myClass for use here
-```
-With the above implementation. A developer can now call $.myApp.myClass() from within their application to instantiate
-a new myClass that contains get(), set(), and property(). Also, it is important to note that many ku4* classes can be
-inherited using the same convention as class. For example, to inherit from $.mediator, a developer would simply replace
-$.Class.extend(myClass, $.Class) in the example above with $.Class.extend(myClass, $.mediator.Class)
-
-##Base
-
-###math
-Convenient math operations, and some that fix some odd bugs.
+The API tables in each section of the documentation contain three columns. 
 
 | API | Return | Description |
 | --- | --- | --- |
-| round(value:_Number_, nearest:_Number_) | Number | Rounds value to the nearest, where nearest is the base 10 exponent to which to round |
-| roundUp(value:_Number_, nearest:_Number_) | Number | Rounds value up to the nearest, where nearest is the base 10 exponent to which to round |
-| roundDown(value:_Number_, nearest:_Number_) | Number | Rounds value down to the nearest, where nearest is the base 10 exponent to which to round |
+|This column contains the actual JavaScript API of the property or method in question. Proper syntax is depicted. Argument types are displyed in italics. An example: $.MethodName(argument:_Type)| The return values type, if any. A value of "this" in this column indicates the return of a reference to self | This column contains descriptions and any **Gotchas!**  |
+
+##Base
+
+###Asserters
+ku4js-kernel contains an assortment of tested assertion functions that are useful in performing common logic tasks. By using ku4js-kernel asserters, not only are you able to leverage succinct powerful assertions, but your assertions will also clearly reveal the intention of the code.
+
+| API | Return | Description |
+| --- | --- | --- |
+|$.isArray(value:_Object_)| Boolean | Returns true if value is an instance of an Array.|
+|$.isBool(value:_Object_)| Boolean | Returns true if value is of type Boolean.|
+|$.isDate(value:_Object_)| Boolean | Returns true if value is an instance of a Date.|
+|$.isEvent(value:_Object_)| Boolean | A cross browser compatible assertion returning true if value is an instance of an Event or is a window.event.|
+|$.isNumber(value:_Object_)| Boolean | Returns true if value is a Number and not NaN.|
+|$.isObject(value:_Object_)| Boolean | Returns true if value is an Object that is not a Boolean, Number, Date, Array, String, or Function. |
+|$.isObjectLiteral(value:_Object_)| Boolean | Returns true if value is an object litteral.|
+|$.isFunction(value:_Object_)| Boolean | Returns true if value is an instance of a Function.|
+|$.isString(value:_Object_)| Boolean | Returns true if value is a String.|
+|$.isZero(value:_Object_)| Boolean | Returns true if value is 0.|
+|$.isOdd(value:_Object_)| Boolean | Returns true if value is an odd number.|
+|$.isEven(value:_Object_)| Boolean | Returns true if value is an even number.|
+|$.isNull(value:_Object_)| Boolean | Returns true if value is null.|
+|$.isUndefined(value:_Object_)| Boolean | Returns true if value is undefined.|
+|$.isEmpty(value:_Object_)| Boolean | Returns true if value is an empty string.|
+|$.isNullOrEmpty(value:_Object_)| Boolean | Returns true if value is undefined, null or an empty string.|
+|$.exists(value:_Object_)| Boolean | Returns true if value is not undefined or null.|
+|$.areEqual(value1:_Object_, value1:_Object_)| Boolean | Returns true if value1 and value2 are equal. This is useful for testing value objects.|
+|$.xor(value1:_Boolean_, value2:_Boolean_)| Boolean | Returns true if the exclusive or opertionation of value1 and value2 evaluates to true.|
+
+###Class
+Class is a foundational construct from which numerous other classes inherit. This construct is leveraged 
+heavily throughout the ku4js Framwork suite. It offers subclasses a common property API that includes 
+
+* get()
+* set()
+* property() //a getter/setter. 
+
+It also exposes the inheritance API $.Class.extend(). To subclass JavaScript classes with ku4js-kernel 
+using the kernel simply do the following:
+
+```javascript
+function myClass() {
+    myClass.base.call(this); //This line is required and set the correct scope.
+    
+    /*Add further constructor items, initializers and any other relevant code here*/
+    
+}
+myClass.prototype = {
+
+    /*All prototype methods go here*/
+    
+};
+$.Class.extend(myClass, $.Class); //We are creating our subclass here. myClass is a subclass of $.Class
+
+$.myClass = function() { return new myClass(); } //This line is optional. It will make this class pulic. Without this line this class will be internal.
+```
+
+With the above implementation. A developer can now call $.myClass() to instantiate a new myClass that 
+contains get(), set(), and property(). It is important to note that many ku4js-* classes expose an inheritence
+interface and can be inherited using the same convention as class. For example, to inherit from $.mediator, 
+a developer would simply replace $.Class.extend(myClass, $.Class) in the example above with 
+$.Class.extend(myClass, $.mediator.Class) and they would now be inheriting from $.mediator.
+
+###math
+Convenient math operations, and some that fix odd bugs.
+
+| API | Return | Description |
+| --- | --- | --- |
+| $.math.round(value:_Number_, nearest:_Number_) | Number | Rounds value to the nearest, where nearest is the base 10 exponent to which to round. |
+| $.math.roundUp(value:_Number_, nearest:_Number_) | Number | Rounds value up to the nearest, where nearest is the base 10 exponent to which to round. |
+| $.math.roundDown(value:_Number_, nearest:_Number_) | Number | Rounds value down to the nearest, where nearest is the base 10 exponent to which to round. |
+| $.math.roundTowardZero(value:_Number_, nearest:_Number_) | Number | Rounds value toward zeor to the nearest, where nearest is the base 10 exponent to which to round. |
+| $.math.roundFactorial(value:_Number_) | Number | Returns the factorial of value. !value. |
+| $.math.gcd(value1:_Number_, value2:_Number_) | Number | Returns the greatest common divisor given value1 and value2. |
 
 ###str
 Convenient string operations.
 
 | API | Return | Description |
 | --- | --- | --- |
-| trimStart(value:_String_) | String | Returns a string with leading whitespace trimmed. |
-| trimEnd(value:_String_) | String | Returns a string with trailing whitespace trimmed. |
-| trim(value:_String_) | String | Returns a string with leading and trailing whitespace trimmed. |
-| format(value:_String_, ...:_String_) | String | Returns a string replacing the format placeholders with the following arguments. |
-| render(value:_String_, obj:_object_) | String | Returns a string replacing the format placeholders with the values of the key, value pairs in the following object argument. |
-| encodeBase64(value:_String_) | String | Returns a base 64 encoded string from value. |
-| decodeBase64(value:_String_) | String | Returns a string from a base 64 encoded value. |
-| parse(value:_Number_, ...:_Number_) | String | Returns a string from the character code arguments. |
+| $.str.trimStart(value:_String_) | String | Returns a string with leading whitespace trimmed. |
+| $.str.trimEnd(value:_String_) | String | Returns a string with trailing whitespace trimmed. |
+| $.str.trim(value:_String_) | String | Returns a string with leading and trailing whitespace trimmed. |
+| $.str.format(value:_String_, ...:_String_) | String | Returns a string replacing the format placeholders with the following arguments. |
+| $.str.render(value:_String_, obj:_object_) | String | Returns a string replacing the format placeholders with the values of the key, value pairs in the following object argument. |
+| $.str.encodeBase64(value:_String_) | String | Returns a base 64 encoded string from value. |
+| $.str.decodeBase64(value:_String_) | String | Returns a string from a base 64 encoded value. |
+| $.str.encodeUtf8(value:_String_) | String | Returns a UTF-8 encoded value from value. |
+| $.str.decodeUtf8(value:_String_) | String | Returns a string from a UTF-8 encoded value. |
+| $.str.parse(value:_Number_, ...:_Number_) | String | Returns a string from the character code arguments. |
 
 ###uid
-A 32 character random unique ID.
+A 32 character random unique ID. 
+
+| API | Return | Description |
+| --- | --- | --- |
+|$.uid()| String | Returns a 32 character random character string |
+
 
 ##Account
 
@@ -313,4 +346,5 @@ _Documentation Coming Soon_
 
 | API | Return | Description |
 | --- | --- | --- |
-|  |  |  |
+
+---
