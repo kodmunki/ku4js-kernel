@@ -1,7 +1,7 @@
 function rectangle (topLeft, dims){
     rectangle.base.call(this);
     this._topLeft = $.point.parse(topLeft);
-    this._dims = $.point.parse(dims);
+    this._dims = $.coord.parse(dims);
     this._bottomRight = $.point.parse(this._topLeft.add(this._dims));
 }
 rectangle.prototype = {
@@ -13,12 +13,13 @@ rectangle.prototype = {
         var t = this._topLeft,
             b = this._bottomRight;
 
-        return t.isAbove(coord) &&
-            t.isLeftOf(coord) &&
-            b.isRightOf(coord) &&
-            b.isBelow(coord);
+        return  t.isAbove(coord) &&
+                t.isLeftOf(coord) &&
+                b.isRightOf(coord) &&
+                b.isBelow(coord);
     },
     aspectToFit: function(other) {
+
         var thisDims = this.dims(),
             otherDims = other.dims(),
             width = thisDims.x(),
@@ -26,11 +27,14 @@ rectangle.prototype = {
             maxWidth = otherDims.x(),
             maxHeight = otherDims.y();
 
-        if (width > height) {
-          if (width > maxWidth) {
+        if (width > height && !$.isZero(width)) {
             height *= maxWidth / width;
             width = maxWidth;
-          }
+
+            if (height > maxHeight) {
+                height = maxHeight;
+                width *= height / thisDims.y();
+            }
         }
         else {
           if (height > maxHeight) {
@@ -39,7 +43,7 @@ rectangle.prototype = {
           }
         }
 
-        return new rectangle(this._topLeft, {width:width, height:height});
+        return $.rectangle(this.topLeft(), $.coord(width, height));
     }
 };
 $.Class.extend(rectangle, $.Class);

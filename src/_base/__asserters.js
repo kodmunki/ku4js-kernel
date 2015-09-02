@@ -13,7 +13,7 @@ $.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (i
 $.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); };
 $.isNull = function(x) { return x === null; };
 $.isUndefined = function(x) { return typeof (x) == "undefined"; };
-$.isEmpty = function(s) { return $.isString(s) && $.isZero(s.split(/\B/).length); };
+$.isEmpty = function(s) { return ($.isString(s) || $.isArray(s)) && $.isZero(s.length); };
 $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); };
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); };
 $.areEqual = function(value1, value2) {

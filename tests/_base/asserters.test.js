@@ -225,19 +225,19 @@ $(function(){
     });
 
     test('isNullOrEmpty',  function () {
-        expect(4);
+        expect(6);
         ok($.isNullOrEmpty(null));
         ok($.isNullOrEmpty(undefined));
         ok($.isNullOrEmpty(""));
         ok($.isNullOrEmpty(new String()));
+        ok($.isNullOrEmpty([]));
+        ok($.isNullOrEmpty(new Array()));
     });
 
     test('isNotNullOrEmpty',  function () {
-        expect(11);
+        expect(9);
         ok(!$.isNullOrEmpty(true));
         ok(!$.isNullOrEmpty(false));
-        ok(!$.isNullOrEmpty([]));
-        ok(!$.isNullOrEmpty(new Array()));
         ok(!$.isNullOrEmpty(0));
         ok(!$.isNullOrEmpty(new Number()));
         ok(!$.isNullOrEmpty(new Date()));
