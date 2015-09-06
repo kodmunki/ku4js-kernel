@@ -6,7 +6,7 @@ $.replicate = function(value) {
             : ($.isObject(value))
                 ? {} : value,
         v;
-    for (n in value) {
+    for (var n in value) {
         v = value[n];
         result[n] = (($.isArray(v)) ||
                      ($.isObject(v)))

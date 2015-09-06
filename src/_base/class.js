@@ -1,4 +1,4 @@
-$.Class = function(){ }
+$.Class = function(){ };
 $.Class.prototype = {
     get: function(p){ return this["_"+p]; },
     set: function(p, v){ this["_"+p] = v; return this; },

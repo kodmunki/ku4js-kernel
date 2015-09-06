@@ -1,12 +1,12 @@
 if(!$.exists($.obj)) $.obj = { };
 $.obj.keys = function(o) {
     var r = [];
-    for (n in o) r[r.length] = n;
+    for (var n in o) r[r.length] = n;
     return r;
 };
 $.obj.values = function(o) {
     var r = [];
-    for (n in o) r[r.length] = o[n];
+    for (var n in o) r[r.length] = o[n];
     return r;
 };
 $.obj.count = function(o){
@@ -19,14 +19,17 @@ $.obj.hasProp = function(obj, prop){
         ? obj.hasOwnProperty(prop)
         : false;
 };
+$.obj.ownProp = function(obj, prop){
+    return ($.obj.hasProp(obj, prop)) ? obj[prop] : undefined;
+};
 $.obj.merge = function(obj1, obj2){
     var mergee = $.replicate(obj2);
-    for (n in obj1) mergee[n] = obj1[n];
+    for (var n in obj1) mergee[n] = obj1[n];
     return mergee;
 };
 $.obj.meld = function(obj1, obj2){
     var meldee = $.replicate(obj2);
-    for (n in obj1) {
+    for (var n in obj1) {
         if($.exists(meldee[n])) continue;
         meldee[n] = obj1[n];
     }

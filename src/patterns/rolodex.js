@@ -28,7 +28,7 @@ rolodex.prototype = {
 	this.$current = (n > l) ? 0 : ((n < 0) ? l : n);
 	return s[this.$current];
     }
-}
+};
 $.Class.extend(rolodex, $.iterator.Class);
 $.rolodex = function(subj){ return new rolodex(subj); }
 $.rolodex.Class = rolodex;

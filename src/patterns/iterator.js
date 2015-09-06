@@ -51,5 +51,5 @@ function iterator_createKvArray (obj) {
     return array;
 }
 $.Class.extend(iterator, $.Class);
-$.iterator = function(subject){ return new iterator(subject); }
+$.iterator = function(subject){ return new iterator(subject); };
 $.iterator.Class = iterator;

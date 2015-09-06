@@ -90,5 +90,5 @@ mediator.prototype = {
     }
 };
 $.Class.extend(mediator, $.Class);
-$.mediator = function(name) { return new mediator(name); }
+$.mediator = function(name) { return new mediator(name); };
 $.mediator.Class = mediator;

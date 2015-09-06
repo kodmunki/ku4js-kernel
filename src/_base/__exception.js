@@ -9,7 +9,7 @@ $.ku4exception = function(className, message) {
         browserTrace = "";
         
         (function(){
-            try{ generate.exeception; }
+            try{ generate.exeception(); }
             catch(e){
                 browserTrace = ($.exists(e.stack)) ? e.stack.replace(/generate is.+/, ""): "[Unavailable]";
                 var i = 0, method, m;
@@ -30,30 +30,9 @@ $.ku4exception = function(className, message) {
             }
         })();
     return exception(className, message, browserTrace, ku4Trace);
-}
+};
 
 $.ku4Log = function(){
     try { console.log.apply(console, arguments); }
     catch(e){ alert(Array.prototype.slice.call(arguments).join("\n")); }
-}
-
-/*
-//IE
-LOG: message 
-LOG: description 
-LOG: number 
-LOG: name 
- 
-//firefox
-fileName
-lineNumber
- 
-//Safari
-message
-line
-sourceId
-expressionBeginOffset
-expressionCaretOffset
-expressionEndOffset
-name
-*/
+};

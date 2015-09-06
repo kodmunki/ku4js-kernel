@@ -1,5 +1,8 @@
 if(!$.exists($.str)) $.str = { };
 var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+$.str.isNullOrEmpty = function(s) {
+    return !$.exists(s) || ($.isString(s) && $.isEmpty(s));
+};
 $.str.build = function() {
     return "".concat.apply(new String(), arguments);
 };
@@ -8,14 +11,14 @@ $.str.format = function() {
     for (i = 1; i < l; i++) {
         A = a[i];
         S = ($.isNull(A)) ? "null" : ($.isUndefined(A)) ? "undefined" : A.toString();
-        s = s.replace(RegExp("\\{" + (i - 1) + "\\}", "g"), S);
+        s = s.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), S);
     }
     return s;
 };
 $.str.render = function(template, obj, alt) {
     var s = "" + template;
     for (var n in obj) {
-        s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
+        s = s.replace(new RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
     }
     return $.exists(alt) ? s.replace(/\{\{[A-z0-9_]+\}\}/g, alt) : s;
 };

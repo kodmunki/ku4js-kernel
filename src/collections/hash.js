@@ -25,7 +25,7 @@ hash.prototype = {
     },
     clear: function() {
         var h = this.$h;
-        for (n in h) delete h[n];
+        for (var n in h) delete h[n];
         this._count = 0;
         return this;
     },
@@ -36,7 +36,7 @@ hash.prototype = {
     },
     findKey: function(v){
         var h = this.$h;
-        for (n in h) if($.areEqual(h[n], v)) return n;
+        for (var n in h) if($.areEqual(h[n], v)) return n;
         return null;
     },
     findValue: function(k) { return this.find(k) },

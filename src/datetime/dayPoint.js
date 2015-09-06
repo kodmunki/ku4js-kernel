@@ -135,9 +135,8 @@ $.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.pars
 $.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); };
 
 function dayPoint_findDaysInMonth(month, year) {
-    var m = month, y = year;
-    if (m == 2) return (dayPoint_isLeapYear(y)) ? 29 : 28;
-    return (((m < 8) && ($.isEven(m))) || ((m > 7) && ($.isOdd(m)))) ? 30 : 31;
+    if (month == 2) return (dayPoint_isLeapYear(year)) ? 29 : 28;
+    return (((month < 8) && ($.isEven(month))) || ((month > 7) && ($.isOdd(month)))) ? 30 : 31;
 }
 function dayPoint_isLeapYear(year) {
     var y = year.toString().split(/\B/),

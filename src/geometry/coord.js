@@ -87,7 +87,7 @@ $.coord.zero = function(){ return new coord(0,  0); };
 $.coord.random = function(seedx, seedy){
     var x = seedx * Math.random(), y = seedy * Math.random(seedy);
     return new coord(x, y);
-}
+};
 $.coord.canParse = coord_canParse;
 $.coord.parse = coord_parse;
 $.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; };

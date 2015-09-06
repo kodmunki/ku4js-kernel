@@ -1,4 +1,4 @@
-$.isArray = function(x) { return x instanceof Array; };
+$.isArray = function(x) { return Array.isArray(x); };
 $.isBool = function(x) { return (/boolean/i.test(typeof (x))); };
 $.isDate = function(x) { return x instanceof Date; };
 $.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x === window.event; }};
@@ -13,7 +13,7 @@ $.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (i
 $.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); };
 $.isNull = function(x) { return x === null; };
 $.isUndefined = function(x) { return typeof (x) == "undefined"; };
-$.isEmpty = function(s) { return ($.isString(s) || $.isArray(s)) && $.isZero(s.length); };
+$.isEmpty = function(o) { return $.exists(o) && !$.isFunction(o) && $.isZero(o.length); };
 $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); };
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); };
 $.areEqual = function(value1, value2) {

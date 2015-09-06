@@ -1,7 +1,7 @@
 $.abstractState = function(states) {
     $.abstractState.base.call(this);
     this.states(states);
-}
+};
 $.abstractState.prototype = {
     context: function(context) { return this.property("context", context); },
     states: function(states) { return this.set("states", states); },
@@ -10,5 +10,5 @@ $.abstractState.prototype = {
         c.state(new this._states[state](c));
         return this;
     }
-}
+};
 $.Class.extend($.abstractState, $.Class);

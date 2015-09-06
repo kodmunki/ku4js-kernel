@@ -3,6 +3,14 @@ $(function(){
 
     module("str");
 
+    test('isNullOrEmpty', function () {
+        expect(4);
+        ok($.str.isNullOrEmpty(null));
+        ok($.str.isNullOrEmpty(undefined));
+        ok($.str.isNullOrEmpty(""));
+        ok(!$.str.isNullOrEmpty(" "));
+    });
+
     test('build', function () {
         expect(5);
         equal($.str.build(null), "null");

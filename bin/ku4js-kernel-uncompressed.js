@@ -28,7 +28,7 @@ catch(e) {
     storeAuthorInfo();
 }
 
-$.isArray = function(x) { return x instanceof Array; };
+$.isArray = function(x) { return Array.isArray(x); };
 $.isBool = function(x) { return (/boolean/i.test(typeof (x))); };
 $.isDate = function(x) { return x instanceof Date; };
 $.isEvent = function(x) { try { return x instanceof Event; } catch(e){ return x === window.event; }};
@@ -43,7 +43,7 @@ $.isEven = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (i
 $.isOdd = function(n) { return ($.isNullOrEmpty(n) || $.isDate(n)) ? false : (isNaN(n) ? false : ($.isZero(n) ? false : !$.isEven(n))); };
 $.isNull = function(x) { return x === null; };
 $.isUndefined = function(x) { return typeof (x) == "undefined"; };
-$.isEmpty = function(s) { return ($.isString(s) || $.isArray(s)) && $.isZero(s.length); };
+$.isEmpty = function(o) { return $.exists(o) && !$.isFunction(o) && $.isZero(o.length); };
 $.isNullOrEmpty = function(s) { return !$.exists(s) || $.isEmpty(s); };
 $.exists = function(x) { return (x !== null) && (!$.isUndefined(x)); };
 $.areEqual = function(value1, value2) {
@@ -68,7 +68,7 @@ $.ku4exception = function(className, message) {
         browserTrace = "";
         
         (function(){
-            try{ generate.exeception; }
+            try{ generate.exeception(); }
             catch(e){
                 browserTrace = ($.exists(e.stack)) ? e.stack.replace(/generate is.+/, ""): "[Unavailable]";
                 var i = 0, method, m;
@@ -89,33 +89,12 @@ $.ku4exception = function(className, message) {
             }
         })();
     return exception(className, message, browserTrace, ku4Trace);
-}
+};
 
 $.ku4Log = function(){
     try { console.log.apply(console, arguments); }
     catch(e){ alert(Array.prototype.slice.call(arguments).join("\n")); }
-}
-
-/*
-//IE
-LOG: message 
-LOG: description 
-LOG: number 
-LOG: name 
- 
-//firefox
-fileName
-lineNumber
- 
-//Safari
-message
-line
-sourceId
-expressionBeginOffset
-expressionCaretOffset
-expressionEndOffset
-name
-*/
+};
 
 $.replicate = function(value) {
     var result = ($.isDate(value))
@@ -125,7 +104,7 @@ $.replicate = function(value) {
             : ($.isObject(value))
                 ? {} : value,
         v;
-    for (n in value) {
+    for (var n in value) {
         v = value[n];
         result[n] = (($.isArray(v)) ||
                      ($.isObject(v)))
@@ -137,12 +116,12 @@ $.replicate = function(value) {
 if(!$.exists($.obj)) $.obj = { };
 $.obj.keys = function(o) {
     var r = [];
-    for (n in o) r[r.length] = n;
+    for (var n in o) r[r.length] = n;
     return r;
 };
 $.obj.values = function(o) {
     var r = [];
-    for (n in o) r[r.length] = o[n];
+    for (var n in o) r[r.length] = o[n];
     return r;
 };
 $.obj.count = function(o){
@@ -155,14 +134,17 @@ $.obj.hasProp = function(obj, prop){
         ? obj.hasOwnProperty(prop)
         : false;
 };
+$.obj.ownProp = function(obj, prop){
+    return ($.obj.hasProp(obj, prop)) ? obj[prop] : undefined;
+};
 $.obj.merge = function(obj1, obj2){
     var mergee = $.replicate(obj2);
-    for (n in obj1) mergee[n] = obj1[n];
+    for (var n in obj1) mergee[n] = obj1[n];
     return mergee;
 };
 $.obj.meld = function(obj1, obj2){
     var meldee = $.replicate(obj2);
-    for (n in obj1) {
+    for (var n in obj1) {
         if($.exists(meldee[n])) continue;
         meldee[n] = obj1[n];
     }
@@ -184,7 +166,7 @@ $.obj.filter = function(/*obj, keys...*/) {
 
 if(!$.exists($.arr)) $.arr = { };
 $.arr.indexOfRegExp = function(array, regexp) {
-    for (n in array) {
+    for (var n in array) {
         var value = array[n];
         if(regexp.test(array[n])) return n;
     }
@@ -194,7 +176,7 @@ $.arr.parseArguments = function(args) {
     return Array.prototype.slice.call(args);
 };
 
-$.Class = function(){ }
+$.Class = function(){ };
 $.Class.prototype = {
     get: function(p){ return this["_"+p]; },
     set: function(p, v){ this["_"+p] = v; return this; },
@@ -280,6 +262,9 @@ $.math.gcd = function(a, b) {
 
 if(!$.exists($.str)) $.str = { };
 var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+$.str.isNullOrEmpty = function(s) {
+    return !$.exists(s) || ($.isString(s) && $.isEmpty(s));
+};
 $.str.build = function() {
     return "".concat.apply(new String(), arguments);
 };
@@ -288,14 +273,14 @@ $.str.format = function() {
     for (i = 1; i < l; i++) {
         A = a[i];
         S = ($.isNull(A)) ? "null" : ($.isUndefined(A)) ? "undefined" : A.toString();
-        s = s.replace(RegExp("\\{" + (i - 1) + "\\}", "g"), S);
+        s = s.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), S);
     }
     return s;
 };
 $.str.render = function(template, obj, alt) {
     var s = "" + template;
     for (var n in obj) {
-        s = s.replace(RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
+        s = s.replace(new RegExp("\\{{" + n + "\\}}", "g"), obj[n]);
     }
     return $.exists(alt) ? s.replace(/\{\{[A-z0-9_]+\}\}/g, alt) : s;
 };
@@ -571,7 +556,7 @@ hash.prototype = {
     },
     clear: function() {
         var h = this.$h;
-        for (n in h) delete h[n];
+        for (var n in h) delete h[n];
         this._count = 0;
         return this;
     },
@@ -582,7 +567,7 @@ hash.prototype = {
     },
     findKey: function(v){
         var h = this.$h;
-        for (n in h) if($.areEqual(h[n], v)) return n;
+        for (var n in h) if($.areEqual(h[n], v)) return n;
         return null;
     },
     findValue: function(k) { return this.find(k) },
@@ -721,7 +706,7 @@ list.prototype = {
 };
 $.Class.extend(list, $.Class);
 
-$.list = function(a){ return new list(a); }
+$.list = function(a){ return new list(a); };
 $.list.Class = list;
 $.list.parseArguments = function(a){
     return new list(Array.prototype.slice.call(a));
@@ -864,9 +849,8 @@ $.dayPoint.assumeNow = function(dayPoint) { dayPoint_assumeNow = $.dayPoint.pars
 $.dayPoint.today = function() { return dayPoint_assumeNow || $.dayPoint.parse(new Date()); };
 
 function dayPoint_findDaysInMonth(month, year) {
-    var m = month, y = year;
-    if (m == 2) return (dayPoint_isLeapYear(y)) ? 29 : 28;
-    return (((m < 8) && ($.isEven(m))) || ((m > 7) && ($.isOdd(m)))) ? 30 : 31;
+    if (month == 2) return (dayPoint_isLeapYear(year)) ? 29 : 28;
+    return (((month < 8) && ($.isEven(month))) || ((month > 7) && ($.isOdd(month)))) ? 30 : 31;
 }
 function dayPoint_isLeapYear(year) {
     var y = year.toString().split(/\B/),
@@ -1116,7 +1100,7 @@ $.coord.zero = function(){ return new coord(0,  0); };
 $.coord.random = function(seedx, seedy){
     var x = seedx * Math.random(), y = seedy * Math.random(seedy);
     return new coord(x, y);
-}
+};
 $.coord.canParse = coord_canParse;
 $.coord.parse = coord_parse;
 $.coord.tryParse = function(o){ return coord_canParse(o) ? coord_parse(o) : null; };
@@ -1349,19 +1333,19 @@ $.fraction.isInstance = function(other) { return other instanceof fraction; };
 $.abstractContext = function(state) {
     $.abstractContext.base.call(this);
     this.state(state);
-}
+};
 $.abstractContext.prototype = {
     state: function(state) {
         if(!$.exists(state)) return this._state;
         return this.set("state", state.context(this));
     }
-}
+};
 $.Class.extend($.abstractContext, $.Class);
 
 $.abstractState = function(states) {
     $.abstractState.base.call(this);
     this.states(states);
-}
+};
 $.abstractState.prototype = {
     context: function(context) { return this.property("context", context); },
     states: function(states) { return this.set("states", states); },
@@ -1370,7 +1354,7 @@ $.abstractState.prototype = {
         c.state(new this._states[state](c));
         return this;
     }
-}
+};
 $.Class.extend($.abstractState, $.Class);
 
 $.abstractVisitor = function() { }
@@ -1378,7 +1362,7 @@ $.abstractVisitor.prototype = {
     $visit: function(){ throw new Error("visit method is abstract an must be defined."); },
     subject: function(subject) { return this.property("subject", $.replicate(subject)); },
     visit: function() { return this.$visit(); }
-}
+};
 
 function iterator(subject) {
     iterator.base.call(this);
@@ -1433,7 +1417,7 @@ function iterator_createKvArray (obj) {
     return array;
 }
 $.Class.extend(iterator, $.Class);
-$.iterator = function(subject){ return new iterator(subject); }
+$.iterator = function(subject){ return new iterator(subject); };
 $.iterator.Class = iterator;
 
 function mediator(name) {
@@ -1528,7 +1512,7 @@ mediator.prototype = {
     }
 };
 $.Class.extend(mediator, $.Class);
-$.mediator = function(name) { return new mediator(name); }
+$.mediator = function(name) { return new mediator(name); };
 $.mediator.Class = mediator;
 
 function observer(name) {
@@ -1629,20 +1613,20 @@ rolodex.prototype = {
 	this.$current = (n > l) ? 0 : ((n < 0) ? l : n);
 	return s[this.$current];
     }
-}
+};
 $.Class.extend(rolodex, $.iterator.Class);
 $.rolodex = function(subj){ return new rolodex(subj); }
 $.rolodex.Class = rolodex;
 
 function abstractSpec() { }
 abstractSpec.prototype = {
-    $isSatisfiedBy: function(v) { return; },
+    $isSatisfiedBy: function(v) { },
     isSatisfiedBy: function(v) {return this.$isSatisfiedBy(v);},
     and: function(spec) { return new andSpec(this, spec); },
     or: function(spec) { return new orSpec(this, spec); },
     xor: function(spec) { return new xorSpec(this, spec); },
     not: function() { return new notSpec(this); }
-}
+};
 function andSpec (a, b) {
     andSpec.base.call(this);
     this.$1 = a;
@@ -1651,7 +1635,7 @@ function andSpec (a, b) {
 andSpec.prototype.$isSatisfiedBy = function(c) {
     return this.$1.isSatisfiedBy(c) &&
             this.$2.isSatisfiedBy(c);
-}
+};
 $.Class.extend(andSpec, abstractSpec);
 
 function orSpec(a, b) {
@@ -1662,7 +1646,7 @@ function orSpec(a, b) {
 orSpec.prototype.$isSatisfiedBy = function(candidate) {
     return this.$1.isSatisfiedBy(candidate) ||
             this.$2.isSatisfiedBy(candidate);
-}
+};
 
 $.Class.extend(orSpec, abstractSpec);
 
@@ -1674,15 +1658,15 @@ function xorSpec(a, b) {
 xorSpec.prototype.$isSatisfiedBy = function(candidate) {
     return $.xor(this.$1.isSatisfiedBy(candidate),
                  this.$2.isSatisfiedBy(candidate));
-}
+};
 $.Class.extend(xorSpec, abstractSpec);
 
 function trueSpec() { trueSpec.base.call(this); }
-trueSpec.prototype.$isSatisfiedBy = function(candidate) { return true; }
+trueSpec.prototype.$isSatisfiedBy = function(candidate) { return true; };
 $.Class.extend(trueSpec, abstractSpec);
 
 function falseSpec() { falseSpec.base.call(this); }
-falseSpec.prototype.$isSatisfiedBy = function(candidate) { return false; }
+falseSpec.prototype.$isSatisfiedBy = function(candidate) { return false; };
 $.Class.extend(falseSpec, abstractSpec);
 
 function notSpec(s) {
@@ -1691,7 +1675,7 @@ function notSpec(s) {
 }
 notSpec.prototype.$isSatisfiedBy = function(candidate) {
     return !this._s.isSatisfiedBy(candidate);
-}
+};
 $.Class.extend(notSpec, abstractSpec);
 
 function spec(func){
@@ -1702,7 +1686,7 @@ $.Class.extend(spec, abstractSpec);
 
 $.spec = function(func){
     return new spec(func);
-}
+};
 
 function stack() {
     this._q = [];
