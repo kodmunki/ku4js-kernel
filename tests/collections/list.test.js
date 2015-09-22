@@ -81,4 +81,27 @@ $(function(){
         ok(!list.isEmpty(), "isEmpty");
         ok(list.clear().isEmpty(), "isEmpty");
     });
+
+    test('each-performance', function () {
+
+        function testPerformance(number, time) {
+            var array = [], test = [];
+            for (var i = 0; i < number; i++) {
+                array[array.length] = i;
+            }
+            performanceOk(function () {
+                $.list(array).each(function (item) {
+                    test[test.length] = item;
+                });
+            }, time);
+            equal(array.length, number);
+            equal(test.length, number);
+        }
+
+        testPerformance(10, 3);
+        testPerformance(100, 15);
+        testPerformance(1000, 45);
+        testPerformance(10000, 400);
+        testPerformance(100000, 5000);
+    });
 });

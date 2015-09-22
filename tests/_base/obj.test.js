@@ -83,4 +83,21 @@ $(function(){
         equal(filter.c, 3);
         equal(filter.d, undefined);
     });
+
+    test('areEqual', function() {
+        var obj1 = {},
+            obj2 = {"a": 1, "b": 2, "c": 3},
+            obj3 = {"a": 1, "b": 2, "c": 3},
+            obj4 = {"a": 1, "b": 2, "c": 3, "d": 4};
+
+        expect(8);
+        ok(!$.obj.areEqual(null, obj2));
+        ok(!$.obj.areEqual(obj1, null));
+        ok(!$.obj.areEqual(obj1, obj2));
+        ok(!$.obj.areEqual(obj1, obj3));
+        ok(!$.obj.areEqual(obj1, obj4));
+        ok(!$.obj.areEqual(obj2, obj1));
+        ok($.obj.areEqual(obj2, obj3));
+        ok(!$.obj.areEqual(obj2, obj4));
+    });
 });

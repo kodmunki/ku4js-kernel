@@ -163,6 +163,15 @@ $.obj.filter = function(/*obj, keys...*/) {
 
     return value;
 };
+$.obj.areEqual = function(obj1, obj2) {
+    var keys1 = $.obj.keys(obj1),
+        keys2 = $.obj.keys(obj2);
+
+    if(!($.exists(obj1) && $.exists(obj2))) return false;
+    if(keys1.length != keys2.length) return false;
+    for(var n in obj1) if(!$.areEqual(obj1[n], obj2[n])) return false;
+    return true;
+};
 
 if(!$.exists($.arr)) $.arr = { };
 $.arr.indexOfRegExp = function(array, regexp) {
