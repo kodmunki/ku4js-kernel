@@ -8,7 +8,7 @@ $.str.build = function() {
 };
 $.str.format = function() {
     var a = arguments, s = a[0], l = a.length,  A, S;
-    for (i = 1; i < l; i++) {
+    for (var i = 1; i < l; i++) {
         A = a[i];
         S = ($.isNull(A)) ? "null" : ($.isUndefined(A)) ? "undefined" : A.toString();
         s = s.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), S);

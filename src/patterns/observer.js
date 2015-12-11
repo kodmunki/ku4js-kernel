@@ -23,8 +23,7 @@ observer.prototype = {
         return this;
     },
     notify: function() {
-        var it = new $.iterator(this._methods.values()), args = arguments,
-            name = this._name;
+        var it = new $.iterator(this._methods.values()), args = arguments, name = this._name;
         it.each(function(subscriber) {
             var method = subscriber.m;
             if(!$.exists(method)) {

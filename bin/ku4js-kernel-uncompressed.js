@@ -1,32 +1,24 @@
-(function(l){
-function storeAuthorInfo() {
-    $.ku4 = {
-        'author': 'kodmunki\u2122',
-        'license': 'The MIT License (MIT)' +
-                   '\n\nCopyright (c) 2013 kodmunki\u2122.' +
-                   '\nPermission is hereby granted, free of charge, to any person obtaining a copy of' +
-                   '\nthis software and associated documentation files (the "Software"), to deal in' +
-                   '\nthe Software without restriction, including without limitation the rights to' +
-                   '\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of' +
-                   '\nthe Software, and to permit persons to whom the Software is furnished to do so,' +
-                   '\nsubject to the following conditions:' +
-                   '\n\nThe above copyright notice and this permission notice shall be included in all' +
-                   '\ncopies or substantial portions of the Software.' +
-                   '\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR' +
-                   '\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS' +
-                   '\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR' +
-                   '\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER' +
-                   '\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN' +
-                   '\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
-    };
-}
-try {
-    storeAuthorInfo();
-}
-catch(e) {
-    $ = {};
-    storeAuthorInfo();
-}
+var ku4js = jQuery;
+(function($){
+$._about_ku4js_ = {
+    'author': 'kodmunki\u2122',
+    'license': 'The MIT License (MIT)' +
+               '\n\nCopyright (c) 2013 kodmunki\u2122.' +
+               '\nPermission is hereby granted, free of charge, to any person obtaining a copy of' +
+               '\nthis software and associated documentation files (the "Software"), to deal in' +
+               '\nthe Software without restriction, including without limitation the rights to' +
+               '\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of' +
+               '\nthe Software, and to permit persons to whom the Software is furnished to do so,' +
+               '\nsubject to the following conditions:' +
+               '\n\nThe above copyright notice and this permission notice shall be included in all' +
+               '\ncopies or substantial portions of the Software.' +
+               '\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR' +
+               '\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS' +
+               '\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR' +
+               '\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER' +
+               '\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN' +
+               '\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
+};
 
 $.isArray = function(x) { return Array.isArray(x); };
 $.isBool = function(x) { return (/boolean/i.test(typeof (x))); };
@@ -216,11 +208,12 @@ if(!$.exists($.enumeration)) $.enumeration = function(values) {
 
 if(!$.exists($.evt)) $.evt = { };
 $.evt.mute = function(event) {
-    if(!$.exists(event)) return;
+    if(!$.exists(event)) return false;
     if($.isFunction(event.preventDefault())) event.preventDefault();
     if($.isFunction(event.stopPropagation())) event.stopPropagation();
     if($.isFunction(event.stopImmediatePropagation())) event.stopImmediatePropagation();
     event.cancelBubble = true;
+    return false;
 };
 
 function lock(isLocked) {
@@ -279,7 +272,7 @@ $.str.build = function() {
 };
 $.str.format = function() {
     var a = arguments, s = a[0], l = a.length,  A, S;
-    for (i = 1; i < l; i++) {
+    for (var i = 1; i < l; i++) {
         A = a[i];
         S = ($.isNull(A)) ? "null" : ($.isUndefined(A)) ? "undefined" : A.toString();
         s = s.replace(new RegExp("\\{" + (i - 1) + "\\}", "g"), S);
@@ -1549,8 +1542,7 @@ observer.prototype = {
         return this;
     },
     notify: function() {
-        var it = new $.iterator(this._methods.values()), args = arguments,
-            name = this._name;
+        var it = new $.iterator(this._methods.values()), args = arguments, name = this._name;
         it.each(function(subscriber) {
             var method = subscriber.m;
             if(!$.exists(method)) {
@@ -1750,4 +1742,4 @@ function ku4_performance_note(t, m) {
 
 $.ku4performance = function(func) { return new ku4_performance(func); };
 
-})();
+})(ku4js);
