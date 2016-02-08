@@ -35,7 +35,7 @@ setup () {
 
 openlink () {
     touch $LNKGFILE
-    echo "var ku4js = jQuery;"  >> $LNKGFILE
+    echo "var ku4js = jQuery || {};"  >> $LNKGFILE
     echo "(function($){" >> $LNKGFILE
 }
 

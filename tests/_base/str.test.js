@@ -11,6 +11,15 @@ $(function(){
         ok(!$.str.isNullOrEmpty(" "));
     });
 
+    test('contains', function () {
+        expect(5);
+        ok($.str.contains("", ""));
+        ok($.str.contains("a", ""));
+        ok($.str.contains("a", "a"));
+        ok($.str.contains("aaabaa", "b"));
+        ok(!$.str.contains("aaabaa", "d"));
+    });
+
     test('build', function () {
         expect(5);
         equal($.str.build(null), "null");

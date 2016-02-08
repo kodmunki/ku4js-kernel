@@ -3,6 +3,9 @@ var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 $.str.isNullOrEmpty = function(s) {
     return !$.exists(s) || ($.isString(s) && $.isEmpty(s));
 };
+$.str.contains = function(s, value) {
+    return s.indexOf(value) > -1;
+};
 $.str.build = function() {
     return "".concat.apply(new String(), arguments);
 };

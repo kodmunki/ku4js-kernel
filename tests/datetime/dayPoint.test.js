@@ -155,8 +155,9 @@ $(function(){
         equal($.dayPoint(2011, 1, 1).toJson(), new Date("01/01/2011").toJSON());
     });
     test('canParse', function () {
-        expect(11);
+        expect(12);
         ok($.dayPoint.canParse("1/1/2011"));
+        ok($.dayPoint.canParse("05/01/2011"));
         ok($.dayPoint.canParse(new Date("1/1/2011")));
         ok($.dayPoint.canParse("1906-08-04T05:00:00.000Z"));
         ok($.dayPoint.canParse(1));

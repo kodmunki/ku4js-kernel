@@ -97,18 +97,18 @@ $.dayPoint = function(year, month, date, hours, minutes, seconds, milliseconds){
 $.dayPoint.Class = dayPoint;
 
 $.dayPoint.canParse = function(v) {
-    return ($.isString(v) ||
-            $.isNumber(v) ||
-            $.isDate(v))
-        ? !isNaN(new Date(v).valueOf())
-        : false;
+    return $.exists(this.tryParse(v));
 };
 $.dayPoint.parse = function(value) {
     if (value instanceof dayPoint) return value;
+    var v = ($.isString(value))
+        ? $.str.trim(value)
+            .replace(/T\d{2}:\d{2}:\d{2}.\d{1,}Z/,"")
 
-    var v = ($.isString(value) && /^\d{4}\-\d{,12}\-\d{1,2}$/.test($.str.trim(value)))
-                ? value.replace(/(?:\D)(0)/g,"-").replace(/^0/,"")
-                : value;
+            //NOTE: This code was causing breaks in Safari. It is unknown as to why it is here in the first place
+            //      It is a very odd piece of code. --Jacob Mulholland 02/07/2016
+            //.replace(/(?:\D)(0)/g,"-").replace(/^0/,"")
+        : value;
 
     if(/^\d{4}\-\d{1,2}\-\d{1,2}$/.test(v)) {
         var components = v.split("-"),
@@ -119,14 +119,18 @@ $.dayPoint.parse = function(value) {
     }
 
     var D = new Date(v);
-
-    if(!$.exists(v) || isNaN(D).valueOf())
+    if(!$.exists(v) || isNaN(D.valueOf()))
         throw $.ku4exception("$.dayPoint", $.str.format("Cannot parse value= {0}", v));
 
     return $.dayPoint(D.getFullYear(), D.getMonth() + 1, D.getDate());
 };
 $.dayPoint.tryParse = function(v){
-    return $.dayPoint.canParse(v) ? $.dayPoint.parse(v) : null;
+    try {
+        return $.dayPoint.parse(v);
+    }
+    catch(e) {
+        return null;
+    }
 };
 
 var dayPoint_assumeNow;
