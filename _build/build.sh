@@ -35,7 +35,7 @@ setup () {
 
 openlink () {
     touch $LNKGFILE
-    echo "var ku4js = jQuery || {};"  >> $LNKGFILE
+    echo "var jQuery, ku4jQuery; var ku4js = (ku4jQuery) ? jQuery : {};"  >> $LNKGFILE
     echo "(function($){" >> $LNKGFILE
 }
 
@@ -54,14 +54,14 @@ closelink () {
 
 compile () {
     echo Compiling
-    
+
     touch $COMPFILE
     java -jar $COMPRESSOR $LNKGFILE -o $COMPFILE
-    
+
     [ -f $MINFILE ] && rm $MINFILE
     touch $MINFILE
     cat $COMPFILE >> $MINFILE
-    
+
     [ -f $JSFILE ] && rm $JSFILE
     touch $JSFILE
     cat $LNKGFILE >> $JSFILE

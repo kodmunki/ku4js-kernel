@@ -116,9 +116,11 @@ $(function(){
     });
 
     test("toString", function() {
-        expect(30);
+        expect(32);
         equal(two.toString(), "$2.63");
         equal($.money(0.00).toString(), "$0.00");
+        equal($.money(0.01).toString(), "$0.01");
+        equal($.money(0.07).toString(), "$0.07");
         equal($.money(0.10).toString(), "$0.10");
         equal($.money(0.20).toString(), "$0.20");
         equal($.money(0.30).toString(), "$0.30");

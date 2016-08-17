@@ -1,4 +1,4 @@
-var ku4js = jQuery || {};
+var jQuery, ku4jQuery; var ku4js = (ku4jQuery) ? jQuery : {};
 (function($){
 $._about_ku4js_ = {
     'author': 'kodmunki\u2122',
@@ -948,9 +948,9 @@ money.prototype = {
         var money = this.round(),
             format = (money.isLessThan($.money.zero(this.currency()))) ? "({0}{1}{2}{3})" : "{0}{1}{2}{3}",
             separator = digitSeparator || ",",
-            mark = decimalMark || ".";
-        var dollars = money_formatDollars(money.dollars(), separator);
-        var cents = money_formatCents(money.cents());
+            mark = decimalMark || ".",
+            dollars = money_formatDollars(money.dollars(), separator),
+            cents = money_formatCents(money.cents());
 
         return $.str.format(format, this._currency, dollars , mark, cents);
     }
@@ -1015,8 +1015,8 @@ function money_formatCents(cents) {
         _cents = rounded.toString().replace(/[^\d]|0\./g, "");
 
     if ($.isZero(rounded)) return "00";
-    if (rounded < .10) return "0" + _cents;
-    if (/^\d$/.test(_cents)) return _cents + "0";
+    if (rounded < .10) return ("0" + _cents).slice(-2);
+    if (/^\d$/.test(_cents)) return (_cents + "0").slice(0,2);
     return _cents;
 }
 

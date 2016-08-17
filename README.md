@@ -8,6 +8,9 @@ ku4js-kernel contains a vast number of powerful classes and patterns including: 
 
 ---
 
+#Bind to jquery
+You can bind ku4js to jquery by setting `var ku4jQuery = true;` before ku4js loads.
+
 #Documentation
 The following documentation describes each class in the ku4js-kernel library. It is organized to follow the directory structure found in /src ordered by lowest level constructs first. All instantiable classes can be instantiated using the $.className() syntax. All constructors are empty unless otherwise noted.
 
