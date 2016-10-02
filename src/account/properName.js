@@ -1,8 +1,8 @@
 function properName(first, middle, last) {
     properName.base.call(this);
-    this._first = first;
+    this._first = first || "";
     this._middle = middle || "";
-    this._last = last;
+    this._last = last || "";
 }
 properName.prototype = {
     first: function(){ return this._first; },
@@ -10,11 +10,11 @@ properName.prototype = {
     last: function(){ return this._last; },
     full: function() {
         var format = ($.isNullOrEmpty(this._middle)) ? "{F} {L}" : "{F} {M} {L}";
-        return this.toStringWithFormat(format);
+        return $.str.trim(this.toStringWithFormat(format).replace(/\s{2,}/, ""));
     },
     initials: function() {
         var format = ($.isNullOrEmpty(this._middle)) ? "{f}.{l}." : "{f}.{m}.{l}.";
-        return this.toStringWithFormat(format);
+        return this.toStringWithFormat(format).replace(/\.{2,}/, ".");
     },
     equals: function(other) {
         if(!$.exists(other)) return false;
@@ -37,5 +37,5 @@ properName.prototype = {
 };
 $.Class.extend(properName, $.Class);
 
-$.properName = function(first, middle, last) { return new properName(first, middle, last); }
+$.properName = function(first, middle, last) { return new properName(first, middle, last); };
 $.properName.Class = properName;
