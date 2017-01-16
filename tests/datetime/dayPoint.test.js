@@ -170,11 +170,12 @@ $(function(){
         ok(!$.dayPoint.canParse(function() { }));
     });
     test('parse', function () {
-        expect(13);
+        expect(14);
         ok($.dayPoint.parse("1/1/2011"));
         ok($.dayPoint.parse(new Date("1/1/2011")));
         ok($.dayPoint.parse(1));
         ok($.dayPoint.parse("1906-08-04T05:00:00.000Z"));
+        ok($.dayPoint.parse('2017-01-16T05:00:00Z').equals($.dayPoint(2017, 1, 16)));
         deepEqual($.dayPoint.parse("2011-08-01").toDate(), new Date("08/01/2011"));
         deepEqual($.dayPoint.parse("1906-08-04T05:00:00.000Z").toDate(), new Date("08/04/1906"));
         raises(function() { $.dayPoint.parse(null); });

@@ -103,7 +103,7 @@ $.dayPoint.parse = function(value) {
     if (value instanceof dayPoint) return value;
     var v = ($.isString(value))
         ? $.str.trim(value)
-            .replace(/T\d{2}:\d{2}:\d{2}.\d{1,}Z/,"")
+            .replace(/T\d{2}:\d{2}:\d{2}(.\d{1,})?Z/,"")
 
             //NOTE: This code was causing breaks in Safari. It is unknown as to why it is here in the first place
             //      It is a very odd piece of code. --Jacob Mulholland 02/07/2016
